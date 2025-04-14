@@ -1,19 +1,22 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ShopLayoutComponent } from './layout/shop-layout/shop-layout.component';
-import { ItemsComponent } from './views/items/items.component';
-import { CarritoComponent } from './carrito/carrito.component';
-
-
+import { NgModule } from '@angular/core';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { CarritoComponent } from './components/carrito/carrito.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { BannerComponent } from './views/banner/banner.component';
+import { DestacadosComponent } from './views/destacados/destacados.component';
+import { GrillaItemsComponent } from './views/grilla-items/grilla-items.component';
+import { ItemComponent } from './views/item/item.component';
 
 @NgModule({
   declarations: [
-    ShopLayoutComponent,
-    ItemsComponent,
-    CarritoComponent
+    CarritoComponent,
+    BannerComponent,
+    DestacadosComponent,
+    GrillaItemsComponent,
+    ItemComponent,
+    LayoutComponent,
   ],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule, SharedModule],
 })
-export class ShopModule { }
+export class ShopModule {}
