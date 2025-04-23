@@ -1,0 +1,9 @@
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: aquamarine;
+  margin-top: 25px;
+  margin-bottom: 30px;
+}
