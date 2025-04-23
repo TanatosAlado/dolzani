@@ -1,0 +1,25 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 300px;
+  margin: 0 auto;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+button {
+  width: 100%;
+}
+
+.registro-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.registro-link a {
+  color: #3f51b5;
+  cursor: pointer;
+}

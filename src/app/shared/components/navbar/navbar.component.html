@@ -1,1 +1,20 @@
-<p>navbar works!</p>
+<nav class="navbar">
+  <!-- Logo a la izquierda -->
+  <div class="navbar-left">
+    <img src="assets/logo.png" alt="Logo" class="logo" />
+  </div>
+
+  <!-- Links al centro -->
+  <ul class="navbar-center">
+    <li><a routerLink="/productos">Productos</a></li>
+    <li><a routerLink="/nosotros">Nosotros</a></li>
+    <li><a routerLink="/contacto">Contacto</a></li>
+  </ul>
+
+  <!-- Iconos a la derecha -->
+  <div class="navbar-right">
+    <button (click)="openIngreso()">Login</button>
+    <button (click)="openRegistro()">Registrarse</button>
+    <button>Carrito</button>
+  </div>
+</nav>

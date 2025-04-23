@@ -1,17 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { NgModule } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import { FooterComponent } from './components/footer/footer.component';
-
-
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
-  declarations: [
-    NavbarComponent,
-    FooterComponent
-  ],
-  imports: [    CommonModule
-  ],
-  exports:[NavbarComponent,FooterComponent]
+  declarations: [NavbarComponent, FooterComponent],
+  imports: [CommonModule, MatDialogModule],
+  exports: [NavbarComponent, FooterComponent, MatDialogModule],
 })
-export class SharedModule { }
+export class SharedModule {}
