@@ -19,8 +19,9 @@ export class NavbarComponent {
     //this.authService.openIngresoModal();
     this.dialog.open(IngresoComponent, {
       width: '400px',
-      disableClose: true, // Para que no se cierre con ESC ni clic fuera
-      backdropClass: 'custom-backdrop' // Opcional si querés modificar el fondo
+      disableClose: true,
+      backdropClass: 'custom-backdrop',
+      panelClass: 'custom-dialog'
     });
   }
 
