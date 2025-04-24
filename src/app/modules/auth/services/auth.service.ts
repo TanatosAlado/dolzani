@@ -13,6 +13,7 @@ export class AuthService {
   openIngresoModal() {
     const dialogRef = this.dialog.open(IngresoComponent, {
       width: '400px', // Ancho del modal
+      disableClose: true, 
       data: {}, // Puedes pasar datos si lo necesitas
     });
 

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { IngresoComponent } from 'src/app/modules/auth/views/ingreso/ingreso.component';
+
 
 @Component({
   selector: 'app-navbar',
@@ -9,11 +12,16 @@ import { AuthService } from 'src/app/modules/auth/services/auth.service';
 export class NavbarComponent {
   usuarioLogueado: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private dialog: MatDialog) {}
 
   // Métodos para abrir los modales
   openIngreso() {
-    this.authService.openIngresoModal();
+    //this.authService.openIngresoModal();
+    this.dialog.open(IngresoComponent, {
+      width: '400px',
+      disableClose: true, // Para que no se cierre con ESC ni clic fuera
+      backdropClass: 'custom-backdrop' // Opcional si querés modificar el fondo
+    });
   }
 
   openRegistro() {

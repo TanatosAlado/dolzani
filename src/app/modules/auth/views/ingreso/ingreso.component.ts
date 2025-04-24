@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/modules/auth/services/auth.service'; // Asegúrate de tener el servicio para manejo de login
 
 @Component({
@@ -10,7 +11,7 @@ export class IngresoComponent {
   usuario: string = '';
   contrasena: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private dialogRef: MatDialogRef<IngresoComponent>) {}
 
   // Método para manejar el envío del formulario
   onSubmit() {
@@ -25,5 +26,9 @@ export class IngresoComponent {
   // Método para abrir el modal de registro
   abrirRegistro() {
     this.authService.openRegistroModal();
+  }
+
+  cerrar() {
+    this.dialogRef.close();
   }
 }
