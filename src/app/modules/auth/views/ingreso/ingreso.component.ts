@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/modules/auth/services/auth.service'; // Asegúrate de tener el servicio para manejo de login
+import { LoginRequest } from '../../models/loginRequest.model';
 
 @Component({
   selector: 'app-ingreso',
@@ -16,10 +17,9 @@ export class IngresoComponent {
   // Método para manejar el envío del formulario
   onSubmit() {
     if (this.usuario && this.contrasena) {
-      // Aquí puedes agregar la lógica para autenticar al usuario
-      console.log('Formulario enviado', this.usuario, this.contrasena);
-      // Ejemplo: Llamar al servicio para autenticar el usuario
-      this.authService.login(this.usuario, this.contrasena);
+      const ingresante: LoginRequest = new LoginRequest(this.usuario, this.contrasena);
+    
+      this.authService.login(ingresante);
     }
   }
 
