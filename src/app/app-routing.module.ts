@@ -4,6 +4,10 @@ import { LayoutComponent } from './modules/shop/components/layout/layout.compone
 import { AdminLayoutComponent } from './modules/admin/components/admin-layout/admin-layout.component';
 import { NosotrosComponent } from './modules/sociales/components/nosotros/nosotros.component';
 import { ContactoComponent } from './modules/sociales/components/contacto/contacto.component';
+import { ClientesComponent } from './modules/admin/views/clientes/clientes.component';
+import { ProductosComponent } from './modules/admin/views/productos/productos.component';
+import { PedidosComponent } from './modules/admin/views/pedidos/pedidos.component';
+import { GestionesComponent } from './modules/admin/views/gestiones/gestiones.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'prefix' },
@@ -24,16 +28,12 @@ const routes: Routes = [
   {
     path: 'gestiones',
     component: AdminLayoutComponent,
-    //canActivate: [AuthGuard],
-    data: {
-      header: 'gestiones',
-      navigable: true,
-      quick: {
-        header: 'Gestiones',
-        icon: 'home',
-        navigable: true,
-      },
-    },
+    children: [
+      { path: '', component: GestionesComponent }, 
+      { path: 'clientes', component: ClientesComponent },
+      { path: 'productos', component: ProductosComponent },
+      { path: 'pedidos', component: PedidosComponent },
+    ]
   },
   {
     path: 'nosotros',
