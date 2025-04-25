@@ -9,11 +9,13 @@
     <li><a routerLink="/productos">Productos</a></li>
     <li><a routerLink="/nosotros">Nosotros</a></li>
     <li><a routerLink="/contacto">Contacto</a></li>
+    <li><a routerLink="/gestiones">Gestiones</a></li>
   </ul>
 
   <!-- Iconos a la derecha -->
   <div class="navbar-right">
-    <button (click)="openIngreso()">Login</button>
+    <button *ngIf="!usuarioLogueado" (click)="openIngreso()">Login</button>
+    <button *ngIf="usuarioLogueado" (click)="closeSesion()">Logout</button>
     <button (click)="openRegistro()">Registrarse</button>
     <button>Carrito</button>
   </div>
