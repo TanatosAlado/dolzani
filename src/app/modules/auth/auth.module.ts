@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { IngresoComponent } from './views/ingreso/ingreso.component';
 import { RegistroComponent } from './views/registro/registro.component';
 import { MatIconModule } from '@angular/material/icon';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule
   ],
   exports: [IngresoComponent, RegistroComponent],
 })
