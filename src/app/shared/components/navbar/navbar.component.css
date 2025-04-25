@@ -33,3 +33,20 @@
   cursor: pointer;
   margin-left: 1rem;
 }
+
+.navbar-center li {
+  display: inline-block;
+  margin: 0 15px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.navbar-center li:hover {
+  transform: translateY(-3px) scale(1.05);
+  color: #cb484e; /* color personalizado */
+}
+
+.navbar-center li a.active {
+  font-weight: bold;
+  border-bottom: 2px solid #cb484e;
+  color: #cb484e;
+}

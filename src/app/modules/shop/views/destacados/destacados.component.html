@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <h2 class="mb-4">Destacados</h2>
-  <div class="row">
-    <div class="col-12 col-md-4 mb-4" *ngFor="let destacado of destacados">
+  <div class="grid-productos">
+    <div class="item" *ngFor="let destacado of destacados">
       <app-item [producto]="destacado"></app-item>
     </div>
   </div>
