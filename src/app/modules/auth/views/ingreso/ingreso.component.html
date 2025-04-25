@@ -1,36 +1,44 @@
-<h2>Iniciar sesión</h2>
+<div class="modal-container">
+  <h2>Iniciar sesión</h2>
 
-<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-  <!-- Campo de usuario -->
-  <mat-form-field appearance="fill">
-    <mat-label>Usuario</mat-label>
-    <input matInput type="text" name="usuario" [(ngModel)]="usuario" required />
-  </mat-form-field>
-
-  <!-- Campo de contraseña -->
-  <mat-form-field appearance="fill">
-    <mat-label>Contraseña</mat-label>
-    <input
-      matInput
-      type="password"
-      name="contraseña"
-      [(ngModel)]="contrasena"
-      required
-    />
-  </mat-form-field>
-
-  <!-- Botón de envío -->
-  <button
-    mat-raised-button
-    color="primary"
-    type="submit"
-    [disabled]="!loginForm.form.valid"
-  >
-    Ingresar
-  </button>
-</form>
-
-<!-- Enlace para ir al registro -->
-<div class="registro-link">
-  <p>No tienes una cuenta? <a (click)="abrirRegistro()">Regístrate</a></p>
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <!-- Campo de usuario -->
+    <mat-form-field appearance="fill">
+      <mat-label>Usuario</mat-label>
+      <input matInput type="text" name="usuario" [(ngModel)]="usuario" required />
+    </mat-form-field>
+  
+    <!-- Campo de contraseña -->
+    <mat-form-field appearance="fill">
+      <mat-label>Contraseña</mat-label>
+      <input
+        matInput
+        type="password"
+        name="contraseña"
+        [(ngModel)]="contrasena"
+        required
+      />
+    </mat-form-field>
+  
+    <!-- Botón de envío -->
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!loginForm.form.valid"
+    >
+      Ingresar
+    </button>
+  </form>
+  
+  <!-- Enlace para ir al registro -->
+  <div class="registro-link">
+    <p>No tienes una cuenta? <a (click)="abrirRegistro()">Regístrate</a></p>
+  </div>
+  
+  <div style="display: flex; justify-content: flex-end;">
+    <button mat-icon-button (click)="cerrar()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 </div>

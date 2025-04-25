@@ -38,7 +38,7 @@ export class DestacadosComponent {
       nombre: 'MANZANA ROJA',
       descripcion: '1KG = 6 UNIDADES',
       imagenUrl:
-        'https://http2.mlstatic.com/D_NQ_NP_692232-MLA72462105149_102023-O.webp',
+        'https://http2.mlstatic.com/D_NQ_NP_2X_705616-MLA70540794238_072023-F.webp',
       precioOriginal: 1350,
       precioConDescuento: 999,
       descuento: 26,

@@ -5,6 +5,9 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { ShopModule } from './modules/shop/shop.module';
 import { SharedModule } from './shared/shared.module';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from './environment/environment';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,8 +17,11 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     ShopModule,
     AuthModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [AngularFireModule],
 })
 export class AppModule {}

@@ -23,3 +23,19 @@ button {
   color: #3f51b5;
   cursor: pointer;
 }
+
+::ng-deep .cdk-overlay-backdrop.custom-backdrop {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.modal-container {
+  padding: 24px;
+  max-width: 400px;
+  background: white;
+  border-radius: 8px;
+}
+
+.cerrar-modal {
+  display: flex;
+  justify-content: flex-end;
+}
