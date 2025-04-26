@@ -41,8 +41,8 @@ export class AuthService {
   login(ingresante: LoginRequest): Observable<Cliente> {
     let respuesta: Cliente = null
 
-    this.getUsuarios().subscribe((usuarios) => {
-      usuarios.forEach((usuario) => {
+    this.getClientes().subscribe((clientes) => {
+      clientes.forEach((usuario) => {
         const data = usuario.payload.doc.data() as Cliente;
         const id = usuario.payload.doc.id;
         if (data.usuario === ingresante.user && data.contrasena === ingresante.password) {
@@ -67,8 +67,9 @@ export class AuthService {
     return of(respuesta);    
   }
 
-  getUsuarioByLogin(ingresante: LoginRequest): Observable<Cliente> {
-    return this.firestore.collection('Usuarios', ref => ref.where('usuario', '==', ingresante.user).where('contrasena', '==', ingresante.password)).snapshotChanges().pipe(
+  //SERVICE PARA TRAER CLIENTE LOGUEADO
+  getClienteByLogin(ingresante: LoginRequest): Observable<Cliente> {
+    return this.firestore.collection('Clientes', ref => ref.where('usuario', '==', ingresante.user).where('contrasena', '==', ingresante.password)).snapshotChanges().pipe(
       map(actions => {
         const clientes = actions.map(a => {
           const data = a.payload.doc.data() as Cliente;
@@ -93,12 +94,49 @@ export class AuthService {
     );
   }
 
-  getUsuarios(): Observable<any> {
-    return this.firestore.collection('Usuarios').snapshotChanges()
+  // SERVICE PARA TRAER CLIENTE POR ID
+  getClienteById(cliente: any): Observable<Cliente | null> {
+    return this.firestore.collection('Clientes', ref => ref.where('mail', '==', cliente.mail))
+      .get()
+      .pipe(
+        map(snapshot => {
+          if (snapshot.empty) {
+            return null;
+          }
+          const doc = snapshot.docs[0];
+          const data = doc.data() as Cliente;
+          return new Cliente(
+            doc.id,
+            data.usuario,
+            data.contrasena,
+            data.mail,
+            data.telefono,
+            data.direccion,
+            data.historial,
+            data.estado,
+            data.razonSocial,
+            data.nombre,
+            data.apellido,
+            data.administrador
+          );
+        })
+      );
+  }
+  
+  
+
+
+  //SERVICE PARA TRAER CLIENTES
+  getClientes(): Observable<any> {
+    return this.firestore.collection('Clientes').snapshotChanges()
   }
 
-  createUsuario(usuario: any): Promise<any>{
-    return this.firestore.collection('Usuarios').add(usuario)
+//SERVICE PARA CREAR CLIENTES
+  createCliente(usuario: any): Promise<any>{
+    return this.firestore.collection('Clientes').add(usuario)
   }
-
+  //SERVICE PARA ACTUALIZAR CLIENTES
+  updateUsuario(id: string, cliente: any): Promise<any> {
+    return this.firestore.collection('Clientes').doc(id).update(cliente);
+  }
 }

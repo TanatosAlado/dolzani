@@ -19,7 +19,7 @@ export class IngresoComponent {
   onSubmit() {
     if (this.usuario && this.contrasena) {
       const ingresante: LoginRequest = new LoginRequest(this.usuario, this.contrasena);
-      this.authService.getUsuarioByLogin(ingresante).subscribe((cliente: Cliente) => {
+      this.authService.getClienteByLogin(ingresante).subscribe((cliente: Cliente) => {
         if (cliente) {
           console.log('Ingreso exitoso');
           this.dialogRef.close(cliente); // Cierra el modal y pasa el cliente logueado (evitamos traer todos)
@@ -38,30 +38,5 @@ export class IngresoComponent {
 
   cerrar() {
     this.dialogRef.close();
-  }
-
-  alta(){
-    const _cliente: Cliente = {
-      id: "1",
-      usuario: "calessan",
-      contrasena: "admin123",
-      mail: "cris@hotmail.com",
-      telefono: "123456789",
-      direccion: "calle falsa 123",
-      historial: [],
-      estado: true,
-      razonSocial: "calesaLand",
-      nombre: "Cristian",
-      apellido: "Alessandro",
-      administrador: true,
-    }
-    
-    
-    this.authService.createUsuario(_cliente).then((res) => {
-      console.log("Usuario creado con éxito", res);
-    }).catch((err) => {
-      console.error("Error al crear el usuario", err);
-    })
-
   }
 }
