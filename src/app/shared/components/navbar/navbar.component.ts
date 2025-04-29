@@ -28,6 +28,7 @@ import {
 })
 export class NavbarComponent {
   usuarioLogueado: boolean = false;
+  usrAdmin: boolean = false;
 
   constructor(private authService: AuthService, private dialog: MatDialog, private generalService: GeneralService) {}
 
@@ -47,6 +48,7 @@ export class NavbarComponent {
         console.log('Cliente logueado:', cliente);
         // Guardamos el cliente en el servicio general
         this.usuarioLogueado = true;
+        this.usrAdmin = cliente.administrador;
         this.generalService.setCliente(cliente);
       } else {
         console.log('El usuario cerró el modal sin loguearse');
@@ -61,5 +63,6 @@ export class NavbarComponent {
   closeSesion(){
     this.generalService.logout();
     this.usuarioLogueado = false;
+    this.usrAdmin = false;
   }
 }

@@ -7,10 +7,10 @@
   <!-- Links al centro -->
   <nav [@navbarFadeSlide]>
     <ul class="navbar-center">
-      <li><a routerLink="/inicio" routerLinkActive="active">Productos</a></li>
+      <li><a routerLink="/inicio" routerLinkActive="active">Inicio</a></li>
       <li><a routerLink="/nosotros" routerLinkActive="active">Nosotros</a></li>
       <li><a routerLink="/contacto" routerLinkActive="active">Contacto</a></li>
-      <li><a routerLink="/gestiones" routerLinkActive="active">Gestiones</a></li>
+      <li *NGiF="usrAdmin"><a routerLink="/gestiones" routerLinkActive="active">Gestiones</a></li>
     </ul>
   </nav>
 
