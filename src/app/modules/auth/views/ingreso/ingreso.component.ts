@@ -15,6 +15,8 @@ export class IngresoComponent {
 
   constructor(private authService: AuthService, private dialogRef: MatDialogRef<IngresoComponent>) {}
 
+  value = 'Clear me';
+
   // Método para manejar el envío del formulario
   onSubmit() {
     if (this.usuario && this.contrasena) {
