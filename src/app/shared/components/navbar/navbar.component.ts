@@ -29,8 +29,12 @@ import {
 export class NavbarComponent {
   usuarioLogueado: boolean = false;
   usrAdmin: boolean = false;
+  searchTerm: string = '';
+  resultados: any[] = [];
+  productos:any[]=[]
+  cantidadProductos: number = 0;
 
-  constructor(private authService: AuthService, private dialog: MatDialog, private generalService: GeneralService) {}
+  constructor(private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService) {}
 
   // Métodos para abrir los modales
   openIngreso() {
@@ -65,4 +69,28 @@ export class NavbarComponent {
     this.usuarioLogueado = false;
     this.usrAdmin = false;
   }
+
+    //FUNCION PARA BUSCAR PRODUCTOS EN EL CUADRO DE BUSQUEDA Y APAREZCAN LA LISTA DE LOS ENCONTRADOS
+    autocompletar() {
+      if (this.searchTerm.length === 0) {
+        this.resultados = [];
+        return;
+      }
+      this.resultados = this.productos.filter(item =>
+        item.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+
+      //FUNCION PARA SELECCIONAR EL PRODUCTO ENCONTRADO Y VER SUS DETALLES
+  seleccionar(item: any) {
+    this.searchTerm = item.nombre;
+    // this.sharedService.showProductoById(item.id)
+    this.resultados = []; // Ocultar la lista después de seleccionar
+  }
+    //FUNCION PARA NAVEGAR A LA BUSQUEDA DEL PEDIDO
+    busquedaPedido(busqueda:any){
+      // this.sharedService.showBusqueda(busqueda)
+      this.searchTerm=''
+      this.resultados=[]
+    }
 }

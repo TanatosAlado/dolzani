@@ -18,6 +18,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 
+
+
+// const materialModules = [
+//   MatGridListModule,
+//   MatCardModule,
+//   MatIconModule,
+//   MatButtonModule
+// ];
+
 @NgModule({
   declarations: [NavbarComponent, FooterComponent],
   imports: [CommonModule, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule],
