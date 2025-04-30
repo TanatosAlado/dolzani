@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 
@@ -10,7 +11,7 @@ export class GeneralService {
 
  private clienteSubject = new BehaviorSubject<Cliente | null>(null);
  
-  constructor(private paginatorIntl: MatPaginatorIntl) { 
+  constructor(private paginatorIntl: MatPaginatorIntl,private router: Router) { 
     this.setPaginatorLabels();
   }
 
@@ -40,6 +41,11 @@ export class GeneralService {
 
   logout() {
     this.clienteSubject.next(null);
+  }
+
+  //FUNCION PARA NAVEGAR AL HOME
+  home(){
+    this.router.navigate([''])
   }
 
 

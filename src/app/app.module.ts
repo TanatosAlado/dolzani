@@ -11,6 +11,8 @@ import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/f
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminModule } from './modules/admin/admin.module';
 
+
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
