@@ -6,6 +6,10 @@ import { ClientesComponent } from './views/clientes/clientes.component';
 import { ProductosComponent } from './views/productos/productos.component';
 import { PedidosComponent } from './views/pedidos/pedidos.component';
 import { GestionesComponent } from './views/gestiones/gestiones.component';
+import { AuthModule } from '../auth/auth.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormProductoComponent } from './views/productos/components/form-producto/form-producto.component';
+import { ListaProductosComponent } from './views/productos/components/lista-productos/lista-productos.component';
 
 
 
@@ -16,11 +20,15 @@ import { GestionesComponent } from './views/gestiones/gestiones.component';
     ClientesComponent,
     ProductosComponent,
     PedidosComponent,
-    GestionesComponent
+    GestionesComponent,
+    FormProductoComponent,
+    ListaProductosComponent
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    AuthModule,
+    MatDialogModule
   ],
 })
 export class AdminModule { }

@@ -3,6 +3,7 @@ import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-clientes',
@@ -23,7 +24,7 @@ export class ClientesComponent {
   totalClientes = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
-  constructor(private clientesService: ClientesService) {}
+  constructor(private clientesService: ClientesService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadClientes();
@@ -82,7 +83,8 @@ export class ClientesComponent {
   }
 
   abrirRegistro(){
-    
+    console.log('prueba');
+    this.authService.openRegistroModal();
   }
 
 }
