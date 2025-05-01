@@ -3,22 +3,24 @@ import { MatDialog } from '@angular/material/dialog';
 import { IngresoComponent } from '../views/ingreso/ingreso.component';
 import { RegistroComponent } from '../views/registro/registro.component';
 import { LoginRequest } from '../models/loginRequest.model';
-import { map, Observable, of } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map, Observable, of, from } from 'rxjs';
+import { Firestore, collection, query, where, getDocs, addDoc, doc, updateDoc } from '@angular/fire/firestore';
+import { inject } from '@angular/core';
 import { Cliente } from '../models/cliente.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private dialog: MatDialog, private firestore: AngularFirestore) {}
+  private firestore = inject(Firestore);
 
-  // Método para abrir el modal de ingreso
+  constructor(private dialog: MatDialog) {}
+
   openIngresoModal() {
     const dialogRef = this.dialog.open(IngresoComponent, {
-      width: '400px', // Ancho del modal
+      width: '400px',
       disableClose: true, 
-      data: {}, // Puedes pasar datos si lo necesitas
+      data: {}, 
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -26,7 +28,6 @@ export class AuthService {
     });
   }
 
-  // Método para abrir el modal de registro
   openRegistroModal() {
     const dialogRef = this.dialog.open(RegistroComponent, {
       width: '400px',
@@ -39,43 +40,19 @@ export class AuthService {
   }
 
   login(ingresante: LoginRequest): Observable<Cliente> {
-    let respuesta: Cliente = null
-
-    this.getClientes().subscribe((clientes) => {
-      clientes.forEach((usuario) => {
-        const data = usuario.payload.doc.data() as Cliente;
-        const id = usuario.payload.doc.id;
-        if (data.usuario === ingresante.user && data.contrasena === ingresante.password) {
-          respuesta = new Cliente(
-            id,
-            data.usuario,
-            data.contrasena,
-            data.mail,
-            data.telefono,
-            data.direccion,
-            data.historial,
-            data.estado,
-            data.razonSocial,
-            data.nombre,
-            data.apellido,
-            data.administrador
-          );
-        }
-      });
-    });
-
-    return of(respuesta);    
+    return this.getClienteByLogin(ingresante);
   }
 
-  //SERVICE PARA TRAER CLIENTE LOGUEADO
   getClienteByLogin(ingresante: LoginRequest): Observable<Cliente> {
-    return this.firestore.collection('Clientes', ref => ref.where('usuario', '==', ingresante.user).where('contrasena', '==', ingresante.password)).snapshotChanges().pipe(
-      map(actions => {
-        const clientes = actions.map(a => {
-          const data = a.payload.doc.data() as Cliente;
-          const id = a.payload.doc.id;
+    const clientesRef = collection(this.firestore, 'Clientes');
+    const q = query(clientesRef, where('usuario', '==', ingresante.user), where('contrasena', '==', ingresante.password));
+
+    return from(getDocs(q)).pipe(
+      map(snapshot => {
+        const clientes = snapshot.docs.map(doc => {
+          const data = doc.data() as Cliente;
           return new Cliente(
-            id,
+            doc.id,
             data.usuario,
             data.contrasena,
             data.mail,
@@ -94,49 +71,52 @@ export class AuthService {
     );
   }
 
-  // SERVICE PARA TRAER CLIENTE POR ID
   getClienteById(cliente: any): Observable<Cliente | null> {
-    return this.firestore.collection('Clientes', ref => ref.where('mail', '==', cliente.mail))
-      .get()
-      .pipe(
-        map(snapshot => {
-          if (snapshot.empty) {
-            return null;
-          }
-          const doc = snapshot.docs[0];
-          const data = doc.data() as Cliente;
-          return new Cliente(
-            doc.id,
-            data.usuario,
-            data.contrasena,
-            data.mail,
-            data.telefono,
-            data.direccion,
-            data.historial,
-            data.estado,
-            data.razonSocial,
-            data.nombre,
-            data.apellido,
-            data.administrador
-          );
-        })
-      );
+    const clientesRef = collection(this.firestore, 'Clientes');
+    const q = query(clientesRef, where('mail', '==', cliente.mail));
+
+    return from(getDocs(q)).pipe(
+      map(snapshot => {
+        if (snapshot.empty) {
+          return null;
+        }
+        const doc = snapshot.docs[0];
+        const data = doc.data() as Cliente;
+        return new Cliente(
+          doc.id,
+          data.usuario,
+          data.contrasena,
+          data.mail,
+          data.telefono,
+          data.direccion,
+          data.historial,
+          data.estado,
+          data.razonSocial,
+          data.nombre,
+          data.apellido,
+          data.administrador
+        );
+      })
+    );
   }
-  
-  
 
-
-  //SERVICE PARA TRAER CLIENTES
   getClientes(): Observable<any> {
-    return this.firestore.collection('Clientes').snapshotChanges()
+    const clientesRef = collection(this.firestore, 'Clientes');
+    return from(getDocs(clientesRef)).pipe(
+      map(snapshot => snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })))
+    );
   }
 
-//SERVICE PARA CREAR CLIENTES
-  createCliente(usuario: any): Promise<any>{
-    return this.firestore.collection('Clientes').add(usuario)
+  createCliente(usuario: any): Promise<any> {
+    const ref = collection(this.firestore, 'Clientes');
+    return addDoc(ref, usuario);
   }
-  //SERVICE PARA ACTUALIZAR CLIENTES
+
   updateUsuario(id: string, cliente: any): Promise<any> {
-    return this.firestore.collection('Clientes').doc(id).update(cliente);
+    const productoRef = doc(this.firestore, `Clientes/${id}`);
+    return updateDoc(productoRef, { ...cliente });
   }
 }

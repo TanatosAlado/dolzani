@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Producto } from 'src/app/shared/models/producto.model';
+import { ProductosService } from 'src/app/shared/services/productos.service';
 
 @Component({
   selector: 'app-form-producto',
@@ -10,7 +11,7 @@ import { Producto } from 'src/app/shared/models/producto.model';
 export class FormProductoComponent implements OnInit {
   productoForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private productosService: ProductosService) {}
 
   ngOnInit(): void {
     this.productoForm = this.fb.group({
@@ -66,7 +67,8 @@ export class FormProductoComponent implements OnInit {
     if (this.productoForm.valid) {
       const producto: Producto = this.productoForm.value;
       console.log('Producto creado:', producto);
-      // Aquí podés emitir un evento, llamar a un servicio, etc.
+      this.productosService.agregarProducto(producto).then(() => {
+        console.log('Producto agregado a Firestore')});
     } else {
       this.productoForm.markAllAsTouched();
     }

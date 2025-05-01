@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Producto } from 'src/app/shared/models/producto.model';
 
 @Component({
   selector: 'app-item',
@@ -6,12 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./item.component.css'],
 })
 export class ItemComponent {
-  @Input() producto!: {
-    nombre: string;
-    descripcion?: string;
-    imagenUrl: string;
-    precioOriginal: number;
-    precioConDescuento: number;
-    descuento: number;
-  };
+  @Input() producto!: Producto;
 }

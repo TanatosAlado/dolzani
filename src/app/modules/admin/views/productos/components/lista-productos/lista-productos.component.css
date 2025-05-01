@@ -1,0 +1,21 @@
+.lista-productos-container {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    width: 100%;
+    margin-top: 16px;
+  }
+  
+  .mat-table {
+    width: 100%;
+    margin-top: 16px;
+  }
+  
+  .mat-header-cell, .mat-cell {
+    padding: 8px;
+  }
+  
+  button {
+    margin-right: 8px;
+  }
+  

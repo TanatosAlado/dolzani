@@ -1,1 +1,36 @@
-<p>lista-productos works!</p>
+<div class="lista-productos-container">
+  
+    <mat-table [dataSource]="productos" class="mat-elevation-z8">
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let producto"> {{producto.nombre}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="descripcion">
+        <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
+        <mat-cell *matCellDef="let producto"> {{producto.descripcion}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="precio">
+        <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
+        <mat-cell *matCellDef="let producto"> {{producto.precio | currency}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="stock">
+        <mat-header-cell *matHeaderCellDef> Stock </mat-header-cell>
+        <mat-cell *matCellDef="let producto"> {{producto.stock }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let producto">
+          <button mat-button (click)="editarProducto(producto)">Editar</button>
+          <button mat-button color="warn" (click)="eliminarProducto(producto.id)">Eliminar</button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+  
