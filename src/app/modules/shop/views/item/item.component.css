@@ -22,13 +22,6 @@
   font-size: 0.8rem;
 }
 
-.logo-ecommerce {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  height: 40px;
-}
-
 .product-img {
   display: block;
   margin: 1rem auto;
@@ -38,4 +31,25 @@
 
 .card-body {
   padding: 1rem;
+}
+
+.logo-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ec133e; /* o el color que quieras */
+  border-bottom-left-radius: 2rem;
+  padding: 0.75rem;
+  height: 70px;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+.logo-ecommerce {
+  height: 70px; /* aumentá el tamaño */
+  max-width: 100%;
+  object-fit: contain;
 }

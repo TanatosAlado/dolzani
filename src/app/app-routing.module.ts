@@ -8,6 +8,7 @@ import { ClientesComponent } from './modules/admin/views/clientes/clientes.compo
 import { ProductosComponent } from './modules/admin/views/productos/productos.component';
 import { PedidosComponent } from './modules/admin/views/pedidos/pedidos.component';
 import { GestionesComponent } from './modules/admin/views/gestiones/gestiones.component';
+import { BannerComponent } from './modules/admin/views/banner/banner.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'prefix' },
@@ -33,6 +34,7 @@ const routes: Routes = [
       { path: 'clientes', component: ClientesComponent },
       { path: 'productos', component: ProductosComponent },
       { path: 'pedidos', component: PedidosComponent },
+      { path: 'banner', component: BannerComponent },
     ]
   },
   {

@@ -10,6 +10,8 @@ import { AuthModule } from '../auth/auth.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormProductoComponent } from './views/productos/components/form-producto/form-producto.component';
 import { ListaProductosComponent } from './views/productos/components/lista-productos/lista-productos.component';
+import { BannerComponent } from './views/banner/banner.component';
+import { EncabezadoComponent } from './views/encabezado/encabezado.component';
 
 
 
@@ -22,7 +24,9 @@ import { ListaProductosComponent } from './views/productos/components/lista-prod
     PedidosComponent,
     GestionesComponent,
     FormProductoComponent,
-    ListaProductosComponent
+    ListaProductosComponent,
+    BannerComponent,
+    EncabezadoComponent
   ],
   imports: [
     CommonModule,

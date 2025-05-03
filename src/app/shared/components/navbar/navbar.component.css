@@ -520,7 +520,8 @@ i{
   padding-left: 3%;
   
   padding-right: 3%;
-  background-color: #ff5577;
+  /* background-color: #ff5577; */
+  background-color: red;
   height: 100px;
   .container-fluid {
     margin-top: 4%;

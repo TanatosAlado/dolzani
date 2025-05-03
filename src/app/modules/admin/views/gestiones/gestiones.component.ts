@@ -27,6 +27,12 @@ export class GestionesComponent {
       icono: 'fas fa-shopping-cart',
       ruta: '/gestiones/pedidos',
     },
+    {
+      titulo: 'Banner',
+      descripcion: 'Gestión de banner',
+      icono: 'fas fa-image',
+      ruta: '/gestiones/banner',
+    },
   ];
 
   constructor(private router: Router) {}
