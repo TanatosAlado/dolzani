@@ -9,7 +9,8 @@ import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 })
 export class GeneralService {
 
- private clienteSubject = new BehaviorSubject<Cliente | null>(null);
+ //private clienteSubject = new BehaviorSubject<Cliente | null>(null);
+ private clienteSubject = new BehaviorSubject<Cliente | null>(this.loadClienteFromLocalStorage());
  
   constructor(private paginatorIntl: MatPaginatorIntl,private router: Router) { 
     this.setPaginatorLabels();
@@ -26,9 +27,15 @@ export class GeneralService {
       return `${page * pageSize + 1} - ${Math.min((page + 1) * pageSize, length)} de ${length}`;
     };
   }  
+  
+  private loadClienteFromLocalStorage(): Cliente | null {
+    const cliente = localStorage.getItem('cliente');
+    return cliente ? JSON.parse(cliente) : null;
+  }
 
   setCliente(cliente: Cliente) {
     this.clienteSubject.next(cliente);
+    localStorage.setItem('cliente', JSON.stringify(cliente)); // Guardar cliente en localStorage
   }
 
   getCliente(): Observable<Cliente | null> {
@@ -41,6 +48,7 @@ export class GeneralService {
 
   logout() {
     this.clienteSubject.next(null);
+    localStorage.removeItem('cliente'); // Eliminar cliente de localStorage al hacer logout
   }
 
   //FUNCION PARA NAVEGAR AL HOME

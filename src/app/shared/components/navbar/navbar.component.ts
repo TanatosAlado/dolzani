@@ -39,7 +39,7 @@ export class NavbarComponent {
   constructor(private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router) {}
 
   ngOnInit() {
-    const clienteGuardado = localStorage.getItem('clienteLogueado');
+    const clienteGuardado = localStorage.getItem('cliente');
     if (clienteGuardado) {
       const cliente = JSON.parse(clienteGuardado);
       this.usuarioLogueado = true;
@@ -66,7 +66,7 @@ export class NavbarComponent {
         this.usuarioLogueado = true;
         this.usrAdmin = cliente.administrador;
         this.generalService.setCliente(cliente);
-        localStorage.setItem('clienteLogueado', JSON.stringify(cliente));
+        localStorage.setItem('cliente', JSON.stringify(cliente));
       } else {
         console.log('El usuario cerró el modal sin loguearse');
       }
