@@ -13,22 +13,22 @@ export class ProductosComponent {
     
   }
 
-  abrirModalAltaProducto(): void {
-    const dialogRef = this.dialog.open(FormProductoComponent, {
-      width: '90vw',       // 90% del ancho de la ventana
-      maxWidth: '600px',   // máximo 600px
-      height: 'auto',
-      maxHeight: '90vh',   // 90% del alto de la ventana
-      panelClass: 'custom-dialog-container', // opcional para estilos
-      data: {} // si querés pasar datos iniciales, podés hacerlo acá
-    });
+  // abrirModalAltaProducto(): void {
+  //   const dialogRef = this.dialog.open(FormProductoComponent, {
+  //     width: '90vw',       // 90% del ancho de la ventana
+  //     maxWidth: '600px',   // máximo 600px
+  //     height: 'auto',
+  //     maxHeight: '90vh',   // 90% del alto de la ventana
+  //     panelClass: 'custom-dialog-container', // opcional para estilos
+  //     data: {} // si querés pasar datos iniciales, podés hacerlo acá
+  //   });
 
-    dialogRef.afterClosed().subscribe(resultado => {
-      if (resultado) {
-        // Podés actualizar la lista, mostrar mensaje, etc.
-        console.log('Producto creado:', resultado);
-      }
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(resultado => {
+  //     if (resultado) {
+  //       // Podés actualizar la lista, mostrar mensaje, etc.
+  //       console.log('Producto creado:', resultado);
+  //     }
+  //   });
+  // }
 
 }
