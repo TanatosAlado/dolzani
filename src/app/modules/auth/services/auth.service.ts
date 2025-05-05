@@ -30,7 +30,8 @@ export class AuthService {
 
   openRegistroModal() {
     const dialogRef = this.dialog.open(RegistroComponent, {
-      width: '400px',
+      width: '90vw',
+      maxWidth: '850px',
       data: {}, 
     });
 

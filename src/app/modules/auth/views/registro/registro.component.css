@@ -1,43 +1,25 @@
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 300px;
-    margin: 0 auto;
-  }
-  
-  mat-form-field {
-    width: 100%;
-  }
-  
-  button {
-    width: 100%;
-  }
-  
-  .registro-link {
-    text-align: center;
-    margin-top: 10px;
-  }
-  
-  .registro-link a {
-    color: #3f51b5;
-    cursor: pointer;
-  }
-  
-  ::ng-deep .cdk-overlay-backdrop.custom-backdrop {
-    background-color: rgba(0, 0, 0, 0.7) !important;
-  }
-  
-  .modal-container {
-    padding: 24px;
-    max-width: 400px;
-    max-height: 80vh; /* o un valor fijo como 500px */
-    background: white;
-    border-radius: 8px;
-    overflow-y: auto;
-  }
-  
-  .cerrar-modal {
-    display: flex;
-    justify-content: flex-end;
-  }
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 24px;
+  min-width: 800px; 
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}

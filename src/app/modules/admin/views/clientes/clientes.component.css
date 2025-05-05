@@ -54,3 +54,9 @@
     margin-top: 16px;
   }
   
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+  

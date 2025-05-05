@@ -4,6 +4,10 @@ import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { ClienteDetalleComponent } from '../cliente-detalle/cliente-detalle.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ClienteEditarComponent } from '../cliente-editar/cliente-editar.component';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-clientes',
@@ -18,13 +22,14 @@ export class ClientesComponent {
   clientesStack: any[] = []; // pila para manejar navegación
   currentPage = 0; // página actual
   ultimoCliente: any = null; // último documento de la página actual
+  public clienteAEliminar: string = ''; 
 
   displayedColumns: string[] = ['nombre', 'apellido', 'razonSocial', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
   totalClientes = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
-  constructor(private clientesService: ClientesService, private authService: AuthService) {}
+  constructor(private clientesService: ClientesService, private authService: AuthService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadClientes();
@@ -68,22 +73,45 @@ export class ClientesComponent {
   }
 
   editarCliente(cliente: any): void {
-    console.log('Editar', cliente);
-    // abrir modal o navegar a componente de edición
+    const dialogRef = this.dialog.open(ClienteEditarComponent, {
+      width: '500px',
+      maxHeight: '90vh', 
+      data: cliente
+    });
+  
+    dialogRef.afterClosed().subscribe(resultado => {
+      if (resultado) {
+       
+        console.log('Datos actualizados:', resultado);
+        // LLAMAR AL SERVICIO PARA ACTUALIZAR EL CLIENTE
+      }
+    });
   }
   
-  eliminarCliente(cliente: any): void {
-    console.log('Eliminar', cliente);
-    // mostrar confirmación y llamar servicio
+  openConfirmDialog(cliente: any): void {
+    this.clienteAEliminar = cliente.id;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        message: `¿Está seguro que desea eliminar este cliente: ${cliente.nombre}?`,
+        confirmAction: () => this.eliminarCliente() // Acción a ejecutar si se confirma
+      }
+    });
+  }
+
+  eliminarCliente(): void {
+    console.log('Eliminar', this.clienteAEliminar);
+    // LLAMAR AL SERVICIO, SUSCRIBIRSE E INFIRMAR AL USUARIO
   }
 
   verCliente(cliente: any): void {
-    console.log('Ver', cliente);
-    // mostrar confirmación y llamar servicio
+    this.dialog.open(ClienteDetalleComponent, {
+      width: '500px',
+      data: cliente
+    });
   }
 
   abrirRegistro(){
-    console.log('prueba');
     this.authService.openRegistroModal();
   }
 

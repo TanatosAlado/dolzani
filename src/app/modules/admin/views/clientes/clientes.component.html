@@ -3,10 +3,14 @@
 </app-encabezado>
 
 <div class="container mt-5">
-  <h2 class="mb-4">Clientes registrados <button (click)="abrirRegistro()">+</button></h2>
+  <!-- <h4 class="mb-4">Clientes registrados <button (click)="abrirRegistro()">+</button></h4> -->
+  
 
   <div class="container">
     <div class="tabla-container">
+      <div class="button-container">
+        <button mat-raised-button color="primary" (click)="abrirRegistro()">Nuevo</button>
+      </div>
       <table mat-table [dataSource]="dataSource.data" class="mat-elevation-z8" style="width: 100%;">
         
         <!-- Nombre Column -->
@@ -37,7 +41,7 @@
             <button mat-icon-button color="primary" (click)="editarCliente(element)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="eliminarCliente(element)">
+            <button mat-icon-button color="warn" (click)="openConfirmDialog(element)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>

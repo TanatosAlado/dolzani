@@ -1,70 +1,56 @@
-<div class="modal-container">
-  <h2>Registro Cliente</h2>
+<h2 mat-dialog-title>Registro de Cliente</h2>
 
-  <form [formGroup]="formRegistroCliente" (ngSubmit)="crearCliente()">
-    <!-- Campo de usuario -->
-    <mat-form-field appearance="fill">
+<form [formGroup]="formRegistroCliente" (ngSubmit)="crearCliente()" class="form-container">
+  <div class="form-grid">
+    <mat-form-field appearance="outline">
       <mat-label>Usuario</mat-label>
-      <input matInput type="text" formControlName="usuario" required />
+      <input matInput formControlName="usuario" required />
     </mat-form-field>
 
-    <!-- Campo de nombre -->
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Nombre</mat-label>
-      <input matInput type="text" formControlName="nombre" required />
+      <input matInput formControlName="nombre" required />
     </mat-form-field>
 
-    <!-- Campo de apellido -->
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Apellido</mat-label>
-      <input matInput type="text" formControlName="apellido" required />
+      <input matInput formControlName="apellido" required />
     </mat-form-field>
 
-    <!-- Campo de contraseña -->
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Contraseña</mat-label>
       <input matInput type="password" formControlName="contrasena" required />
     </mat-form-field>
 
-    <!-- Campo de mail -->
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Mail</mat-label>
       <input matInput type="email" formControlName="mail" required />
     </mat-form-field>
 
-    <!-- Campo de telefono -->
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Teléfono</mat-label>
       <input matInput type="number" formControlName="telefono" required />
     </mat-form-field>
 
-    <!-- Campo de direccion -->
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Dirección</mat-label>
-      <input matInput type="text" formControlName="direccion" required />
+      <input matInput formControlName="direccion" required />
     </mat-form-field>
 
-    <!-- Campo de estado -->
-    <mat-form-field appearance="fill">
-      <mat-label>Estado</mat-label>
-      <input matInput type="text" formControlName="estado" required />
-    </mat-form-field>
-
-    <!-- Campo de razon social -->
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Razón Social</mat-label>
-      <input matInput type="text" formControlName="razonSocial" required />
+      <input matInput formControlName="razonSocial" required />
     </mat-form-field>
 
-    <!-- Botón de envío -->
-    <button mat-raised-button color="primary" type="submit" [disabled]="!formRegistroCliente.valid">
-      Registrarse
-    </button>
-  </form>
-
-  <div style="display: flex; justify-content: flex-end;">
-    <button mat-icon-button (click)="cerrar()">
-      <mat-icon>close</mat-icon>
-    </button>
+    <mat-slide-toggle formControlName="estado" color="primary">
+      ¿Activo?
+    </mat-slide-toggle>
   </div>
-</div>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!formRegistroCliente.valid">
+      Registrar
+    </button>
+    <button mat-button type="button" (click)="cerrar()">Cancelar</button>
+  </div>
+</form>

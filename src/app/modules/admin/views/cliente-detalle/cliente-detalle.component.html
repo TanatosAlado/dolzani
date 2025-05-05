@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Detalle del Cliente</h2>
+
+<mat-dialog-content class="contenido-modal">
+  <p><strong>Nombre:</strong> {{ cliente.nombre }}</p>
+  <p><strong>Apellido:</strong> {{ cliente.apellido }}</p>
+  <p><strong>Razón Social:</strong> {{ cliente.razonSocial }}</p>
+  <p><strong>Dirección:</strong> {{ cliente.direccion }}</p>
+  <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+  <p><strong>Mail:</strong> {{ cliente.mail }}</p>
+  <p><strong>Usuario:</strong> {{ cliente.usuario }}</p>
+  <p><strong>Estado:</strong> {{ cliente.estado ? 'Activo' : 'Inactivo' }}</p>
+
+  <div *ngIf="cliente.historial?.length > 0">
+    <h3>Historial de pedidos</h3>
+    <table mat-table [dataSource]="cliente.historial" class="mat-elevation-z1">
+      <!-- Define columnas según la estructura de historial -->
+      <!-- Ejemplo: fecha, producto, cantidad -->
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef> Fecha </th>
+        <td mat-cell *matCellDef="let pedido"> {{pedido.fecha}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="producto">
+        <th mat-header-cell *matHeaderCellDef> Producto </th>
+        <td mat-cell *matCellDef="let pedido"> {{pedido.producto}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+        <td mat-cell *matCellDef="let pedido"> {{pedido.cantidad}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnasHistorial"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnasHistorial;"></tr>
+    </table>
+  </div>
+  <div *ngIf="cliente.historial?.length === 0">
+    <p><em>Este cliente aún no tiene historial de pedidos.</em></p>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

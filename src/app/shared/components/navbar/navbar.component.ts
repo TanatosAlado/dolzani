@@ -11,6 +11,8 @@ import {
   style,
   animate,
 } from '@angular/animations';
+import { Router } from '@angular/router';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -34,7 +36,17 @@ export class NavbarComponent {
   productos:any[]=[]
   cantidadProductos: number = 0;
 
-  constructor(private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService) {}
+  constructor(private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router) {}
+
+  ngOnInit() {
+    const clienteGuardado = localStorage.getItem('clienteLogueado');
+    if (clienteGuardado) {
+      const cliente = JSON.parse(clienteGuardado);
+      this.usuarioLogueado = true;
+      this.usrAdmin = cliente.administrador;
+      this.generalService.setCliente(cliente);
+    }
+  }
 
   // Métodos para abrir los modales
   openIngreso() {
@@ -54,6 +66,7 @@ export class NavbarComponent {
         this.usuarioLogueado = true;
         this.usrAdmin = cliente.administrador;
         this.generalService.setCliente(cliente);
+        localStorage.setItem('clienteLogueado', JSON.stringify(cliente));
       } else {
         console.log('El usuario cerró el modal sin loguearse');
       }
@@ -65,9 +78,18 @@ export class NavbarComponent {
   }
 
   closeSesion(){
-    this.generalService.logout();
-    this.usuarioLogueado = false;
-    this.usrAdmin = false;
+    this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        message: '¿Está seguro que desea cerrar sesión?',
+        confirmAction: () => {
+          this.generalService.logout();
+          this.usuarioLogueado = false;
+          this.usrAdmin = false;
+          this.router.navigate(['/']); // redirigir al home
+        }
+      }
+    });
   }
 
     //FUNCION PARA BUSCAR PRODUCTOS EN EL CUADRO DE BUSQUEDA Y APAREZCAN LA LISTA DE LOS ENCONTRADOS
