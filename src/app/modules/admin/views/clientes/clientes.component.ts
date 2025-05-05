@@ -4,9 +4,9 @@ import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
-import { ClienteDetalleComponent } from '../cliente-detalle/cliente-detalle.component';
+import { ClienteDetalleComponent } from './components/cliente-detalle/cliente-detalle.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ClienteEditarComponent } from '../cliente-editar/cliente-editar.component';
+import { ClienteEditarComponent } from './components/cliente-editar/cliente-editar.component';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({

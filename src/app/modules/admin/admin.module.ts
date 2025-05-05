@@ -12,8 +12,8 @@ import { FormProductoComponent } from './views/productos/components/form-product
 import { ListaProductosComponent } from './views/productos/components/lista-productos/lista-productos.component';
 import { BannerComponent } from './views/banner/banner.component';
 import { EncabezadoComponent } from './views/encabezado/encabezado.component';
-import { ClienteDetalleComponent } from './views/cliente-detalle/cliente-detalle.component';
-import { ClienteEditarComponent } from './views/cliente-editar/cliente-editar.component';
+import { ClienteDetalleComponent } from './views/clientes/components/cliente-detalle/cliente-detalle.component';
+import { ClienteEditarComponent } from './views/clientes/components/cliente-editar/cliente-editar.component';
 import { ProductoDetalleComponent } from './views/productos/components/producto-detalle/producto-detalle.component';
 import { ProductoEditarComponent } from './views/productos/components/producto-editar/producto-editar.component';
 
