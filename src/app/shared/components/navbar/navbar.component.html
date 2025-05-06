@@ -63,10 +63,10 @@
         <li style="border-bottom: 1px solid rgba(221, 221, 221, 0.5);" *ngFor="let item of resultados"
           (click)="seleccionar(item)" class="d-flex align-items-center">
           <div class="result-item d-flex align-items-center w-100 p-2">
-            <img [src]="item.imagen1" alt="{{ item.nombre }}" class="product-image img-fluid" />
+            <img [src]="item.imagen" alt="{{ item.nombre }}" class="product-image img-fluid" />
             <div class="ms-2 d-flex flex-column">
               <span>{{ item.nombre }}</span>
-              <span>$ {{ item.precioFinal }}</span>
+              <span>$ {{ item.precio }}</span>
             </div>
           </div>
         </li>
@@ -105,10 +105,10 @@
           <li style="border-bottom: 1px solid rgba(221, 221, 221, 0.5)" *ngFor="let item of resultados"
             (click)="seleccionar(item)" class="d-flex align-items-center">
             <div class="result-item d-flex align-items-center w-100 p-2">
-              <img [src]="item.imagen1" alt="{{ item.nombre }}" class="product-image img-fluid" />
+              <img [src]="item.imagen" alt="{{ item.nombre }}" class="product-image img-fluid" />
               <div class="ms-2 d-flex flex-column">
                 <span>{{ item.nombre }}</span>
-                <span>$ {{ item.precioFinal }}</span>
+                <span>$ {{ item.precio }}</span>
               </div>
             </div>
           </li>

@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { CarritoComponent } from './components/carrito/carrito.component';
 
 
 
@@ -28,7 +29,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 // ];
 
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent, ConfirmDialogComponent],
+  declarations: [NavbarComponent, FooterComponent, ConfirmDialogComponent, CarritoComponent],
   imports: [CommonModule, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule],
   exports: [NavbarComponent, FooterComponent, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule],
 })

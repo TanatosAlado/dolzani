@@ -11,6 +11,8 @@ export class GeneralService {
 
  //private clienteSubject = new BehaviorSubject<Cliente | null>(null);
  private clienteSubject = new BehaviorSubject<Cliente | null>(this.loadClienteFromLocalStorage());
+ private busquedaSource = new BehaviorSubject<string>('');
+ busqueda$ = this.busquedaSource.asObservable();
  
   constructor(private paginatorIntl: MatPaginatorIntl,private router: Router) { 
     this.setPaginatorLabels();
@@ -55,6 +57,16 @@ export class GeneralService {
   home(){
     this.router.navigate([''])
   }
-
+  
+ // FUNCION PARA NAVEGAR Y MOSTRAR EL COMPONENTE DE BUSQUEDA DEL PRODUCTO
+ showBusqueda(idProducto: string) {
+  if (idProducto != '') {
+    this.router.navigate([`busqueda/${idProducto}`])
+  }
+  else {
+    this.router.navigate([`busqueda`])
+  }
+  this.busquedaSource.next(idProducto);
+}
 
 }

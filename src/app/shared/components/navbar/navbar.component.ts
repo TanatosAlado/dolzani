@@ -13,6 +13,7 @@ import {
 } from '@angular/animations';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ProductosService } from '../../services/productos.service';
 
 
 @Component({
@@ -36,9 +37,10 @@ export class NavbarComponent {
   productos:any[]=[]
   cantidadProductos: number = 0;
 
-  constructor(private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router) {}
+  constructor(private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router, private productoService:ProductosService) {}
 
   ngOnInit() {
+    this.getProductos()
     const clienteGuardado = localStorage.getItem('cliente');
     if (clienteGuardado) {
       const cliente = JSON.parse(clienteGuardado);
@@ -46,6 +48,7 @@ export class NavbarComponent {
       this.usrAdmin = cliente.administrador;
       this.generalService.setCliente(cliente);
     }
+    console.log("total productos", this.productos)
   }
 
   // Métodos para abrir los modales
@@ -101,6 +104,7 @@ export class NavbarComponent {
       this.resultados = this.productos.filter(item =>
         item.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
+      console.log(this.resultados)
     }
 
       //FUNCION PARA SELECCIONAR EL PRODUCTO ENCONTRADO Y VER SUS DETALLES
@@ -111,8 +115,17 @@ export class NavbarComponent {
   }
     //FUNCION PARA NAVEGAR A LA BUSQUEDA DEL PEDIDO
     busquedaPedido(busqueda:any){
-      // this.sharedService.showBusqueda(busqueda)
+      this.generalService.showBusqueda(busqueda)
       this.searchTerm=''
       this.resultados=[]
     }
+
+     //FUNCION PARA GUARDAR LOS PRODUCTOS EN UN ARRAY
+   getProductos(){
+    this.productoService.obtenerProductos().subscribe((productos) => {
+      this.productos = productos;
+      console.log(this.productos);
+    })
+    
+  }
 }

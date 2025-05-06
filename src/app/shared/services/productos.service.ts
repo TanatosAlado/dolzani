@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Producto } from '../models/producto.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, query, updateDoc, where } from '@angular/fire/firestore';
 import { inject } from '@angular/core';
 
@@ -39,7 +39,5 @@ export class ProductosService {
     const q = query(ref, where('destacado', '==', true));
     return collectionData(q) as Observable<Producto[]>;
   }
-
-
 
 }
