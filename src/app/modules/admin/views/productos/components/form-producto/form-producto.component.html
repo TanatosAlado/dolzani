@@ -44,11 +44,6 @@
     <input matInput formControlName="imagen" />
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Cantidad por defecto</mat-label>
-    <input matInput type="number" formControlName="cantidad" />
-  </mat-form-field>
-
   <mat-checkbox formControlName="oferta">¿Está en oferta?</mat-checkbox>
 
   <mat-form-field appearance="fill" class="full-width" *ngIf="productoForm.get('oferta')?.value">
@@ -59,7 +54,7 @@
   <mat-checkbox formControlName="impuestoNacional">¿Aplica impuesto nacional?</mat-checkbox>
 
   <mat-form-field appearance="fill" class="full-width" *ngIf="productoForm.get('impuestoNacional')?.value">
-    <mat-label>Precio con Impuesto Nacional</mat-label>
+    <mat-label>Precio sin Impuesto Nacional</mat-label>
     <input matInput type="number" formControlName="precioImpuestoNacional" />
   </mat-form-field>
 

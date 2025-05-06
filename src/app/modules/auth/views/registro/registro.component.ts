@@ -18,17 +18,49 @@ export class RegistroComponent {
   constructor(private fb: FormBuilder,private dialogRef: MatDialogRef<RegistroComponent>,private authService: AuthService){
 
     this.formRegistroCliente = this.fb.group({
-      usuario: ['', Validators.required],
-      contrasena: ['', [Validators.required]],
-      nombre: ['', [Validators.required]],
-      apellido: ['', [Validators.required]],
-      mail: ['', [Validators.required]],
-      telefono: ['', Validators.required],
+      usuario: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.pattern('^[a-zA-Z0-9]+$') // solo letras y números, sin espacios ni símbolos
+        ]
+      ],
+      contrasena: ['', Validators.required],
+      nombre: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$') // solo letras y espacios (opcional)
+        ]
+      ],
+      apellido: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$')
+        ]
+      ],
+      mail: [
+        '',
+        [
+          Validators.required,
+          Validators.email // valida formato de email
+        ]
+      ],
+      telefono: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]+$') // solo números
+        ]
+      ],
       direccion: ['', Validators.required],
       historial: [''],
-      estado: ['', Validators.required],
-      razonSocial: ['', [Validators.required]],
+      estado: [''],
+      razonSocial: ['', Validators.required],
     });
+    
   }
 
   //FUNCION PARA CERRA EL MODAL
@@ -52,6 +84,7 @@ export class RegistroComponent {
           telefono: formValues.telefono,
           direccion: formValues.direccion,
           historial: [],
+          carrito: [],
           estado: true,
           razonSocial: formValues.razonSocial,
           nombre: formValues.nombre,
