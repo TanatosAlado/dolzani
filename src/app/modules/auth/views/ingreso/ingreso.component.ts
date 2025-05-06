@@ -12,10 +12,11 @@ import { Cliente } from '../../models/cliente.model';
 export class IngresoComponent {
   usuario: string = '';
   contrasena: string = '';
+  loginFail; boolean = false; // Variable para manejar el error de login
 
   constructor(private authService: AuthService, private dialogRef: MatDialogRef<IngresoComponent>) {}
 
-  value = 'Clear me';
+  //value = 'Clear me';
 
   // Método para manejar el envío del formulario
   onSubmit() {
@@ -26,7 +27,7 @@ export class IngresoComponent {
           console.log('Ingreso exitoso');
           this.dialogRef.close(cliente); // Cierra el modal y pasa el cliente logueado (evitamos traer todos)
         } else {
-          console.error('Usuario o contraseña incorrectos');
+          this.loginFail = true; // Si no se encuentra el cliente, mostramos el error
         }
       })
 
@@ -40,5 +41,9 @@ export class IngresoComponent {
 
   cerrar() {
     this.dialogRef.close();
+  }
+
+  resetLoginFail(): void {
+    this.loginFail = false;
   }
 }
