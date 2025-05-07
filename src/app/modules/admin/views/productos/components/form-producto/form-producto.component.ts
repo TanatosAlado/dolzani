@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Producto } from 'src/app/shared/models/producto.model';
 import { ProductosService } from 'src/app/shared/services/productos.service';
 
@@ -11,7 +12,7 @@ import { ProductosService } from 'src/app/shared/services/productos.service';
 export class FormProductoComponent implements OnInit {
   productoForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private productosService: ProductosService) {}
+  constructor(private fb: FormBuilder, private productosService: ProductosService, private dialogRef: MatDialogRef<FormProductoComponent>) {}
 
   ngOnInit(): void {
     this.productoForm = this.fb.group({
@@ -66,9 +67,9 @@ export class FormProductoComponent implements OnInit {
   onSubmit() {
     if (this.productoForm.valid) {
       const producto: Producto = this.productoForm.value;
-      console.log('Producto creado:', producto);
-      this.productosService.agregarProducto(producto).then(() => {
-        console.log('Producto agregado a Firestore')});
+      this.productosService.agregarProducto(producto).then(() => {    
+        this.dialogRef.close('exito');
+    });
     } else {
       this.productoForm.markAllAsTouched();
     }

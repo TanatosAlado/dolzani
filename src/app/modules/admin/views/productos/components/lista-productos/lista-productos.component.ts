@@ -71,7 +71,7 @@ export class ListaProductosComponent {
 
     dialogRef.afterClosed().subscribe(resultado => {
       if (resultado) {
-        // Podés actualizar la lista, mostrar mensaje, etc.
+        dialogRef.close(); // Cerrar el modal después de crear el producto
         console.log('Producto creado:', resultado);
       }
     });
