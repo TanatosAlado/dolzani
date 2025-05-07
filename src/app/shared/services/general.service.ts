@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 import { ClientesService } from './clientes.service';
 
@@ -82,4 +82,32 @@ export class GeneralService {
   this.busquedaSource.next(idProducto);
 }
 
+
+  //SERVICIO PARA CARGAR EN EL CARRITO EL PRODUCTO
+  cargarProductoCarrito(producto: any, cantidad: number = 1) {
+    let clienteEncontrado:Cliente
+     this.getCliente().subscribe(cliente =>{
+      clienteEncontrado=cliente
+     })
+    if (clienteEncontrado) {
+      console.log("el cliente encontrado", clienteEncontrado)
+      const productoExistente = clienteEncontrado.carrito.find(item => item.id === producto.id);
+      if (productoExistente) {
+        productoExistente.cantidad += cantidad;
+      } else {
+        clienteEncontrado.carrito.push({
+          id: producto.id,
+          imagen: producto.imagen1,
+          nombre: producto.nombre,
+          cantidad: cantidad,
+          precioOferta: producto.precioOferta,
+          porcentajeOferta: producto.porcentajeOferta,
+          precioFinal: producto.precioFinal,
+        });
+      }
+      this.clientesService.actualizarCliente(clienteEncontrado.id, clienteEncontrado)
+      // this.toastService.toatsMessage("Producto Agregado Al Carrito", "green", 2000)
+      // this.contadorProductos()
+    }
+  }
 }

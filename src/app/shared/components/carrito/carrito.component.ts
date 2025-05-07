@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { GeneralService } from '../../services/general.service';
 // import { CarritoService } from '../../services/carrito.service';
 
 @Component({
@@ -10,16 +11,20 @@ import { AuthService } from 'src/app/modules/auth/services/auth.service';
 })
 export class CarritoComponent {
 
-  clientes:Cliente[]=[]
+  cliente:Cliente
   
-  // constructor(private carritoService:CarritoService){
+   constructor(private generalService:GeneralService){
 
-  // }
+   }
 
   ngOnInit(){
   // this.getClienteLogueado()
+  this.getCliente()
   }
 
+  getCliente(){
+    this.cliente=this.generalService.getClienteActual()
+  }
   
   // getClienteLogueado(){
   //     this.carritoService.obtenerClienteLogueado().subscribe((clientes) => {
