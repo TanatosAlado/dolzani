@@ -24,7 +24,7 @@ export class ClientesComponent {
   ultimoCliente: any = null; // último documento de la página actual
   public clienteAEliminar: string = ''; 
 
-  displayedColumns: string[] = ['nombre', 'apellido', 'razonSocial', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'apellido', 'razonSocial', 'estado', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
   totalClientes = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -83,7 +83,14 @@ export class ClientesComponent {
       if (resultado) {
        
         console.log('Datos actualizados:', resultado);
-        // LLAMAR AL SERVICIO PARA ACTUALIZAR EL CLIENTE
+        this.clientesService.actualizarCliente(resultado.id, resultado)
+        .then(() => {
+          console.log('Cliente actualizado correctamente en Firebase');
+          this.loadClientes();
+        })
+        .catch(error => {
+          console.error('Error al actualizar el cliente:', error);
+        });
       }
     });
   }
@@ -112,7 +119,16 @@ export class ClientesComponent {
   }
 
   abrirRegistro(){
-    this.authService.openRegistroModal();
+    this.authService.openRegistroModal().subscribe((resultado) => {
+      console.log('El modal de registro se cerró');
+      if (resultado) {
+        this.ultimoCliente = null;
+        this.clientesStack = [];
+        this.currentPage = 0;
+        this.loadClientes();
+        this.loadTotalClientes();
+      }
+    });
   }
 
 }

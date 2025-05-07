@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Cliente } from '../../models/cliente.model';
 import { AuthService } from '../../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -15,20 +16,52 @@ export class RegistroComponent {
 
   formRegistroCliente: FormGroup;
 
-  constructor(private fb: FormBuilder,private dialogRef: MatDialogRef<RegistroComponent>,private authService: AuthService){
+  constructor(private fb: FormBuilder,private dialogRef: MatDialogRef<RegistroComponent>,private authService: AuthService, private snackBar: MatSnackBar){
 
     this.formRegistroCliente = this.fb.group({
-      usuario: ['', Validators.required],
-      contrasena: ['', [Validators.required]],
-      nombre: ['', [Validators.required]],
-      apellido: ['', [Validators.required]],
-      mail: ['', [Validators.required]],
-      telefono: ['', Validators.required],
+      usuario: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.pattern('^[a-zA-Z0-9]+$') // solo letras y números, sin espacios ni símbolos
+        ]
+      ],
+      contrasena: ['', Validators.required],
+      nombre: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$') // solo letras y espacios (opcional)
+        ]
+      ],
+      apellido: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$')
+        ]
+      ],
+      mail: [
+        '',
+        [
+          Validators.required,
+          Validators.email // valida formato de email
+        ]
+      ],
+      telefono: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]+$') // solo números
+        ]
+      ],
       direccion: ['', Validators.required],
       historial: [''],
-      estado: ['', Validators.required],
-      razonSocial: ['', [Validators.required]],
+      estado: [''],
+      razonSocial: ['', Validators.required],
     });
+    
   }
 
   //FUNCION PARA CERRA EL MODAL
@@ -39,6 +72,10 @@ export class RegistroComponent {
   //FUNCION PARA CREAR EL CLIENTE
   crearCliente() {
     const formValues = this.formRegistroCliente.value;
+
+    this.snackBar.open('Creando cliente...', '', {
+      duration: 2000,
+    });
   
     this.authService.getClienteById({ mail: formValues.mail }).subscribe((clienteEncontrado) => {
       if (clienteEncontrado) {
@@ -52,6 +89,7 @@ export class RegistroComponent {
           telefono: formValues.telefono,
           direccion: formValues.direccion,
           historial: [],
+          carrito: [],
           estado: true,
           razonSocial: formValues.razonSocial,
           nombre: formValues.nombre,
@@ -61,13 +99,20 @@ export class RegistroComponent {
         
         this.authService.createCliente(_cliente).then((docref) => {
           this.actualizarIDCliente(docref.id, _cliente);
-          console.log('Usuario creado con éxito', docref);
+          this.snackBar.open('Cliente creado con éxito', 'Cerrar', {
+            duration: 3000,
+          });
+          this.dialogRef.close(true);
         }).catch((err) => {
-          console.error('Error al crear el usuario', err);
+          this.snackBar.open('Error al crear el cliente', 'Cerrar', {
+            duration: 3000,
+          });
         });
       }
     }, (error) => {
-      console.error('Error buscando cliente', error);
+      this.snackBar.open('Error al buscar el cliente', 'Cerrar', {
+        duration: 3000,
+      });
     });
   }
   

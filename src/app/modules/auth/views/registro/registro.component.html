@@ -1,56 +1,106 @@
-<h2 mat-dialog-title>Registro de Cliente</h2>
+<mat-card>
+  <h2 mat-dialog-title>Registro de Cliente</h2>
 
-<form [formGroup]="formRegistroCliente" (ngSubmit)="crearCliente()" class="form-container">
-  <div class="form-grid">
-    <mat-form-field appearance="outline">
-      <mat-label>Usuario</mat-label>
-      <input matInput formControlName="usuario" required />
-    </mat-form-field>
+  <form [formGroup]="formRegistroCliente" (ngSubmit)="crearCliente()" class="form-container">
+    <div class="form-grid">
+      <!-- Usuario -->
+      <mat-form-field appearance="outline">
+        <mat-label>Usuario</mat-label>
+        <input matInput formControlName="usuario" required />
+        <mat-error *ngIf="formRegistroCliente.get('usuario')?.hasError('required')">
+          Usuario es obligatorio
+        </mat-error>
+        <mat-error *ngIf="formRegistroCliente.get('usuario')?.hasError('minlength')">
+          Mínimo 6 caracteres
+        </mat-error>
+        <mat-error *ngIf="formRegistroCliente.get('usuario')?.hasError('pattern')">
+          Solo letras y números, sin espacios ni símbolos
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Nombre</mat-label>
-      <input matInput formControlName="nombre" required />
-    </mat-form-field>
+      <!-- Nombre -->
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" required />
+        <mat-error *ngIf="formRegistroCliente.get('nombre')?.hasError('required')">
+          Nombre es obligatorio
+        </mat-error>
+        <mat-error *ngIf="formRegistroCliente.get('nombre')?.hasError('pattern')">
+          Solo se permiten letras
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Apellido</mat-label>
-      <input matInput formControlName="apellido" required />
-    </mat-form-field>
+      <!-- Apellido -->
+      <mat-form-field appearance="outline">
+        <mat-label>Apellido</mat-label>
+        <input matInput formControlName="apellido" required />
+        <mat-error *ngIf="formRegistroCliente.get('apellido')?.hasError('required')">
+          Apellido es obligatorio
+        </mat-error>
+        <mat-error *ngIf="formRegistroCliente.get('apellido')?.hasError('pattern')">
+          Solo se permiten letras
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Contraseña</mat-label>
-      <input matInput type="password" formControlName="contrasena" required />
-    </mat-form-field>
+      <!-- Contraseña -->
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="contrasena" required />
+        <mat-error *ngIf="formRegistroCliente.get('contrasena')?.hasError('required')">
+          Contraseña es obligatoria
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Mail</mat-label>
-      <input matInput type="email" formControlName="mail" required />
-    </mat-form-field>
+      <!-- Mail -->
+      <mat-form-field appearance="outline">
+        <mat-label>Mail</mat-label>
+        <input matInput type="email" formControlName="mail" required />
+        <mat-error *ngIf="formRegistroCliente.get('mail')?.hasError('required')">
+          Email es obligatorio
+        </mat-error>
+        <mat-error *ngIf="formRegistroCliente.get('mail')?.hasError('email')">
+          Formato de email inválido
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Teléfono</mat-label>
-      <input matInput type="number" formControlName="telefono" required />
-    </mat-form-field>
+      <!-- Teléfono -->
+      <mat-form-field appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput type="text" formControlName="telefono" required />
+        <mat-error *ngIf="formRegistroCliente.get('telefono')?.hasError('required')">
+          Teléfono es obligatorio
+        </mat-error>
+        <mat-error *ngIf="formRegistroCliente.get('telefono')?.hasError('pattern')">
+          Solo se permiten números
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Dirección</mat-label>
-      <input matInput formControlName="direccion" required />
-    </mat-form-field>
+      <!-- Dirección -->
+      <mat-form-field appearance="outline">
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="direccion" required />
+        <mat-error *ngIf="formRegistroCliente.get('direccion')?.hasError('required')">
+          Dirección es obligatoria
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Razón Social</mat-label>
-      <input matInput formControlName="razonSocial" required />
-    </mat-form-field>
+      <!-- Razón Social -->
+      <mat-form-field appearance="outline">
+        <mat-label>Razón Social</mat-label>
+        <input matInput formControlName="razonSocial" required />
+        <mat-error *ngIf="formRegistroCliente.get('razonSocial')?.hasError('required')">
+          Razón social es obligatoria
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-    <mat-slide-toggle formControlName="estado" color="primary">
-      ¿Activo?
-    </mat-slide-toggle>
-  </div>
+    <mat-divider></mat-divider>
 
-  <div class="actions">
-    <button mat-raised-button color="primary" type="submit" [disabled]="!formRegistroCliente.valid">
-      Registrar
-    </button>
-    <button mat-button type="button" (click)="cerrar()">Cancelar</button>
-  </div>
-</form>
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!formRegistroCliente.valid">
+        Registrar
+      </button>
+      <button mat-button type="button" (click)="cerrar()">Cancelar</button>
+    </div>
+  </form>
+</mat-card>

@@ -28,16 +28,14 @@ export class AuthService {
     });
   }
 
-  openRegistroModal() {
+  openRegistroModal(): Observable<any> {
     const dialogRef = this.dialog.open(RegistroComponent, {
       width: '90vw',
       maxWidth: '850px',
-      data: {}, 
+      data: {},
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('El modal de registro se cerró');
-    });
+  
+    return dialogRef.afterClosed(); 
   }
 
   login(ingresante: LoginRequest): Observable<Cliente> {
