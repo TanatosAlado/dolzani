@@ -16,6 +16,7 @@ import { ClienteDetalleComponent } from './views/clientes/components/cliente-det
 import { ClienteEditarComponent } from './views/clientes/components/cliente-editar/cliente-editar.component';
 import { ProductoDetalleComponent } from './views/productos/components/producto-detalle/producto-detalle.component';
 import { ProductoEditarComponent } from './views/productos/components/producto-editar/producto-editar.component';
+import { CambioPassComponent } from '../auth/views/cambio-pass/cambio-pass.component';
 
 
 
@@ -34,7 +35,8 @@ import { ProductoEditarComponent } from './views/productos/components/producto-e
     ClienteDetalleComponent,
     ClienteEditarComponent,
     ProductoDetalleComponent,
-    ProductoEditarComponent
+    ProductoEditarComponent,
+    CambioPassComponent
   ],
   imports: [
     CommonModule,

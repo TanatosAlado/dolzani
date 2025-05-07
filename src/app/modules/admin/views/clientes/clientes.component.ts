@@ -8,6 +8,7 @@ import { ClienteDetalleComponent } from './components/cliente-detalle/cliente-de
 import { MatDialog } from '@angular/material/dialog';
 import { ClienteEditarComponent } from './components/cliente-editar/cliente-editar.component';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-clientes',
@@ -17,6 +18,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
 export class ClientesComponent {
 
   clientes: Cliente[] = [];
+  nuevaContrasena: string = 'Dolzani123'; // Nueva contraseña para el cliente
 
   pageSize = 10; // cantidad de clientes por página
   clientesStack: any[] = []; // pila para manejar navegación
@@ -29,7 +31,7 @@ export class ClientesComponent {
   totalClientes = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
-  constructor(private clientesService: ClientesService, private authService: AuthService, private dialog: MatDialog) {}
+  constructor(private clientesService: ClientesService, private authService: AuthService, private dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.loadClientes();
@@ -130,5 +132,30 @@ export class ClientesComponent {
       }
     });
   }
+
+  restablecerPass(cliente: Cliente): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        message: `¿Está seguro que desea blanquear la contraseña del cliente ${cliente.nombre} ${cliente.apellido}?`,
+        confirmAction: () => this.blanquearPass(cliente) 
+      }
+    });
+  }
+
+  blanquearPass(cliente: Cliente): void {
+    this.clientesService.actualizarCliente(cliente.id, { contrasena: this.nuevaContrasena })
+      .then(() => {
+        this.snackBar.open('Blanqueo realizado con éxito', 'Cerrar', {
+          duration: 3000,
+        });
+      })
+      .catch(error => {
+        this.snackBar.open('Error al realizar el blanqueo', 'Cerrar', {
+          duration: 3000,
+        });
+      });
+  }
+
 
 }

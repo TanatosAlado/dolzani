@@ -13,6 +13,8 @@ export class Cliente {
         public apellido: string,
         public administrador: boolean = false,
         public carrito: any[] = [],
+        public dni: string = '', 
+        public cuit: string = '' 
     ) {}
 }
 

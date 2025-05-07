@@ -1,0 +1,51 @@
+.modal-container {
+    padding: 32px;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    margin: auto;
+    position: relative;
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  .imagen-central {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  
+  .imagen-central img {
+    width: 100px;
+    height: auto;
+    border-radius: 20%;
+    object-fit: cover;
+  }
+  
+  .cerrar-modal {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+  
+  mat-hint{
+    color: red;
+    font-size: 12px;
+  }

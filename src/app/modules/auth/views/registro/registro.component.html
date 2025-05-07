@@ -51,6 +51,28 @@
         </mat-error>
       </mat-form-field>
 
+      <!-- DNI -->
+      <mat-form-field appearance="outline">
+        <mat-label>DNI</mat-label>
+        <input matInput formControlName="dni" required />
+        <mat-error *ngIf="formRegistroCliente.get('dni')?.hasError('required')">
+          DNI es obligatorio
+        </mat-error>
+        <mat-error *ngIf="formRegistroCliente.get('dni')?.hasError('pattern')">
+          El DNI debe contener 7 u 8 números
+        </mat-error>
+      </mat-form-field>
+
+      <!-- CUIT -->
+      <mat-form-field appearance="outline">
+        <mat-label>CUIT</mat-label>
+        <input matInput formControlName="cuit" />
+        <mat-hint>Opcional</mat-hint>
+        <mat-error *ngIf="formRegistroCliente.get('cuit')?.hasError('pattern')">
+          El CUIT debe tener 11 números
+        </mat-error>
+      </mat-form-field>
+
       <!-- Mail -->
       <mat-form-field appearance="outline">
         <mat-label>Mail</mat-label>
