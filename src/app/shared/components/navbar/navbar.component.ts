@@ -13,6 +13,7 @@ import {
 } from '@angular/animations';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ClientesService } from '../../services/clientes.service';
 
 
 @Component({
@@ -36,15 +37,25 @@ export class NavbarComponent {
   productos:any[]=[]
   cantidadProductos: number = 0;
 
-  constructor(private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router) {}
+  constructor(private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router, private clientesService: ClientesService) {}
 
   ngOnInit() {
     const clienteGuardado = localStorage.getItem('cliente');
     if (clienteGuardado) {
-      const cliente = JSON.parse(clienteGuardado);
-      this.usuarioLogueado = true;
-      this.usrAdmin = cliente.administrador;
-      this.generalService.setCliente(cliente);
+
+      console.log('Cliente guardado en localStorage:', clienteGuardado);
+
+      this.clientesService.getClienteById(clienteGuardado).subscribe({
+        next: (cliente) => {
+          this.usuarioLogueado = true;
+          this.usrAdmin = cliente.administrador;
+          this.generalService.setCliente(cliente);
+        },
+        error: (err) => {
+          console.error('Error al obtener cliente', err);
+          localStorage.removeItem('cliente');
+        }
+      });
     }
   }
 
@@ -61,12 +72,13 @@ export class NavbarComponent {
     // Escuchar el cierre del modal y obtener el cliente logueado
     dialogRef.afterClosed().subscribe((cliente: Cliente) => {
       if (cliente) {
-        console.log('Cliente logueado:', cliente);
         // Guardamos el cliente en el servicio general
         this.usuarioLogueado = true;
         this.usrAdmin = cliente.administrador;
         this.generalService.setCliente(cliente);
-        localStorage.setItem('cliente', JSON.stringify(cliente));
+        localStorage.setItem('cliente', cliente.id); // clienteId = 'ApdVnmooZNKXXhu5sL01'
+
+
       } else {
         console.log('El usuario cerró el modal sin loguearse');
       }

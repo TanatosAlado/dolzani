@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
+import { ClientesService } from './clientes.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,16 @@ import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 export class GeneralService {
 
  //private clienteSubject = new BehaviorSubject<Cliente | null>(null);
- private clienteSubject = new BehaviorSubject<Cliente | null>(this.loadClienteFromLocalStorage());
+ private clienteSubject = new BehaviorSubject<Cliente | null>(null);
  
-  constructor(private paginatorIntl: MatPaginatorIntl,private router: Router) { 
+  constructor(private paginatorIntl: MatPaginatorIntl,private router: Router, private clientesService: ClientesService) { 
     this.setPaginatorLabels();
+  }
+
+  ngOnInit() {
+    this.loadClienteFromLocalStorage().subscribe(cliente => {
+      this.clienteSubject.next(cliente);
+    });
   }
 
   private setPaginatorLabels() {
@@ -28,14 +35,19 @@ export class GeneralService {
     };
   }  
   
-  private loadClienteFromLocalStorage(): Cliente | null {
-    const cliente = localStorage.getItem('cliente');
-    return cliente ? JSON.parse(cliente) : null;
+  private loadClienteFromLocalStorage(): Observable<Cliente | null> {
+    console.log('Cargando cliente desde localStorage...');
+    const clienteId = localStorage.getItem('cliente');
+    if (clienteId) {
+      return this.clientesService.getClienteById(clienteId);
+    } else {
+      return of(null); 
+    }
   }
 
   setCliente(cliente: Cliente) {
     this.clienteSubject.next(cliente);
-    localStorage.setItem('cliente', JSON.stringify(cliente)); // Guardar cliente en localStorage
+    localStorage.setItem('cliente', cliente.id); // Guardar cliente en localStorage
   }
 
   getCliente(): Observable<Cliente | null> {

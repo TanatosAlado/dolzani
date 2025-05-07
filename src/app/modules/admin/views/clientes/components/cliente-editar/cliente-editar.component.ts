@@ -15,6 +15,7 @@ constructor(    private fb: FormBuilder,
   @Inject(MAT_DIALOG_DATA) public cliente: any){
     
     this.formCliente = this.fb.group({
+      id: [cliente.id],
       nombre: [cliente.nombre, Validators.required],
       apellido: [cliente.apellido, Validators.required],
       razonSocial: [cliente.razonSocial],
@@ -22,7 +23,8 @@ constructor(    private fb: FormBuilder,
       telefono: [cliente.telefono],
       mail: [cliente.mail, [Validators.required, Validators.email]],
       usuario: [cliente.usuario],
-      estado: [cliente.estado]
+      estado: [cliente.estado],
+      administrador: [cliente.administrador],
     });
 
   }

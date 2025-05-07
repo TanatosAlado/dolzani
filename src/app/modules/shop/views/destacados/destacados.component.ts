@@ -20,7 +20,6 @@ export class DestacadosComponent {
   ngOnInit(): void {
     this.productosService.obtenerProductos().subscribe((productos) => {
       this.destacados = productos.filter((producto) => producto.destacado);
-      console.log(this.destacados);
     })
 
   }
