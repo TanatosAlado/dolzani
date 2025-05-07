@@ -25,7 +25,9 @@ export class IngresoComponent {
       this.authService.getClienteByLogin(ingresante).subscribe((cliente: Cliente) => {
         if (cliente) {
           console.log('Ingreso exitoso');
-          this.dialogRef.close(cliente); // Cierra el modal y pasa el cliente logueado (evitamos traer todos)
+          this.dialogRef.close(cliente);
+          localStorage.setItem("mail",cliente.mail)
+           // Cierra el modal y pasa el cliente logueado (evitamos traer todos)
         } else {
           this.loginFail = true; // Si no se encuentra el cliente, mostramos el error
         }

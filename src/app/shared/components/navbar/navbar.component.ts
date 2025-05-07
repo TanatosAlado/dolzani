@@ -14,6 +14,7 @@ import {
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ProductosService } from '../../services/productos.service';
+import { CarritoComponent } from '../carrito/carrito.component';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class NavbarComponent {
   searchTerm: string = '';
   resultados: any[] = [];
   productos:any[]=[]
-  cantidadProductos: number = 0;
+  cantidadProductos: number = 4;
 
   constructor(private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router, private productoService:ProductosService) {}
 
@@ -64,6 +65,7 @@ export class NavbarComponent {
     // Escuchar el cierre del modal y obtener el cliente logueado
     dialogRef.afterClosed().subscribe((cliente: Cliente) => {
       if (cliente) {
+        this.cantidadProductos=0
         console.log('Cliente logueado:', cliente);
         // Guardamos el cliente en el servicio general
         this.usuarioLogueado = true;

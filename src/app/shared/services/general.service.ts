@@ -51,6 +51,7 @@ export class GeneralService {
   logout() {
     this.clienteSubject.next(null);
     localStorage.removeItem('cliente'); // Eliminar cliente de localStorage al hacer logout
+    localStorage.removeItem('mail');
   }
 
   //FUNCION PARA NAVEGAR AL HOME

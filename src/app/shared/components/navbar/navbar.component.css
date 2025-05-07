@@ -655,7 +655,10 @@ i{
   cursor: pointer;
   padding: 0.5rem 1rem;
 }
-
+::ng-deep .cdk-overlay-backdrop.custom-backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(2px);
+}
 
 
 
@@ -800,8 +803,3 @@ form {
   width: 100%;
 } */
 /* Fin Pruebas Calessan */
-
-::ng-deep .cdk-overlay-backdrop.custom-backdrop {
-  background-color: rgba(0, 0, 0, 0.5) !important;
-  backdrop-filter: blur(2px);
-}
