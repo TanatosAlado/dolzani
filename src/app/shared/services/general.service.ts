@@ -97,12 +97,12 @@ export class GeneralService {
       } else {
         clienteEncontrado.carrito.push({
           id: producto.id,
-          imagen: producto.imagen1,
+          imagen: producto.imagen,
           nombre: producto.nombre,
           cantidad: cantidad,
-          precioOferta: producto.precioOferta,
-          porcentajeOferta: producto.porcentajeOferta,
-          precioFinal: producto.precioFinal,
+          precioOferta: producto.oferta,
+          // porcentajeOferta: producto.porcentajeOferta,
+          precioFinal: producto.precio,
         });
       }
       this.clientesService.actualizarCliente(clienteEncontrado.id, clienteEncontrado)
@@ -110,4 +110,10 @@ export class GeneralService {
       // this.contadorProductos()
     }
   }
+
+   //FUNCION PARA OBTENER LA CANTIDAD TOTAL A PAGAR DEL CARRITO DEL CLIENTE
+   getTotalPrecio(cliente: any): number {
+    return cliente.carrito.reduce((total: number, prod: any) => total + (prod.precioFinal * prod.cantidad), 0);
+  }
+  
 }

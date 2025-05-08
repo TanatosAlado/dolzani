@@ -5,10 +5,7 @@
       
       <button type="button" class="btn-close-custom" data-bs-dismiss="offcanvas" aria-label="Cerrar">×</button>
     </div> -->
-    <h4>hola</h4>
-    <!-- <div class="offcanvas-body">
-     
-        
+    <div class="offcanvas-body">
           <div *ngFor="let producto of cliente.carrito" class="card mb-3 shadow-sm border-0">
             <div class="row g-0 align-items-center">
               <div class="col-4">
@@ -41,12 +38,12 @@
           <div class="resumen-carrito mt-3" *ngIf="cliente.carrito && cliente.carrito.length > 0">
             <div class="resumen-linea">
               <span>Total a pagar:</span>
-              <span>${{ this.sharedService.getTotalPrecio(cliente) }}</span>
+              <span>${{ this.generalService.getTotalPrecio(cliente) }}</span>
             </div>
           </div>
           
           <div class="contenedor-compra" *ngIf="cliente.carrito && cliente.carrito.length > 0">
-            <button (click)="navigatecheckout()">FINALIZAR COMPRA</button>
+            <button>FINALIZAR COMPRA</button>
             <span data-bs-dismiss="offcanvas">Ver Más Productos</span>
           </div>
           
@@ -55,5 +52,5 @@
           </p>
         
       
-    </div> -->
-  <!-- </div> -->
+    </div> 
+  

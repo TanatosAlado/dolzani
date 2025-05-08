@@ -26,7 +26,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent, ConfirmDialogComponent],
+  declarations: [NavbarComponent, FooterComponent, ConfirmDialogComponent, CarritoComponent],
   imports: [CommonModule, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule],
   exports: [NavbarComponent, FooterComponent, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule],
 })
