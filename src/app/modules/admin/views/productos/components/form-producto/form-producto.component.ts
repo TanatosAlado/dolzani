@@ -67,12 +67,17 @@ export class FormProductoComponent implements OnInit {
   onSubmit() {
     if (this.productoForm.valid) {
       const producto: Producto = this.productoForm.value;
-      this.productosService.agregarProducto(producto).then(() => {    
-        this.dialogRef.close('exito');
+      this.productosService.agregarProducto(producto).then((docRef) => {
+        producto.id = docRef.id; 
+        return this.productosService.actualizarProducto(producto);    
+    }).then(() => {
+      this.dialogRef.close(producto); // cerramos el modal y devolvemos el producto actualizado
     });
     } else {
       this.productoForm.markAllAsTouched();
     }
   }
+
+
 
 }

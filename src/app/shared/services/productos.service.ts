@@ -40,6 +40,11 @@ export class ProductosService {
     return collectionData(q) as Observable<Producto[]>;
   }
 
+  actualizarProducto(producto: Producto): Promise<void> {
+    const docRef = doc(this.firestore, 'productos', producto.id);
+    return updateDoc(docRef, { ...producto });
+  }
+
 
 
 }
