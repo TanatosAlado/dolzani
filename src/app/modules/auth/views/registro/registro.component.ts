@@ -60,6 +60,19 @@ export class RegistroComponent {
       historial: [''],
       estado: [''],
       razonSocial: ['', Validators.required],
+      dni: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]{7,8}$') // ejemplo: 7 u 8 dígitos
+        ]
+      ],
+      cuit: [
+        '',
+        [
+          Validators.pattern('^[0-9]{11}$') // ejemplo: CUIT con 11 dígitos
+        ]
+      ]
     });
     
   }
@@ -95,6 +108,8 @@ export class RegistroComponent {
           nombre: formValues.nombre,
           apellido: formValues.apellido,
           administrador: false,
+          dni: formValues.dni,
+          cuit: formValues.cuit || '', 
         };
         
         this.authService.createCliente(_cliente).then((docref) => {

@@ -62,7 +62,10 @@ export class AuthService {
             data.razonSocial,
             data.nombre,
             data.apellido,
-            data.administrador
+            data.administrador,
+            data.carrito,
+            data.dni,
+            data.cuit
           );
         });
         return clientes.length > 0 ? clientes[0] : null;

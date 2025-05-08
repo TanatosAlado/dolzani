@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/modules/auth/services/auth.service'; // Asegúrate de tener el servicio para manejo de login
 import { LoginRequest } from '../../models/loginRequest.model';
 import { Cliente } from '../../models/cliente.model';
+import { CambioPassComponent } from '../cambio-pass/cambio-pass.component';
 
 @Component({
   selector: 'app-ingreso',
@@ -13,8 +14,9 @@ export class IngresoComponent {
   usuario: string = '';
   contrasena: string = '';
   loginFail; boolean = false; // Variable para manejar el error de login
+  readonly CONTRASENA_DEFAULT: string = 'Dolzani123'; // Contraseña por defecto para el cliente
 
-  constructor(private authService: AuthService, private dialogRef: MatDialogRef<IngresoComponent>) {}
+  constructor(private authService: AuthService, private dialogRef: MatDialogRef<IngresoComponent>, private dialog: MatDialog) {}
 
   //value = 'Clear me';
 
@@ -24,13 +26,19 @@ export class IngresoComponent {
       const ingresante: LoginRequest = new LoginRequest(this.usuario, this.contrasena);
       this.authService.getClienteByLogin(ingresante).subscribe((cliente: Cliente) => {
         if (cliente) {
-          this.dialogRef.close(cliente); 
-          localStorage.setItem("mail",cliente.mail)// Cierra el modal y pasa el cliente logueado (evitamos traer todos)
+          if (this.contrasena === this.CONTRASENA_DEFAULT) {
+            // Abrir modal para forzar cambio de contraseña
+            this.dialog.open(CambioPassComponent, {
+              data: { cliente },
+              disableClose: true // evita que lo cierre sin cambiarla
+            });
+          } else {
+            this.dialogRef.close(cliente); // Login exitoso normal
+          }
         } else {
-          this.loginFail = true; // Si no se encuentra el cliente, mostramos el error
+          this.loginFail = true;
         }
-      })
-
+      });
     }
   }
 

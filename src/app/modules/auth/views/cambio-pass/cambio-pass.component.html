@@ -1,0 +1,50 @@
+<div class="modal-container">
+    <div class="cerrar-modal">
+      <button mat-icon-button (click)="cerrar()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  
+    <div class="imagen-central">
+      <img src="../../../../../assets/logo-ecommerceT.png" alt="Login" />
+    </div>
+  
+    <h5>Cambio de contraseña</h5>
+
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+
+
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Contraseña actual</mat-label>
+        <input matInput type="password" name="contrasenaActual" [(ngModel)]="contrasenaActual" (ngModelChange)="resetLoginFail()" required />
+        <button *ngIf="contrasenaActual" matSuffix mat-icon-button>
+          <mat-icon style="color: #666;">close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Contraseña nueva</mat-label>
+        <input matInput type="password" name="contrasenaNueva" [(ngModel)]="contrasenaNueva" (ngModelChange)="resetLoginFail()" required />
+        <button *ngIf="contrasenaNueva" matSuffix mat-icon-button>
+          <mat-icon style="color: #666;">close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Repetir contraseña</mat-label>
+        <input matInput type="password" name="contrasenaRep" [(ngModel)]="contrasenaRep" (ngModelChange)="resetLoginFail()" required />
+        <button *ngIf="contrasenaRep" matSuffix mat-icon-button>
+          <mat-icon style="color: #666;">close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-hint *ngIf="loginFail">Datos de accesos incorrectos</mat-hint>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.form.valid">
+        Confirmar
+      </button>
+    </form>
+  
+
+  </div>
+  
