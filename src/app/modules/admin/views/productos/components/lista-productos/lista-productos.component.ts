@@ -6,6 +6,7 @@ import { FormProductoComponent } from '../form-producto/form-producto.component'
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { ProductoDetalleComponent } from '../producto-detalle/producto-detalle.component';
 import { ProductoEditarComponent } from '../producto-editar/producto-editar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-lista-productos',
@@ -20,7 +21,8 @@ export class ListaProductosComponent {
 
   constructor(
     private productosService: ProductosService,  
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,  
   ) {}
 
   ngOnInit(): void {
@@ -90,14 +92,17 @@ export class ListaProductosComponent {
       width: '400px',
       data: {
         message: `¿Está seguro que desea eliminar este producto: ${producto.nombre}?`,
-        confirmAction: () => this.eliminarProducto() // Acción a ejecutar si se confirma
+        confirmAction: () => this.eliminarProducto(producto.id) // Acción a ejecutar si se confirma
       }
     });
   }
 
-  eliminarProducto(): void {
-    console.log('Eliminar', this.productoAEliminar);
-    // LLAMAR AL SERVICIO, SUSCRIBIRSE E INFIRMAR AL USUARIO
+  eliminarProducto(id: string): void {
+    this.productosService.eliminarProducto(id).then(() => {
+      this.snackBar.open('Cliente eliminado con éxito', 'Cerrar', {
+        duration: 3000,
+      });
+    })
   }
 
 

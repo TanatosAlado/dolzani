@@ -30,8 +30,8 @@ export class ProductosService {
   }
 
   eliminarProducto(id: string): Promise<void> {
-    const productoRef = doc(this.firestore, `productos/${id}`);
-    return deleteDoc(productoRef);
+    const docRef = doc(this.firestore, 'productos', id);
+    return deleteDoc(docRef);
   }
 
   obtenerDestacados(): Observable<Producto[]> {
