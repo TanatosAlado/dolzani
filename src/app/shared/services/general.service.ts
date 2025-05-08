@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 import { ClientesService } from './clientes.service';
 
@@ -12,6 +12,8 @@ export class GeneralService {
 
  //private clienteSubject = new BehaviorSubject<Cliente | null>(null);
  private clienteSubject = new BehaviorSubject<Cliente | null>(null);
+ private busquedaSource = new BehaviorSubject<string>('');
+ busqueda$ = this.busquedaSource.asObservable();
  
   constructor(private paginatorIntl: MatPaginatorIntl,private router: Router, private clientesService: ClientesService) { 
     this.setPaginatorLabels();
@@ -61,12 +63,57 @@ export class GeneralService {
   logout() {
     this.clienteSubject.next(null);
     localStorage.removeItem('cliente'); // Eliminar cliente de localStorage al hacer logout
+    localStorage.removeItem('mail');
   }
 
   //FUNCION PARA NAVEGAR AL HOME
   home(){
     this.router.navigate([''])
   }
+  
+ // FUNCION PARA NAVEGAR Y MOSTRAR EL COMPONENTE DE BUSQUEDA DEL PRODUCTO
+ showBusqueda(idProducto: string) {
+  if (idProducto != '') {
+    this.router.navigate([`busqueda/${idProducto}`])
+  }
+  else {
+    this.router.navigate([`busqueda`])
+  }
+  this.busquedaSource.next(idProducto);
+}
 
 
+  //SERVICIO PARA CARGAR EN EL CARRITO EL PRODUCTO
+  cargarProductoCarrito(producto: any, cantidad: number = 1) {
+    let clienteEncontrado:Cliente
+     this.getCliente().subscribe(cliente =>{
+      clienteEncontrado=cliente
+     })
+    if (clienteEncontrado) {
+      console.log("el cliente encontrado", clienteEncontrado)
+      const productoExistente = clienteEncontrado.carrito.find(item => item.id === producto.id);
+      if (productoExistente) {
+        productoExistente.cantidad += cantidad;
+      } else {
+        clienteEncontrado.carrito.push({
+          id: producto.id,
+          imagen: producto.imagen,
+          nombre: producto.nombre,
+          cantidad: cantidad,
+          precioOferta: producto.oferta,
+          // porcentajeOferta: producto.porcentajeOferta,
+          precioFinal: producto.precio,
+        });
+      }
+      this.clientesService.actualizarCliente(clienteEncontrado.id, clienteEncontrado)
+      // this.toastService.toatsMessage("Producto Agregado Al Carrito", "green", 2000)
+      // this.contadorProductos()
+    }
+  }
+
+   //FUNCION PARA OBTENER LA CANTIDAD TOTAL A PAGAR DEL CARRITO DEL CLIENTE
+   getTotalPrecio(cliente: any): number {
+    return cliente.carrito.reduce((total: number, prod: any) => total + (prod.precioFinal * prod.cantidad), 0);
+  }
+  
 }

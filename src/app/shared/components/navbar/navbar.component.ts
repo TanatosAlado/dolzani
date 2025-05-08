@@ -14,6 +14,8 @@ import {
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ClientesService } from '../../services/clientes.service';
+import { ProductosService } from '../../services/productos.service';
+import { CarritoComponent } from '../carrito/carrito.component';
 
 
 @Component({
@@ -35,11 +37,12 @@ export class NavbarComponent {
   searchTerm: string = '';
   resultados: any[] = [];
   productos:any[]=[]
-  cantidadProductos: number = 0;
+  cantidadProductos: number = 4;
 
-  constructor(private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router, private clientesService: ClientesService) {}
+  constructor(private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router, private clientesService: ClientesService, private productoService:ProductosService) {}
 
   ngOnInit() {
+    this.getProductos()
     const clienteGuardado = localStorage.getItem('cliente');
     if (clienteGuardado) {
 
@@ -57,6 +60,7 @@ export class NavbarComponent {
         }
       });
     }
+    console.log("total productos", this.productos)
   }
 
   // Métodos para abrir los modales
@@ -72,6 +76,8 @@ export class NavbarComponent {
     // Escuchar el cierre del modal y obtener el cliente logueado
     dialogRef.afterClosed().subscribe((cliente: Cliente) => {
       if (cliente) {
+        this.cantidadProductos=0
+        console.log('Cliente logueado:', cliente);
         // Guardamos el cliente en el servicio general
         this.usuarioLogueado = true;
         this.usrAdmin = cliente.administrador;
@@ -113,6 +119,7 @@ export class NavbarComponent {
       this.resultados = this.productos.filter(item =>
         item.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
+      console.log(this.resultados)
     }
 
       //FUNCION PARA SELECCIONAR EL PRODUCTO ENCONTRADO Y VER SUS DETALLES
@@ -123,8 +130,17 @@ export class NavbarComponent {
   }
     //FUNCION PARA NAVEGAR A LA BUSQUEDA DEL PEDIDO
     busquedaPedido(busqueda:any){
-      // this.sharedService.showBusqueda(busqueda)
+      this.generalService.showBusqueda(busqueda)
       this.searchTerm=''
       this.resultados=[]
     }
+
+     //FUNCION PARA GUARDAR LOS PRODUCTOS EN UN ARRAY
+   getProductos(){
+    this.productoService.obtenerProductos().subscribe((productos) => {
+      this.productos = productos;
+      console.log(this.productos);
+    })
+    
+  }
 }

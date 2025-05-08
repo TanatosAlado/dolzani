@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { collection, Firestore, orderBy, query, limit, startAfter, getDocs, getDoc, doc, updateDoc } from '@angular/fire/firestore';
-import { from, map, Observable } from 'rxjs';
+import { BehaviorSubject, from, map, Observable } from 'rxjs';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 
 @Injectable({
@@ -10,6 +10,8 @@ export class ClientesService {
 
   ultimoCliente: any;
   private firestore = inject(Firestore);
+  clientesSubject = new BehaviorSubject<Cliente[]>([]);
+  clientes$ = this.clientesSubject.asObservable();
 
   constructor() { }
 

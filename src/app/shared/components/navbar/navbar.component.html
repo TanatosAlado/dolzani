@@ -63,10 +63,10 @@
         <li style="border-bottom: 1px solid rgba(221, 221, 221, 0.5);" *ngFor="let item of resultados"
           (click)="seleccionar(item)" class="d-flex align-items-center">
           <div class="result-item d-flex align-items-center w-100 p-2">
-            <img [src]="item.imagen1" alt="{{ item.nombre }}" class="product-image img-fluid" />
+            <img [src]="item.imagen" alt="{{ item.nombre }}" class="product-image img-fluid" />
             <div class="ms-2 d-flex flex-column">
               <span>{{ item.nombre }}</span>
-              <span>$ {{ item.precioFinal }}</span>
+              <span>$ {{ item.precio }}</span>
             </div>
           </div>
         </li>
@@ -105,10 +105,10 @@
           <li style="border-bottom: 1px solid rgba(221, 221, 221, 0.5)" *ngFor="let item of resultados"
             (click)="seleccionar(item)" class="d-flex align-items-center">
             <div class="result-item d-flex align-items-center w-100 p-2">
-              <img [src]="item.imagen1" alt="{{ item.nombre }}" class="product-image img-fluid" />
+              <img [src]="item.imagen" alt="{{ item.nombre }}" class="product-image img-fluid" />
               <div class="ms-2 d-flex flex-column">
                 <span>{{ item.nombre }}</span>
-                <span>$ {{ item.precioFinal }}</span>
+                <span>$ {{ item.precio }}</span>
               </div>
             </div>
           </li>
@@ -161,4 +161,15 @@
       </li>
     </ul>
   </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasCarritoLabel">Mi Carrito</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+  </div>
+  <div class="offcanvas-body">
+      <app-carrito></app-carrito>  
+  </div>
 </div>
