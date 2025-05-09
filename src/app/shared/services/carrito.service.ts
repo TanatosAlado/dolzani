@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { collection, doc, Firestore, getDoc, query, updateDoc, where } from 'firebase/firestore';
+import { Firestore, collection, doc, getDoc, query, updateDoc, where } from '@angular/fire/firestore';
+
 import { collectionData } from 'rxfire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
@@ -55,6 +56,16 @@ export class CarritoService {
       console.error('Error al eliminar el producto del carrito:', error);
     }
   }
+
+  actualizarCantidadProductos(cliente: Cliente) {
+    const total = cliente.carrito?.reduce((sum, p) => sum + p.cantidad, 0) || 0;
+    this.cantidadProductosSubject.next(total);
+  }
+
+
+
+
+
 }
    
 

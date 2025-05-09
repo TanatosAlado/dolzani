@@ -16,6 +16,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { ClientesService } from '../../services/clientes.service';
 import { ProductosService } from '../../services/productos.service';
 import { CarritoComponent } from '../carrito/carrito.component';
+import { CarritoService } from '../../services/carrito.service';
 
 
 @Component({
@@ -37,22 +38,24 @@ export class NavbarComponent {
   searchTerm: string = '';
   resultados: any[] = [];
   productos:any[]=[]
-  cantidadProductos: number = 4;
+  cantidadProductos: number = 0;
+  cantidadProductos$ = this.carritoService.cantidadProductos$;
 
-  constructor(private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router, private clientesService: ClientesService, private productoService:ProductosService) {}
+
+  constructor(private carritoService: CarritoService, private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router, private clientesService: ClientesService, private productoService:ProductosService) {}
 
   ngOnInit() {
     this.getProductos()
     const clienteGuardado = localStorage.getItem('cliente');
     if (clienteGuardado) {
 
-      console.log('Cliente guardado en localStorage:', clienteGuardado);
-
       this.clientesService.getClienteById(clienteGuardado).subscribe({
         next: (cliente) => {
           this.usuarioLogueado = true;
           this.usrAdmin = cliente.administrador;
           this.generalService.setCliente(cliente);
+
+          this.carritoService.actualizarCantidadProductos(cliente);
         },
         error: (err) => {
           console.error('Error al obtener cliente', err);
@@ -60,7 +63,7 @@ export class NavbarComponent {
         }
       });
     }
-    console.log("total productos", this.productos)
+
   }
 
   // Métodos para abrir los modales
@@ -76,9 +79,7 @@ export class NavbarComponent {
     // Escuchar el cierre del modal y obtener el cliente logueado
     dialogRef.afterClosed().subscribe((cliente: Cliente) => {
       if (cliente) {
-        this.cantidadProductos=0
-        console.log('Cliente logueado:', cliente);
-        // Guardamos el cliente en el servicio general
+        this.cantidadProductos= this.getCantidadProductos(cliente.carrito)
         this.usuarioLogueado = true;
         this.usrAdmin = cliente.administrador;
         this.generalService.setCliente(cliente);
@@ -89,6 +90,10 @@ export class NavbarComponent {
         console.log('El usuario cerró el modal sin loguearse');
       }
     });
+  }
+
+  getCantidadProductos(carrito: any[]): number {
+    return carrito.reduce((total, producto) => total + producto.cantidad, 0);
   }
 
   openRegistro() {

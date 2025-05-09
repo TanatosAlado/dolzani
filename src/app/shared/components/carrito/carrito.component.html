@@ -5,7 +5,10 @@
       
       <button type="button" class="btn-close-custom" data-bs-dismiss="offcanvas" aria-label="Cerrar">×</button>
     </div> -->
-    <div class="offcanvas-body">
+
+
+
+    <div *ngIf="cliente" class="offcanvas-body">
           <div *ngFor="let producto of cliente.carrito" class="card mb-3 shadow-sm border-0">
             <div class="row g-0 align-items-center">
               <div class="col-4">

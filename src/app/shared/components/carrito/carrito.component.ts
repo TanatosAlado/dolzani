@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { GeneralService } from '../../services/general.service';
 import { CarritoService } from '../../services/carrito.service';
 import { ClientesService } from '../../services/clientes.service';
-import { take } from 'rxjs';
-// import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-carrito',
@@ -22,12 +19,13 @@ export class CarritoComponent {
    }
 
   ngOnInit(){
-  // this.getClienteLogueado()
   this.getCliente()
   }
 
   getCliente(){
-    this.cliente=this.generalService.getClienteActual()
+    this.generalService.getCliente().subscribe(cliente => {
+      this.cliente = cliente;
+    });
   }
 
   //FUNCION PARA DISMINUIR EN UNO LA CANTIDAD DEL PRODUCTO EN EL CARRO
@@ -36,7 +34,8 @@ export class CarritoComponent {
       producto.cantidad--;
     }
     this.guardarCambiosCarrito()
-    this.carritoService.contadorProductos()
+    //this.carritoService.contadorProductos()
+    this.carritoService.actualizarCantidadProductos(this.cliente)
   }
 
   //FUNCION PARA AUMENTAR EN UNO LA CANTIDAD DEL PRODUCTO EN EL CARRO
