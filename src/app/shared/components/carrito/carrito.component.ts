@@ -3,6 +3,7 @@ import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 import { GeneralService } from '../../services/general.service';
 import { CarritoService } from '../../services/carrito.service';
 import { ClientesService } from '../../services/clientes.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-carrito',
@@ -40,33 +41,33 @@ export class CarritoComponent {
 
   //FUNCION PARA AUMENTAR EN UNO LA CANTIDAD DEL PRODUCTO EN EL CARRO
   aumentarCantidad(producto: any): void {
-    // producto.cantidad++;
-    // this.guardarCambiosCarrito()
-    // this.carritoService.contadorProductos()
+    producto.cantidad++;
+    this.guardarCambiosCarrito()
+    this.carritoService.contadorProductos()
   }
 
   
   //ACTUALIZAR CAMBIOS EN EL CARRITO DEL CLINETE
   guardarCambiosCarrito() {
-    // const cliente = this.cliente
-    // if (cliente) {
-    //   this.clienteService.actualizarCliente(cliente.id, cliente)
-    //     .then(() => console.log('Carrito actualizado al cerrar'))
-    //     .catch(err => console.error('Error actualizando carrito:', err));
-    // }
+     const cliente = this.cliente
+     if (cliente) {
+       this.clienteService.actualizarCliente(cliente.id, cliente)
+         .then(() => console.log('Carrito actualizado al cerrar'))
+         .catch(err => console.error('Error actualizando carrito:', err));
+     }
   }
 
 
   eliminarDelCarrito(productoId: string) {
-    // this.clienteService.clientes$.pipe(take(1)).subscribe(clientes => {
-    //   const clienteEncontrado = clientes.find(cliente => cliente.mail === this.userLogueado);
-    //   if (clienteEncontrado) {
-    //     const clienteId = clienteEncontrado.id;
-    //     this.carritoService.deleteProductoCarrito(clienteId, productoId).then(() => {
-    //       this.clienteService.getClientes();
-    //     });
-    //   }
-    // });
+    console.log(this.cliente)
+      const clienteEncontrado = this.cliente
+      if (clienteEncontrado) {
+        const clienteId = clienteEncontrado.id;
+        this.carritoService.deleteProductoCarrito(clienteId, productoId).then(() => {
+         
+        });
+      }
+       this.clienteService.getClientes();
   }
 }
 

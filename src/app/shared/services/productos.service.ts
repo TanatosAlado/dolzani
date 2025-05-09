@@ -44,7 +44,4 @@ export class ProductosService {
     const docRef = doc(this.firestore, 'productos', producto.id);
     return updateDoc(docRef, { ...producto });
   }
-
-
-
 }
