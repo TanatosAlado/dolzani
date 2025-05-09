@@ -23,6 +23,7 @@
   </div>
 </nav> -->
 
+
 <nav class="navbar navbar-expand-lg navbar-custom">
   <div class="container-fluid">
     <button class="navbar-toggler d-lg-none text-white" type="button" data-bs-toggle="offcanvas"
@@ -40,7 +41,7 @@
     </a>
     <div class="d-flex d-lg-none ms-auto gap-3 align-items-center">
       <i *ngIf="!usuarioLogueado" (click)="openIngreso()" class="fa-solid fa-user text-white"></i>
-      <i 
+      <i *ngIf="usuarioLogueado"
         class="fa-solid fa-cart-shopping text-white carrito-icono carrito-con-badge"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasCarrito"
@@ -85,7 +86,10 @@
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasCarrito"
         aria-controls="offcanvasCarrito">
-       <span class="badge">{{ cantidadProductos }}</span>
+        <span matBadge="{{ cantidadProductos$ | async }}" matBadgeColor="warn">
+          <mat-icon>shopping_cart</mat-icon>
+        </span>
+       <!-- <span class="badge">{{ cantidadProductos }}</span> -->
      </i>
         <i *ngIf="usuarioLogueado" (click)="closeSesion()" class="fa-solid fa-right-from-bracket"></i> 
       </div>
