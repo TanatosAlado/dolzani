@@ -569,7 +569,7 @@ i{
   
   padding-right: 3%;
   /* background-color: #ff5577; */
-  background-color: red;
+  background-color: #e71634;
   height: 100px;
   .container-fluid {
     margin-top: 4%;
@@ -621,7 +621,7 @@ i{
 }
 
 .second-row {
-  background-color:#ff5577;
+  background-color:#e71634;
 }
 
 .nav-link,
@@ -661,8 +661,9 @@ i{
 }
 
 
-
-
+img.logo {
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.3));
+}
 
 
 
@@ -803,3 +804,16 @@ form {
   width: 100%;
 } */
 /* Fin Pruebas Calessan */
+
+
+.nombre-ecommerce {
+  white-space: nowrap;
+}
+.custom-input-group {
+  min-width: 250px;
+}
+
+.nombre-ecommerce {
+  margin-right: 10rem; 
+  white-space: nowrap;
+}

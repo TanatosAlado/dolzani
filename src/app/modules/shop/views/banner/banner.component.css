@@ -2,8 +2,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
-  background-color: aquamarine;
+  height: 200px;
   margin-top: 25px;
   margin-bottom: 30px;
+  overflow: hidden; /* Evita que algo se desborde */
+  background-color: aquamarine;
+}
+
+.carousel-item img {
+  object-fit: contain; /* Rellena el espacio sin deformarse */
+  width: 100%;
+  height: 100%;
 }

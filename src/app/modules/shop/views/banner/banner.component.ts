@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BannerService } from 'src/app/modules/admin/service/banner.service';
 
 @Component({
   selector: 'app-banner',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./banner.component.css']
 })
 export class BannerComponent {
+
+  imagenes: any[] = [];
+
+  constructor(private bannerService: BannerService) {}
+
+    ngOnInit(): void {
+    this.imagenes = this.bannerService.obtenerImagenes();
+  }
 
 }

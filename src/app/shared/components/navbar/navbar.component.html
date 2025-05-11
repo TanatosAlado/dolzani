@@ -32,10 +32,10 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand-query d-lg-none position-absolute top-45 start-50 translate-middle-x " href="#">
-      <img (click)="this.generalService.home()" src="../../../../assets/logo-ecommerce.png" class="logo" alt="" />
+      <img (click)="this.generalService.home()" src="../../../../assets/LogoDolzani.png" class="logo" alt="" />
     </a>
     <a class="navbar-brand d-none d-lg-block" href="#">
-      <img (click)="this.generalService.home()" src="../../../../assets/logo-ecommerce.png" class="logo" alt="" />
+      <img (click)="this.generalService.home()" src="../../../../assets/LogoDolzani.png" class="logo" alt="" />
     </a>
     <a href="#" class="d-lg-none nav-link ms-auto">
     </a>
@@ -54,8 +54,22 @@
       </i>
       <i *ngIf="usuarioLogueado" (click)="closeSesion()" class="fa-solid fa-right-from-bracket text-white"></i> 
     </div>
+
+    <div class="d-none d-lg-flex mx-auto align-items-center gap-3">
+  <span class="nombre-ecommerce text-white fw-semibold fs-5 ms-4">DISTRIBUIDORA MAYORISTA</span>
+
+  <div class="input-group custom-input-group w-50">
+    <input class="form-control custom-search-input" type="search" placeholder="¿Qué estás buscando?"
+      [(ngModel)]="searchTerm" (input)="autocompletar()" #inputBox aria-label="Buscar"
+      aria-describedby="search-addon">
+    <span class="input-group-text custom-search-icon" id="search-addon">
+      <i (click)="busquedaPedido(searchTerm)" class="fas fa-search"></i>
+    </span>
+  </div>
+</div>
+
     
-    <div class="d-none d-lg-flex mx-auto w-50">
+    <!-- <div class="d-none d-lg-flex mx-auto w-50">
       <div class="input-group custom-input-group">
         <input class="form-control custom-search-input" type="search" placeholder="Qué estás buscando?"
           [(ngModel)]="searchTerm" (input)="autocompletar()" #inputBox aria-label="Buscar"
@@ -76,7 +90,7 @@
           </div>
         </li>
       </ul>
-    </div>
+    </div> -->
     <div class="d-none d-lg-flex gap-3 nav-item">
       <div class="ms-4 d-flex gap-4">
          <i *ngIf="!usuarioLogueado" (click)="openIngreso()"  class="fa-solid fa-user"></i>
@@ -137,7 +151,7 @@
     </div>
   </div>
 </div>
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu">
+<!-- <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title">Menú</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -170,7 +184,7 @@
       </li>
     </ul>
   </div>
-</div>
+</div> -->
 
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel">
