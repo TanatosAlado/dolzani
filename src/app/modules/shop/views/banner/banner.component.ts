@@ -8,12 +8,19 @@ import { BannerService } from 'src/app/modules/admin/service/banner.service';
 })
 export class BannerComponent {
 
-  imagenes: any[] = [];
+  imagenes: { nombre: string, url: string }[] = [];
 
   constructor(private bannerService: BannerService) {}
 
-    ngOnInit(): void {
-    this.imagenes = this.bannerService.obtenerImagenes();
+  ngOnInit(): void {
+    this.cargarImagenes();
   }
+
+
+  async cargarImagenes() {
+    // Asegurate que coincida con la carpeta usada en el upload
+    this.imagenes = await this.bannerService.listarArchivos('uploads');
+  }
+
 
 }

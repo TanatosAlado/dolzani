@@ -1,16 +1,13 @@
 .banner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 200px;
   margin-top: 25px;
   margin-bottom: 30px;
-  overflow: hidden; /* Evita que algo se desborde */
+  overflow: hidden;
   background-color: aquamarine;
 }
 
 .carousel-item img {
-  object-fit: contain; /* Rellena el espacio sin deformarse */
+  object-fit: cover;
   width: 100%;
   height: 100%;
 }

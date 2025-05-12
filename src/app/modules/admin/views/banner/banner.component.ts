@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 import { BannerService } from '../../service/banner.service';
+// import { inject } from '@angular/core';
+// import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage'; // ✅ modular
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+
+
 
 @Component({
   selector: 'app-banner',
@@ -8,24 +15,57 @@ import { BannerService } from '../../service/banner.service';
 })
 export class BannerComponent {
 
-  imagenes: any[] = [];
-  nuevaImagen = { id: 0, url: '', orden: 0 };
+  archivoSeleccionado: File | null = null;
+  subiendo = false;
+  urlArchivo: string | null = null;
+  archivos: { nombre: string, url: string }[] = [];
+  carpeta = 'uploads';
 
-  constructor(private bannerService: BannerService) {}
+  constructor(private bannerService: BannerService, private dialog: MatDialog) {}
+
 
     ngOnInit(): void {
-    this.imagenes = this.bannerService.obtenerImagenes();
+    this.cargarArchivos();
   }
 
-    agregarImagen() {
-    this.bannerService.agregarImagen({ ...this.nuevaImagen });
-    this.nuevaImagen = { id: 0, url: '', orden: 0 };
-    this.imagenes = this.bannerService.obtenerImagenes();
+    onFileSelected(event: any) {
+    this.archivoSeleccionado = event.target.files[0] || null;
+    this.urlArchivo = null; // Limpiar URL anterior si existía
   }
 
-  eliminarImagen(id: number) {
-    this.bannerService.eliminarImagen(id);
-    this.imagenes = this.bannerService.obtenerImagenes();
+
+  subirArchivo() {
+    if (!this.archivoSeleccionado) return;
+
+    this.subiendo = true;
+    const filePath = `uploads/${Date.now()}_${this.archivoSeleccionado.name}`;
+
+    this.bannerService.uploadFile(this.archivoSeleccionado, filePath)
+      .then(url => {
+        this.urlArchivo = url;
+        this.subiendo = false;
+      })
+      .catch(error => {
+        console.error('Error al subir el archivo:', error);
+        this.subiendo = false;
+      });
   }
+
+    async cargarArchivos() {
+    this.archivos = await this.bannerService.listarArchivos(this.carpeta);
+  }
+
+  eliminar(nombre: string) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: `¿Deseás eliminar el archivo "${nombre}"?`,
+        confirmAction: async () => {
+          await this.bannerService.eliminarArchivo(`${this.carpeta}/${nombre}`);
+          this.cargarArchivos(); // refresca el listado
+        }
+      }
+    });
+  }
+
 
 }

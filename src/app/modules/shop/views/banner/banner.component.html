@@ -1,4 +1,4 @@
-<div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+<div *ngIf="imagenes.length > 0; else sinImagenes" id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner banner">
     <div
       class="carousel-item"
@@ -9,7 +9,6 @@
     </div>
   </div>
 
-  <!-- Controles para ir al anterior/siguiente -->
   <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
     <span class="carousel-control-prev-icon"></span>
     <span class="visually-hidden">Anterior</span>
@@ -19,3 +18,7 @@
     <span class="visually-hidden">Siguiente</span>
   </button>
 </div>
+
+<ng-template #sinImagenes>
+  <p class="text-center mt-3">No hay imágenes disponibles para el banner.</p>
+</ng-template>

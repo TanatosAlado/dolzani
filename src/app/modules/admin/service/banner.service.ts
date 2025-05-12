@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Storage, deleteObject, getDownloadURL, listAll, ref, uploadBytes } from '@angular/fire/storage';
 
 
 @Injectable({
@@ -6,23 +7,31 @@ import { Injectable } from '@angular/core';
 })
 export class BannerService {
 
-  private imagenes: any[] = [];
-  private idCounter = 1;
-  
+  constructor(private storage: Storage) {}
 
-  constructor() {}
 
-    obtenerImagenes() {
-    return this.imagenes.sort((a, b) => a.orden - b.orden);
+  async uploadFile(file: File, path: string): Promise<string> {
+    const fileRef = ref(this.storage, path);
+    await uploadBytes(fileRef, file);
+    return await getDownloadURL(fileRef);
   }
 
-  agregarImagen(imagen: any) {
-    imagen.id = this.idCounter++;
-    this.imagenes.push(imagen);
+  async listarArchivos(carpeta: string): Promise<{ nombre: string, url: string }[]> {
+    const carpetaRef = ref(this.storage, carpeta);
+    const result = await listAll(carpetaRef);
+    const archivos = await Promise.all(result.items.map(async (item) => {
+      const url = await getDownloadURL(item);
+      return { nombre: item.name, url };
+    }));
+    return archivos;
   }
 
-  eliminarImagen(id: number) {
-    this.imagenes = this.imagenes.filter(img => img.id !== id);
+  async eliminarArchivo(path: string): Promise<void> {
+    const archivoRef = ref(this.storage, path);
+    await deleteObject(archivoRef);
   }
+
+
+
 
 }
