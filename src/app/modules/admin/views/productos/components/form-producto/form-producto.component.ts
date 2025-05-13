@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Producto } from 'src/app/shared/models/producto.model';
 import { ProductosService } from 'src/app/shared/services/productos.service';
@@ -41,15 +41,15 @@ export class FormProductoComponent implements OnInit {
       rubro: ['', Validators.required],
       subrubro: ['', Validators.required],
       marca: ['', Validators.required],
-      precio: [0, [Validators.required, Validators.min(0)]],
-      stock: [0, [Validators.required, Validators.min(0)]],
+      precio: ['', [Validators.required, Validators.min(0), this.soloNumerosValidator()]],
+      stock: ['', [Validators.required, Validators.min(0), this.soloNumerosValidator()]],
       destacado: [false],
       imagen: [''],
       cantidad: [1],
       oferta: [false, Validators.required],
-      precioOferta: [{ value: 0, disabled: true }],
+      precioOferta: [{ value: '', disabled: true }, this.soloNumerosValidator()],
       impuestoNacional: [false, Validators.required],
-      precioImpuestoNacional: [{ value: 0, disabled: true }],
+      precioImpuestoNacional: [{ value: '', disabled: true }, this.soloNumerosValidator()],
     });
 
     this.setupAutocomplete();
@@ -122,6 +122,36 @@ export class FormProductoComponent implements OnInit {
 
 filtrarSubrubros(): void {
   // lógica para filtrar los subrubros si lo necesitás
+}
+
+limpiarCerosIzquierda(campo: string): void {
+  const control = this.productoForm.get(campo);
+  if (!control) return;
+
+  let valor: string = control.value?.toString() ?? '';
+
+  // Limpiamos todos los ceros a la izquierda, excepto si el valor es "0"
+  const valorLimpio = valor.replace(/^0+(?!$)/, '');
+
+  // Solo actualizamos si el valor cambia
+  if (valor !== valorLimpio) {
+    control.setValue(valorLimpio);
+  }
+}
+
+soloNumerosValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const valor = control.value;
+    return isNaN(valor) || valor === '' ? { soloNumeros: true } : null;
+  };
+}
+
+permitirSoloNumeros(event: KeyboardEvent): void {
+  const charCode = event.key;
+
+  if (!/^\d$/.test(charCode)) {
+    event.preventDefault();
+  }
 }
 
 }

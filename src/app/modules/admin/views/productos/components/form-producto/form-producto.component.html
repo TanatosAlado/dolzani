@@ -51,19 +51,14 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <!-- <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Marca</mat-label>
-    <input matInput formControlName="marca" />
-  </mat-form-field> -->
-
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Precio</mat-label>
-    <input matInput type="number" formControlName="precio" />
+    <input matInput type="text" formControlName="precio" (input)="limpiarCerosIzquierda('precio')" (keypress)="permitirSoloNumeros($event)" />
   </mat-form-field>
 
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Stock</mat-label>
-    <input matInput type="number" formControlName="stock" />
+    <input matInput type="text" formControlName="stock" (input)="limpiarCerosIzquierda('stock')" (keypress)="permitirSoloNumeros($event)" />
   </mat-form-field>
 
   <mat-form-field appearance="fill" class="full-width">
@@ -77,14 +72,14 @@
 
   <mat-form-field appearance="fill" class="full-width" *ngIf="productoForm.get('oferta')?.value">
     <mat-label>Precio Oferta</mat-label>
-    <input matInput type="number" formControlName="precioOferta" />
+    <input matInput type="text" formControlName="precioOferta" (input)="limpiarCerosIzquierda('precioOferta')" (keypress)="permitirSoloNumeros($event)"/>
   </mat-form-field>
 
   <mat-checkbox formControlName="impuestoNacional">¿Aplica impuesto nacional?</mat-checkbox>
 
   <mat-form-field appearance="fill" class="full-width" *ngIf="productoForm.get('impuestoNacional')?.value">
     <mat-label>Precio sin Impuesto Nacional</mat-label>
-    <input matInput type="number" formControlName="precioImpuestoNacional" />
+    <input matInput type="text" formControlName="precioImpuestoNacional" (input)="limpiarCerosIzquierda('precioImpuestoNacional')" (keypress)="permitirSoloNumeros($event)"/>
   </mat-form-field>
 
 </mat-dialog-content>
