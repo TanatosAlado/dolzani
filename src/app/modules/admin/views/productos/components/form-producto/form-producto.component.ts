@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Producto } from 'src/app/shared/models/producto.model';
 import { ProductosService } from 'src/app/shared/services/productos.service';
 
@@ -12,9 +12,28 @@ import { ProductosService } from 'src/app/shared/services/productos.service';
 export class FormProductoComponent implements OnInit {
   productoForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private productosService: ProductosService, private dialogRef: MatDialogRef<FormProductoComponent>) {}
+  constructor(
+  @Inject(MAT_DIALOG_DATA) public data: { rubros: string[], subrubros: string[], marcas: string[] },
+  private fb: FormBuilder,
+  private productosService: ProductosService,
+  private dialogRef: MatDialogRef<FormProductoComponent>
+) {}
+
+  rubros: string[] = [];
+  subrubros: string[] = [];
+  marcas: string[] = [];
+  rubrosFiltrados: string[] = [];
+  subrubrosFiltrados: string[] = [];
+  marcasFiltradas: string[] = []
 
   ngOnInit(): void {
+    if (this.data) {
+      this.rubros = this.data.rubros || [];
+      this.subrubros = this.data.subrubros || [];
+      this.marcas = this.data.marcas || [];
+    }
+    // this.rubros = this.data.rubros;  // Recibe rubros
+    // this.subrubros = this.data.subrubros;  // Recibe subrubros
     this.productoForm = this.fb.group({
       id: ['1'],
       nombre: ['', Validators.required],
@@ -33,6 +52,7 @@ export class FormProductoComponent implements OnInit {
       precioImpuestoNacional: [{ value: 0, disabled: true }],
     });
 
+    this.setupAutocomplete();
     this.setupConditionalFields();
   }
 
@@ -67,6 +87,11 @@ export class FormProductoComponent implements OnInit {
   onSubmit() {
     if (this.productoForm.valid) {
       const producto: Producto = this.productoForm.value;
+
+      producto.rubro = producto.rubro.toUpperCase();
+      producto.subrubro = producto.subrubro.toUpperCase();
+      producto.marca = producto.marca.toUpperCase();
+
       this.productosService.agregarProducto(producto).then((docRef) => {
         producto.id = docRef.id; 
         return this.productosService.actualizarProducto(producto);    
@@ -78,6 +103,25 @@ export class FormProductoComponent implements OnInit {
     }
   }
 
+  setupAutocomplete(): void {
+  this.productoForm.get('rubro')?.valueChanges.subscribe(valor => {
+    const filtro = (valor || '').toUpperCase();
+    this.rubrosFiltrados = this.rubros.filter(r => r.includes(filtro));
+  });
 
+  this.productoForm.get('subrubro')?.valueChanges.subscribe(valor => {
+    const filtro = (valor || '').toUpperCase();
+    this.subrubrosFiltrados = this.subrubros.filter(s => s.includes(filtro));
+  });
+
+  this.productoForm.get('marca')?.valueChanges.subscribe(valor => {
+    const filtro = (valor || '').toUpperCase();
+    this.marcasFiltradas = this.marcas.filter(s => s.includes(filtro));
+  });
+}
+
+filtrarSubrubros(): void {
+  // lógica para filtrar los subrubros si lo necesitás
+}
 
 }

@@ -19,6 +19,10 @@ export class ListaProductosComponent {
   displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'stock', 'acciones'];
   public productoAEliminar: string = ''; 
 
+  rubrosUnicos: string[] = [];
+  subrubrosUnicos: string[] = [];
+  marcasUnicas: string[] = [];
+
   constructor(
     private productosService: ProductosService,  
     public dialog: MatDialog,
@@ -32,19 +36,9 @@ export class ListaProductosComponent {
   obtenerProductos(): void {
     this.productosService.obtenerProductos().subscribe((productos: Producto[]) => {
       this.productos = productos;
-    });
-  }
-
-  abrirModal(): void {
-    const dialogRef = this.dialog.open(FormProductoComponent, {
-      width: '600px',  // Ajusta el tamaño del modal
-      data: null,  // Aquí puedes enviar datos si es necesario (por ejemplo, para editar un producto)
-    });
-
-    dialogRef.afterClosed().subscribe((resultado) => {
-      if (resultado) {
-        this.obtenerProductos(); // Refrescar la lista después de cerrar el modal
-      }
+      this.rubrosUnicos = [...new Set(productos.map(p => p.rubro.toUpperCase()))];
+      this.subrubrosUnicos = [...new Set(productos.map(p => p.subrubro.toUpperCase()))];
+      this.marcasUnicas = [...new Set(productos.map(p => p.marca.toUpperCase()))];
     });
   }
 
@@ -61,23 +55,28 @@ export class ListaProductosComponent {
     });
   }
 
-  abrirModalAltaProducto(): void {
-    const dialogRef = this.dialog.open(FormProductoComponent, {
-      width: '90vw',       // 90% del ancho de la ventana
-      maxWidth: '600px',   // máximo 600px
-      height: 'auto',
-      maxHeight: '90vh',   // 90% del alto de la ventana
-      panelClass: 'custom-dialog-container', // opcional para estilos
-      data: {} // si querés pasar datos iniciales, podés hacerlo acá
-    });
+abrirModalAltaProducto(): void {
+  const dialogRef = this.dialog.open(FormProductoComponent, {
+    width: '90vw',
+    maxWidth: '600px',
+    height: 'auto',
+    maxHeight: '90vh',
+    panelClass: 'custom-dialog-container',
+    data: {
+      rubros: this.rubrosUnicos,
+      subrubros: this.subrubrosUnicos,
+      marcas: this.marcasUnicas
+    }
+  });
 
-    dialogRef.afterClosed().subscribe(resultado => {
-      if (resultado) {
-        dialogRef.close(); // Cerrar el modal después de crear el producto
-        console.log('Producto creado:', resultado);
-      }
-    });
-  }
+  dialogRef.afterClosed().subscribe(resultado => {
+    if (resultado) {
+      console.log('Producto creado:', resultado);
+      this.obtenerProductos(); // Refrescar productos
+    }
+  });
+}
+
 
   verProducto(producto: any): void {
     this.dialog.open(ProductoDetalleComponent, {

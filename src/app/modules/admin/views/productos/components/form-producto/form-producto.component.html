@@ -12,20 +12,49 @@
     <textarea matInput formControlName="descripcion" required></textarea>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
+  <mat-form-field>
     <mat-label>Rubro</mat-label>
-    <input matInput formControlName="rubro" />
+    <input matInput type="text" formControlName="rubro" [matAutocomplete]="autoRubro" />
+
+    <mat-autocomplete #autoRubro="matAutocomplete">
+      <mat-option *ngFor="let rubro of rubrosFiltrados" [value]="rubro">
+        {{ rubro }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Subrubro</mat-label>
-    <input matInput formControlName="subrubro" />
+
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>Subrubro</mat-label>
+  <input
+    matInput
+    type="text"
+    formControlName="subrubro"
+    [matAutocomplete]="autoSubrubro" />
+  <mat-autocomplete #autoSubrubro="matAutocomplete">
+    <mat-option
+      *ngFor="let sub of subrubrosFiltrados"
+      [value]="sub">
+      {{ sub }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Marca</mat-label>
+    <input matInput type="text" formControlName="marca" [matAutocomplete]="autoMarca" />
+
+    <mat-autocomplete #autoMarca="matAutocomplete">
+      <mat-option *ngFor="let marca of marcasFiltradas" [value]="marca">
+        {{ marca }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
+  <!-- <mat-form-field appearance="fill" class="full-width">
     <mat-label>Marca</mat-label>
     <input matInput formControlName="marca" />
-  </mat-form-field>
+  </mat-form-field> -->
 
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Precio</mat-label>

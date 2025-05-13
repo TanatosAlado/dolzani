@@ -21,13 +21,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
-
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
   declarations: [NavbarComponent, FooterComponent, ConfirmDialogComponent, CarritoComponent],
-  imports: [CommonModule, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule],
-  exports: [NavbarComponent, FooterComponent, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule],
+  imports: [CommonModule, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule],
+  exports: [NavbarComponent, FooterComponent, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule],
 })
 export class SharedModule {}
