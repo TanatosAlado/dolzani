@@ -43,7 +43,8 @@ export class CarritoComponent {
   aumentarCantidad(producto: any): void {
     producto.cantidad++;
     this.guardarCambiosCarrito()
-    this.carritoService.contadorProductos()
+    // this.carritoService.contadorProductos()
+    this.carritoService.actualizarCantidadProductos(this.cliente)
   }
 
   

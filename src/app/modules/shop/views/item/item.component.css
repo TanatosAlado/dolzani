@@ -31,6 +31,12 @@
 
 .card-body {
   padding: 1rem;
+
+  min-height: 220px; /* Ajustá según lo que necesites */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
 }
 
 .logo-container {

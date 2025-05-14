@@ -148,4 +148,10 @@ export class NavbarComponent {
     })
     
   }
+
+    abrirCarrito() {
+    // Lógica para abrir el offcanvas o cualquier acción que necesites
+    console.log('Carrito abierto');
+    // Si usas Bootstrap para el offcanvas, puedes hacerlo con código JavaScript o Angular
+  }
 }

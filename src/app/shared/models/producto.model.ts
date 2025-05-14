@@ -14,7 +14,7 @@ export class Producto {
         public oferta: boolean = false,
         public precioOferta: number = 0,
         public impuestoNacional: boolean = false,
-        public precioImpuestoNacional: number = 0,
+        public precioSinImpuestoNacional: number = 0,
     ) {}
 }
 

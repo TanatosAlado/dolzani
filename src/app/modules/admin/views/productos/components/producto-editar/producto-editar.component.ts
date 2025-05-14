@@ -31,7 +31,7 @@ export class ProductoEditarComponent {
       oferta: [this.producto.oferta],
       precioOferta: [this.producto.precioOferta],
       impuestoNacional: [this.producto.impuestoNacional],
-      precioImpuestoNacional: [this.producto.precioImpuestoNacional],
+      precioSinImpuestoNacional: [this.producto.precioSinImpuestoNacional],
       imagen: [this.producto.imagen],
       cantidad: [this.producto.cantidad || 1, [Validators.required, Validators.min(1)]]
     });

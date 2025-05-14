@@ -1,6 +1,8 @@
 <div class="card item-card shadow-sm position-relative">
   <!-- Descuento arriba a la izquierda -->
-  <div class="badge bg-purple discount-badge">-{{ 15 }}%</div>
+  <div *ngIf="producto.oferta" class="badge bg-purple discount-badge">
+    -{{ calcularDescuento(producto) }}%
+  </div>
 
   <!-- Logo arriba a la derecha -->
   <div class="logo-container">
@@ -8,22 +10,24 @@
   </div>
 
   <!-- Imagen del producto -->
-  <img
-    [src]="producto.imagen"
-    class="product-img"
-    alt="{{ producto.nombre }}"
-  />
+  <img [src]="producto.imagen" class="product-img" alt="{{ producto.nombre }}" />
 
   <div class="card-body">
-    <h5 class="card-title fw-bold">{{ producto.nombre }}</h5>
+    <h5 class="card-title fw-bold" style="min-height: 3rem;">{{ producto.nombre }}</h5>
+
     <p class="card-subtitle text-muted small">{{ producto.descripcion }}</p>
 
-    <p class="card-text mb-0">
-      <span class="text-muted text-decoration-line-through"
-        >Antes ${{ producto.precio }}</span
-      >
+    <p class="card-text mb-0" [style.visibility]="producto.oferta ? 'visible' : 'hidden'">
+      <span class="text-muted text-decoration-line-through">Antes ${{ producto.precio }}</span>
     </p>
-    <p class="fs-4 fw-bold text-dark">${{ producto.precioOferta }}</p>
+    <p class="fs-4 fw-bold text-dark">
+      {{ producto.oferta ? ('$' + producto.precioOferta) : ('$' + producto.precio) }}
+    </p>
+
+    <p class="text-muted fw-normal fst-italic" style="font-size: 0.75rem;"
+      [style.visibility]="producto.impuestoNacional ? 'visible' : 'hidden'">
+      Precio s/imp. nacionales: ${{ producto.precioSinImpuestoNacional }}
+    </p>
 
     <button (click)="agregarCarrito(producto)" class="btn btn-primary w-100 mt-2">Agregar al carrito</button>
   </div>

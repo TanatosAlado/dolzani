@@ -19,4 +19,13 @@ export class ItemComponent {
   agregarCarrito(id:any){
   this.generalService.cargarProductoCarrito(id,1)
   }
+
+  calcularDescuento(producto: Producto): number {
+  if (producto.oferta && producto.precio > 0 && producto.precioOferta > 0) {
+    const descuento = ((producto.precio - producto.precioOferta) / producto.precio) * 100;
+    return Math.round(descuento); 
+  }
+  return 0;
+}
+
 }
