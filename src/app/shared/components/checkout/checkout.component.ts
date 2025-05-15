@@ -124,11 +124,6 @@ export class CheckoutComponent {
     const envioSeleccionado = !!this.radioButtonSeleccionado;
     const pagoSeleccionado = !this.showOpcionesPago || !!this.opcionPagoSeleccionada;
 
-    console.log('formularioValido:', formularioValido);
-    console.log('envioSeleccionado:', envioSeleccionado);
-    console.log('pagoSeleccionado:', pagoSeleccionado);
-    console.log('Valor del form:', this.formCheckout.value);
-
     if (formularioValido && envioSeleccionado && pagoSeleccionado) {
       this.createPedido()
       this.sumarContador()

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Producto } from 'src/app/shared/models/producto.model';
 import { GeneralService } from 'src/app/shared/services/general.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-item',
@@ -10,14 +11,20 @@ import { GeneralService } from 'src/app/shared/services/general.service';
 export class ItemComponent {
   @Input() producto!: Producto;
 
-  constructor(private generalService:GeneralService){
+  constructor(private generalService:GeneralService, private toastService: ToastService){
 
   }
 
  
- //FUNCION PARA AGREGAR EL CARRITO EN EL CLIENTE
-  agregarCarrito(id:any){
-  this.generalService.cargarProductoCarrito(id,1)
+  //FUNCION PARA AGREGAR EL CARRITO EN EL CLIENTE
+  agregarCarrito(id: any) {
+    this.generalService.cargarProductoCarrito(id, 1)
+      .then(() => {
+        this.toastService.toatsMessage('Producto agregado al carrito', 'green',2000);
+      })
+      .catch(err => {
+        this.toastService.toatsMessage('El producto no pudo agregarse', 'red',2000);
+      });
   }
 
   calcularDescuento(producto: Producto): number {
