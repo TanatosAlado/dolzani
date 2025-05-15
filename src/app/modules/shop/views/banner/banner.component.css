@@ -3,7 +3,8 @@
   margin-top: 25px;
   margin-bottom: 30px;
   overflow: hidden;
-  background-color: aquamarine;
+  background-color: black;
+  border-radius: 10px;
 }
 
 .carousel-item img {

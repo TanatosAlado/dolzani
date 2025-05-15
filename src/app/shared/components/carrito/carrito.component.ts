@@ -4,6 +4,7 @@ import { GeneralService } from '../../services/general.service';
 import { CarritoService } from '../../services/carrito.service';
 import { ClientesService } from '../../services/clientes.service';
 import { take } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carrito',
@@ -15,7 +16,7 @@ export class CarritoComponent {
   cliente:Cliente
   userLogueado=localStorage.getItem('mail')
   
-   constructor(public generalService:GeneralService, private carritoService:CarritoService, private clienteService: ClientesService){
+   constructor(public generalService:GeneralService, private carritoService:CarritoService, private clienteService: ClientesService, private router: Router){
 
    }
 
@@ -69,6 +70,14 @@ export class CarritoComponent {
         });
       }
        this.clienteService.getClientes();
+  }
+
+  navigateCheckout(){
+    // Forzar cierre manual quitando clases de Bootstrap
+  document.body.classList.remove('offcanvas-backdrop', 'show');
+  document.body.style.overflow = 'auto';
+
+  this.router.navigate(['checkout']);
   }
 }
 

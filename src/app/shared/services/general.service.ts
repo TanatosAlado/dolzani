@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 import { ClientesService } from './clientes.service';
+import { CarritoService } from './carrito.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class GeneralService {
  private busquedaSource = new BehaviorSubject<string>('');
  busqueda$ = this.busquedaSource.asObservable();
  
-  constructor(private paginatorIntl: MatPaginatorIntl,private router: Router, private clientesService: ClientesService) { 
+  constructor(private paginatorIntl: MatPaginatorIntl,private router: Router, private clientesService: ClientesService, private carritoService:CarritoService) { 
     this.setPaginatorLabels();
   }
 
@@ -106,6 +107,9 @@ export class GeneralService {
         });
       }
       this.clientesService.actualizarCliente(clienteEncontrado.id, clienteEncontrado)
+        .then(() => {
+          this.carritoService.actualizarCantidadProductos(clienteEncontrado)
+  })
       // this.toastService.toatsMessage("Producto Agregado Al Carrito", "green", 2000)
       // this.contadorProductos()
     }
@@ -114,6 +118,16 @@ export class GeneralService {
    //FUNCION PARA OBTENER LA CANTIDAD TOTAL A PAGAR DEL CARRITO DEL CLIENTE
    getTotalPrecio(cliente: any): number {
     return cliente.carrito.reduce((total: number, prod: any) => total + (prod.precioFinal * prod.cantidad), 0);
+  }
+
+  formatearFechaDesdeDate(fecha: Date): string {
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const anio = fecha.getFullYear();
+    const horas = fecha.getHours().toString().padStart(2, '0');
+    const minutos = fecha.getMinutes().toString().padStart(2, '0');
+  
+    return `${dia}/${mes}/${anio} ${horas}:${minutos}`;
   }
   
 }

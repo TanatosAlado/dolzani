@@ -47,7 +47,7 @@
           </div>
           
           <div class="contenedor-compra" *ngIf="cliente.carrito && cliente.carrito.length > 0">
-            <button>FINALIZAR COMPRA</button>
+            <button (click)="navigateCheckout()">FINALIZAR COMPRA</button>
             <span data-bs-dismiss="offcanvas">Ver Más Productos</span>
           </div>
           
