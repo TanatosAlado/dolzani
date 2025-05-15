@@ -61,7 +61,7 @@ pedidoPendienteSubject = new BehaviorSubject<Pedido[]>([]);
       }
 
       //SERVICIO PARA MOVER UN CARRO DE PEDIDO PENDIENTE A PEDIDO FINALIZADO
-      async moverDocumento(id: string, origen: string, destino: string) {
+      async moverDocumento(id: string, origen: string, destino: string): Promise<void> {
         try {
           const refOrigen = doc(this.firestore, origen, id);
           const snap = await getDoc(refOrigen);
@@ -113,6 +113,5 @@ pedidoPendienteSubject = new BehaviorSubject<Pedido[]>([]);
           });
         });
       }
-
 
 }

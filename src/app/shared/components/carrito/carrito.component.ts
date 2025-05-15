@@ -6,6 +6,8 @@ import { ClientesService } from '../../services/clientes.service';
 import { take } from 'rxjs';
 import { Router } from '@angular/router';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-carrito',
   templateUrl: './carrito.component.html',
@@ -78,7 +80,17 @@ export class CarritoComponent {
   document.body.style.overflow = 'auto';
 
   this.router.navigate(['checkout']);
+  this.cerrarCarrito();
   }
+
+  cerrarCarrito() {
+    const offcanvasElement = document.getElementById('offcanvasCarrito');
+    if (offcanvasElement) {
+      const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement);
+      offcanvasInstance?.hide();
+    }
+  }
+
 }
 
   

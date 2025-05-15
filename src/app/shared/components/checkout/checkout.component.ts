@@ -7,6 +7,8 @@ import { GeneralService } from '../../services/general.service';
 import { PedidosService } from '../../services/pedidos.service';
 import { ContadorService } from '../../services/contador.service';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
+import { Router } from '@angular/router';
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-checkout',
@@ -33,7 +35,7 @@ export class CheckoutComponent {
   contador: Contador[] = []
 
 
-  constructor(private fb: FormBuilder, private clienteService: ClientesService, public pedidoService: PedidosService, public generalService: GeneralService, private contadorService: ContadorService) {
+  constructor(private fb: FormBuilder, private clienteService: ClientesService, public pedidoService: PedidosService, public generalService: GeneralService, private contadorService: ContadorService, private router: Router, private carritoService: CarritoService) {
 
     this.formCheckout = this.fb.group({
       user: ['', [Validators.required]],
@@ -214,6 +216,8 @@ export class CheckoutComponent {
   //FUNCION PARA CERRAR MODAL FIN DE PEDIDO
   cerrarModal() {
     this.mostrarModal = false;
+    this.router.navigate(['inicio']);
+    this.carritoService.actualizarCantidadProductos(this.clienteEncontrado)
   }
 
   //FUNCION PARA SUMAR EL CONTADOR DE PEDIDOS FINALIZADOS

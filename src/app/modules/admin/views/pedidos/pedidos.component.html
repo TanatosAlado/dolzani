@@ -2,4 +2,203 @@
     Gestión de Pedidos
 </app-encabezado>
 
-  
+
+
+
+<div class="container-section">
+
+    <!-- <div class="container-section-left">
+
+    </div> -->
+    <div class="container-section-right">
+        <div class="title-section">
+
+            <div *ngIf="showTablaPedido">
+                <div class="tabs-container">
+                    <div class="tabs">
+                        <div class="tab" [class.active]="activeTab === 1" (click)="activeTab = 1">Pedidos Pendientes
+                        </div>
+                        <div class="tab" [class.active]="activeTab === 2" (click)="activeTab = 2">Pedidos Finalizados
+                        </div>
+                    </div>
+
+                    <div class="tab-content">
+                        <div *ngIf="activeTab === 1" class="content">
+                            <div class="table-container">
+                                <input class="search-input" (keyup)="applyFilter($event,datasourcePedidosPendientes)"
+                                    placeholder="Búsqueda Pedidos Pendientes" #input>
+                                <table mat-table [dataSource]="datasourcePedidosPendientes"
+                                    class="mat-elevation-z8 responsive-table">
+                                    <ng-container matColumnDef="hora">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Fecha Pedido</th>
+                                        <td mat-cell *matCellDef="let pedidos">{{ pedidos.fecha }}</td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="usuario">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Nombre y Apellido</th>
+                                        <td mat-cell *matCellDef="let pedidos">{{ pedidos.user }}</td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="celular">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Celular</th>
+                                        <td mat-cell *matCellDef="let pedidos">{{ pedidos.telefono }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="entrega">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Forma de Entrega</th>
+                                        <td mat-cell *matCellDef="let pedidos">{{ pedidos.entrega }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="direccion">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Direccion de Envío</th>
+                                        <td mat-cell *matCellDef="let pedidos">{{ pedidos.domicilioEntrega }}</td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="pago">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Forma de Pago</th>
+                                        <td mat-cell *matCellDef="let pedidos">{{ pedidos.pago }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="total">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Total</th>
+                                        <td mat-cell *matCellDef="let pedidos">$ {{ pedidos.total }}</td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="acciones">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Acciones</th>
+                                        <td mat-cell *matCellDef="let pedidos">
+                                            <a (click)="showCarritoPedidoPendiente(pedidos.id)" class="pointer"
+                                                title="Ver Pedido">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                            <a (click)="this.moverDocumento(pedidos.id,'Pedidos Pendientes','Pedidos Finalizados')"
+                                                class="pointer" title="Finalizar Pedido">
+                                                <i class="fa-solid fa-circle-check"></i>
+                                            </a>
+                                            <a (click)="deletePedido(pedidos.id,'Pedidos Pendientes')" class="pointer"
+                                                title="Eliminar Pedido">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="columnsPedidosPendietes"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: columnsPedidosPendietes;"></tr>
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="5">No data matching the filter "{{ input.value }}"
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="paginator-container">
+                                <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons
+                                    aria-label="Select page of pedidosPendientes">
+                                </mat-paginator>
+                            </div>
+                        </div>
+                        <div *ngIf="activeTab === 2" class="content">
+                            <div class="table-container">
+                                <input class="search-input" (keyup)="applyFilter($event,datasourcePedidosFinalizados)"
+                                    placeholder="Búsqueda Pedidos Finalizados" #input>
+                                <table mat-table [dataSource]="datasourcePedidosFinalizados"
+                                    class="mat-elevation-z8 responsive-table">
+                                    <ng-container matColumnDef="hora">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Fecha Pedido</th>
+                                        <td mat-cell *matCellDef="let pedidos">{{ pedidos.fecha }}</td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="usuario">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Nombre y Apellido</th>
+                                        <td mat-cell *matCellDef="let pedidos">{{ pedidos.user }}</td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="celular">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Celular</th>
+                                        <td mat-cell *matCellDef="let pedidos">{{ pedidos.telefono }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="entrega">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Forma de Entrega</th>
+                                        <td mat-cell *matCellDef="let pedidos">{{ pedidos.entrega }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="direccion">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Direccion de Envío</th>
+                                        <td mat-cell *matCellDef="let pedidos">{{ pedidos.domicilioEntrega }}</td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="pago">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Forma de Pago</th>
+                                        <td mat-cell *matCellDef="let pedidos">{{ pedidos.pago }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="total">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Total</th>
+                                        <td mat-cell *matCellDef="let pedidos">$ {{ pedidos.total }}</td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="acciones">
+                                        <th mat-header-cell *matHeaderCellDef class="cabecera">Acciones</th>
+                                        <td mat-cell *matCellDef="let pedidos">
+                                            <a (click)="showCarritoPedidoFinalizado(pedidos.id)" class="pointer"
+                                                title="Ver Pedido">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                            <a (click)="this.moverDocumento(pedidos.id,'Pedidos Finalizados','Pedidos Pendientes')"
+                                                class="pointer" title="Pasar a Pendiente">
+                                                <i class="fa-solid fa-hourglass-half"></i>
+                                            </a>
+                                            <a (click)="deletePedido(pedidos.id,'Pedidos Finalizados')" class="pointer"
+                                                title="Eliminar Pedido">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="columnsPedidosFinalizados"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: columnsPedidosFinalizados;"></tr>
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="5">No data matching the filter "{{ input.value }}"
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <div class="paginator-container">
+                                <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons
+                                    aria-label="Select page of pedidosFinalizados">
+                                </mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MODAL PARA VER EL FORM DEL PEDIDO DEL CLIENTE -->
+            <div *ngIf="showFormPedido">
+                <div class="carrito-container" *ngIf="showCarroPedido && pedidoEncontrado">
+                    <a (click)="showBodyPedidos()" class="add-icon-pedido" title="Ver Tabla Pedido">
+                        <i class="fa-solid fa-table-list"></i>
+                    </a>
+                    <h3>Pedido de {{pedidoEncontrado.user}}</h3>
+                    <div *ngFor="let carro of pedidoEncontrado.carrito" class="producto">
+                        <img [src]="carro.imagen" alt="Producto">
+                        <div class="detalle">
+                            <p>{{carro.nombre}}</p>
+                            <div *ngIf="!carro.editandoCantidad; else inputCantidad"
+                                (click)="this.activeTab === 1 && activarEdicion(carro)">
+                                <span class="cantidad-label">Cantidad: {{carro.cantidad}}</span>
+                            </div>
+                            <ng-template #inputCantidad>
+                                <input type="number" class="input-cantidad" [(ngModel)]="carro.cantidad" min="1"
+                                    (blur)="desactivarEdicion(carro)" (keydown.enter)="desactivarEdicion(carro)"
+                                    (ngModelChange)="actualizarTotal()"
+                                    style="width: 5%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; outline: none;">
+                            </ng-template>
+                        </div>
+                        <div class="precio"
+                            style="font-weight: bold; margin-left: 15px; display: flex; align-items: center; gap: 10px;">
+                            ${{carro.precioFinal * carro.cantidad}}
+                            <i *ngIf="showDeleteCarro" class="fas fa-trash-alt" style="color:#068c89; cursor: pointer;"
+                                (click)="eliminarProductoCarro(carro)"></i>
+                        </div>
+                    </div>
+                    <div class="total">Total: ${{pedidoEncontrado.total}}</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
