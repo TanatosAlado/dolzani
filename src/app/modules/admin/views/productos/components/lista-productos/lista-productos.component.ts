@@ -50,7 +50,16 @@ export class ListaProductosComponent {
 
     dialogRef.afterClosed().subscribe((resultado) => {
       if (resultado) {
-        this.obtenerProductos(); // Refrescar la lista después de cerrar el modal
+
+        console.log('Datos actualizados:', resultado);
+        this.productosService.actualizarProducto(resultado)
+        .then(() => {
+          console.log('Cliente actualizado correctamente en Firebase');
+          this.obtenerProductos(); // Refrescar la lista después de cerrar el modal
+        })
+        .catch(error => {
+          console.error('Error al actualizar el cliente:', error);
+        });
       }
     });
   }

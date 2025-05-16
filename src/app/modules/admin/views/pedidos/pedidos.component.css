@@ -123,7 +123,7 @@ th {
   cursor: pointer;
   display: flex;
   justify-content: center;
- align-content: end;
+ align-content: flex-end;
  text-align: right;
  margin-left: 100%;
   font-size: 20px
