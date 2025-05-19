@@ -13,7 +13,7 @@ import { CambioPassComponent } from '../cambio-pass/cambio-pass.component';
 export class IngresoComponent {
   usuario: string = '';
   contrasena: string = '';
-  loginFail; boolean = false; // Variable para manejar el error de login
+  loginFail: boolean = false; // Variable para manejar el error de login
   readonly CONTRASENA_DEFAULT: string = 'Dolzani123'; // Contraseña por defecto para el cliente
 
   constructor(private authService: AuthService, private dialogRef: MatDialogRef<IngresoComponent>, private dialog: MatDialog) {}
