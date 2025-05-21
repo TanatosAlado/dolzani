@@ -12,16 +12,15 @@
   <!-- Imagen del producto -->
   <img [src]="producto.imagen" class="product-img" alt="{{ producto.nombre }}" />
 
-  <div class="card-body">
+  <div class="card-body text-center">
     <h5 class="card-title fw-bold" style="min-height: 3rem;">{{ producto.nombre }}</h5>
 
-    <p class="card-subtitle text-muted small">{{ producto.descripcion }}</p>
-
-    <p class="card-text mb-0" [style.visibility]="producto.oferta ? 'visible' : 'hidden'">
+    <div class="d-flex justify-content-center align-items-baseline gap-2 mb-2" *ngIf="producto.oferta">
       <span class="text-muted text-decoration-line-through">Antes ${{ producto.precio }}</span>
-    </p>
-    <p class="fs-4 fw-bold text-dark">
-      {{ producto.oferta ? ('$' + producto.precioOferta) : ('$' + producto.precio) }}
+      <span class="fs-4 fw-bold text-dark">${{ producto.precioOferta }}</span>
+    </div>
+    <p *ngIf="!producto.oferta" class="fs-4 fw-bold text-dark text-center">
+      ${{ producto.precio }}
     </p>
 
     <p class="text-muted fw-normal fst-italic" style="font-size: 0.75rem;"

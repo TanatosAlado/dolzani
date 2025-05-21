@@ -99,6 +99,8 @@
       <div class="col-12 d-none d-lg-flex justify-content-center style-menues">
         <a routerLink="/inicio" data-bs-toggle="collapse" data-bs-target="#menuInicio" aria-expanded="false"
           aria-controls="menuInicio">Inicio</a>
+        <a routerLink="/productos" data-bs-toggle="collapse" data-bs-target="#menuProductos" aria-expanded="false"
+          aria-controls="menuProductos">Productos</a>          
         <a routerLink="/nosotros" data-bs-toggle="collapse" data-bs-target="#menuServicios" aria-expanded="false"
           aria-controls="menuServicios">Nosotros</a>
         <a routerLink="/contacto" data-bs-toggle="collapse" data-bs-target="#menuContacto" aria-expanded="false"
@@ -129,6 +131,7 @@
   </div>
   <div class="offcanvas-body d-flex flex-column gap-3">
     <a routerLink="/inicio" class="nav-link">Inicio</a>
+    <a routerLink="/productos" class="nav-link">Productos</a>
     <a routerLink="/nosotros" class="nav-link">Nosotros</a>
     <a routerLink="/contacto" class="nav-link">Contacto</a>
     <a *ngIf="usrAdmin" routerLink="/gestiones" class="nav-link">Gestiones</a>

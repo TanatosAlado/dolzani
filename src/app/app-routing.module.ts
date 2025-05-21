@@ -45,6 +45,7 @@ const routes: Routes = [
   {path:'busqueda/:id',component:GrillaItemsComponent},
   {path:'busqueda',component:GrillaItemsComponent},
   {path:'checkout',component:CheckoutComponent},
+  {path:'productos',component:GrillaItemsComponent},
   {
     path: 'nosotros',
     component: NosotrosComponent,

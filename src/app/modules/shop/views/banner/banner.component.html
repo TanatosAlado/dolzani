@@ -1,4 +1,4 @@
-<div *ngIf="imagenes.length > 0; else sinImagenes" id="bannerCarousel" class="carousel slide container" data-bs-ride="carousel">
+<!-- <div *ngIf="imagenes.length > 0; else sinImagenes" id="bannerCarousel" class="carousel slide container" data-bs-ride="carousel">
   <div class="carousel-inner banner">
     <div
       class="carousel-item"
@@ -13,6 +13,33 @@
     <span class="carousel-control-prev-icon"></span>
     <span class="visually-hidden">Anterior</span>
   </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+    <span class="visually-hidden">Siguiente</span>
+  </button>
+</div>
+
+<ng-template #sinImagenes>
+  <p class="text-center mt-3">No hay imágenes disponibles para el banner.</p>
+</ng-template> -->
+
+
+<div *ngIf="imagenes.length > 0; else sinImagenes" id="bannerCarousel" class="carousel slide banner-container container" data-bs-ride="carousel" data-bs-interval="5000">
+  <div class="carousel-inner banner">
+    <div
+      class="carousel-item position-relative"
+      *ngFor="let img of imagenes; let i = index"
+      [class.active]="i === 0"
+    >
+      <img [src]="img.url" class="d-block w-100" alt="Banner" />
+    </div>
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+
   <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
     <span class="carousel-control-next-icon"></span>
     <span class="visually-hidden">Siguiente</span>
