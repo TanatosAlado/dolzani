@@ -1,51 +1,69 @@
 <div class="container mt-4">
-    <div class="row">
 
-        <!-- Filtros -->
-        <div class="col-md-3 mb-3">
-            <h5>Filtros</h5>
-            <!-- Ejemplo: filtro por nombre -->
-            <input type="text" class="form-control mb-2" placeholder="Buscar por nombre" [(ngModel)]="filtroNombre"
-                (input)="filtrarProductos()" />
+    <!-- Filtros arriba -->
+    <div class="card p-3 mb-4 shadow-sm filter-bar">
+        <div class="row g-3 align-items-end">
 
-            <!-- Filtro por rubro -->
-            <select class="form-control mb-2" [(ngModel)]="filtroRubro" (change)="filtrarProductos()">
-                <option value="">Todos los rubros</option>
-                <option *ngFor="let rubro of rubros" [value]="rubro">{{ rubro }}</option>
-            </select>
+            <!-- Buscar por nombre -->
+            <div class="col-md-2">
+                <input type="text" class="form-control" placeholder="Buscar por nombre" [(ngModel)]="filtroNombre"
+                    (input)="filtrarProductos()" />
+            </div>
 
-            <!-- Filtro por subrubro -->
-            <select class="form-control mb-2" [(ngModel)]="filtroSubrubro" (change)="filtrarProductos()"
-                [disabled]="!filtroRubro">
-                <option value="">Todos los subrubros</option>
-                <option *ngFor="let sub of subrubros" [value]="sub">{{ sub }}</option>
-            </select>
+            <!-- Filtro rubro -->
+            <div class="col-md-2">
+                <select class="form-select" [(ngModel)]="filtroRubro" (change)="filtrarProductos()">
+                    <option value="">Todos los rubros</option>
+                    <option *ngFor="let rubro of rubros" [value]="rubro">{{ rubro }}</option>
+                </select>
+            </div>
+
+            <!-- Filtro subrubro -->
+            <div class="col-md-2">
+                <select class="form-select" [(ngModel)]="filtroSubrubro" (change)="filtrarProductos()"
+                    [disabled]="!filtroRubro">
+                    <option value="">Todos los subrubros</option>
+                    <option *ngFor="let sub of subrubros" [value]="sub">{{ sub }}</option>
+                </select>
+            </div>
+
+            <!-- Filtro marca -->
+            <div class="col-md-2">
+                <select class="form-select" [(ngModel)]="filtroMarca" (change)="filtrarProductos()">
+                    <option value="">Todas las marcas</option>
+                    <option *ngFor="let marca of marcas" [value]="marca">{{ marca }}</option>
+                </select>
+            </div>
 
             <!-- Precio mínimo -->
-            <input type="number" class="form-control mb-2" placeholder="Precio mínimo" [(ngModel)]="precioMin"
-                (input)="filtrarProductos()" />
+            <div class="col-md-1">
+                <input type="number" class="form-control" placeholder="$ Min" [(ngModel)]="precioMin"
+                    (input)="filtrarProductos()" />
+            </div>
 
             <!-- Precio máximo -->
-            <input type="number" class="form-control mb-2" placeholder="Precio máximo" [(ngModel)]="precioMax"
-                (input)="filtrarProductos()" />
-
-
-            <!-- Checkbox destacados -->
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" [(ngModel)]="soloDestacados"
-                    (change)="filtrarProductos()" />
-                <label class="form-check-label">Solo destacados</label>
+            <div class="col-md-1">
+                <input type="number" class="form-control" placeholder="$ Máx" [(ngModel)]="precioMax"
+                    (input)="filtrarProductos()" />
             </div>
-        </div>
 
-        <!-- Grilla de productos -->
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-md-3 mb-4" *ngFor="let producto of productosFiltrados">
-                    <app-item [producto]="producto"></app-item>
+            <!-- Solo destacados -->
+            <div class="col-md-2 d-flex justify-content-center align-items-center">
+                <div class="form-check d-flex align-items-center">
+                    <input class="form-check-input me-2" type="checkbox" [(ngModel)]="soloDestacados"
+                        (change)="filtrarProductos()" />
+                    <label class="form-check-label" title="Mostrar solo productos destacados">★ Destacado</label>
                 </div>
             </div>
-        </div>
 
+        </div>
+    </div>
+
+    <!-- Grilla de productos -->
+    <div class="row">
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2-4 col-5-per-row mb-4" *ngFor="let producto of productosFiltrados">
+
+            <app-item [producto]="producto"></app-item>
+        </div>
     </div>
 </div>

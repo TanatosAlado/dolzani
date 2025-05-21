@@ -20,6 +20,8 @@ export class GrillaItemsComponent {
   rubros: string[] = [];
   precioMin: number | null = null;
   precioMax: number | null = null;
+  filtroMarca: string = '';
+  marcas: string[] = [];
 
   constructor(private productoService: ProductosService) {}
 
@@ -27,10 +29,12 @@ export class GrillaItemsComponent {
     this.productoService.obtenerProductos().subscribe(productos => {
       this.productosOriginal = productos;
       this.rubros = [...new Set(productos.map(p => p.rubro))];
+      this.marcas = [...new Set(productos.map(p => p.marca))];
       this.filtrarProductos();
     });
   }
 
+  
 filtrarProductos() {
   if (this.filtroRubro) {
     this.subrubros = [
@@ -57,9 +61,12 @@ filtrarProductos() {
     const precioMinOk = this.precioMin !== null ? p.precio >= this.precioMin : true;
     const precioMaxOk = this.precioMax !== null ? p.precio <= this.precioMax : true;
 
-    return nombreOk && rubroOk && subrubroOk && destacadoOk && precioMinOk && precioMaxOk;
+    const marcaOk = this.filtroMarca ? p.marca === this.filtroMarca : true;
+
+    return nombreOk && rubroOk && subrubroOk && destacadoOk && precioMinOk && precioMaxOk && marcaOk;
   });
 }
+
 
 
 }
