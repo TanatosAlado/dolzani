@@ -60,3 +60,7 @@
   max-width: 100%;
   object-fit: contain;
 }
+
+.fondo-card{
+  background-color: rgb(228, 228, 228);
+}
