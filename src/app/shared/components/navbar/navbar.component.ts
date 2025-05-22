@@ -45,24 +45,36 @@ export class NavbarComponent {
   constructor(private carritoService: CarritoService, private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router, private clientesService: ClientesService, private productoService:ProductosService) {}
 
   ngOnInit() {
-    this.getProductos()
-    const clienteGuardado = localStorage.getItem('cliente');
-    if (clienteGuardado) {
 
-      this.clientesService.getClienteById(clienteGuardado).subscribe({
-        next: (cliente) => {
-          this.usuarioLogueado = true;
-          this.usrAdmin = cliente.administrador;
-          this.generalService.setCliente(cliente);
+  this.getProductos();
 
-          this.carritoService.actualizarCantidadProductos(cliente);
-        },
-        error: (err) => {
-          console.error('Error al obtener cliente', err);
-          localStorage.removeItem('cliente');
-        }
-      });
+  // Escuchar cambios del cliente en todo momento
+  this.generalService.getCliente().subscribe(cliente => {
+    if (cliente) {
+      this.usuarioLogueado = true;
+      this.usrAdmin = cliente.administrador;
+      this.cantidadProductos = this.getCantidadProductos(cliente.carrito);
+    } else {
+      this.usuarioLogueado = false;
+      this.usrAdmin = false;
+      this.cantidadProductos = 0;
     }
+  });
+
+  // Cargar desde localStorage por si ya hay uno guardado al iniciar
+  const clienteGuardado = localStorage.getItem('cliente');
+  if (clienteGuardado) {
+    this.clientesService.getClienteById(clienteGuardado).subscribe({
+      next: (cliente) => {
+        this.generalService.setCliente(cliente); // Esto va a activar la suscripción de arriba
+        this.carritoService.actualizarCantidadProductos(cliente);
+      },
+      error: (err) => {
+        console.error('Error al obtener cliente', err);
+        localStorage.removeItem('cliente');
+      }
+    });
+  }
 
   }
 

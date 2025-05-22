@@ -13,25 +13,18 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 })
 export class ItemComponent {
   @Input() producto!: Producto;
+  loadingCarrito: { [id: string]: boolean } = {};
 
   constructor(private generalService:GeneralService, private toastService: ToastService, private dialog: MatDialog){
 
   }
 
- 
-  //FUNCION PARA AGREGAR EL CARRITO EN EL CLIENTE
-  // agregarCarrito(id: any) {
-  //   this.generalService.cargarProductoCarrito(id, 1)
-  //     .then(() => {
-  //       this.toastService.toatsMessage('Producto agregado al carrito', 'green',2000);
-  //     })
-  //     .catch(err => {
-  //       this.toastService.toatsMessage('El producto no pudo agregarse', 'red',2000);
-  //     });
-  // }
-
 agregarCarrito(producto: any) {
   const cliente = this.generalService.getClienteActual();
+
+  this.loadingCarrito[producto.id] = true;
+
+  const finalizar = () => this.loadingCarrito[producto.id] = false;
 
   if (!cliente) {
     const dialogRef = this.dialog.open(IngresoComponent, {
@@ -56,6 +49,7 @@ agregarCarrito(producto: any) {
           });
       } else {
         this.toastService.toatsMessage('Debe iniciar sesión para agregar productos al carrito', 'orange', 3000);
+        finalizar();
       }
     });
 
@@ -70,7 +64,8 @@ agregarCarrito(producto: any) {
     .catch(err => {
       this.toastService.toatsMessage('El producto no pudo agregarse', 'red', 2000);
       console.error(err);
-    });
+    })
+    .finally(finalizar);
 }
 
 
