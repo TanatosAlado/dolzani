@@ -8,4 +8,5 @@ export const environment = {
         messagingSenderId: "800150027849",
         appId: "1:800150027849:web:2a19a114ebdbf22f864998"
     },
+    whatsappAdmin:'3424673814'
   };  

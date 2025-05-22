@@ -24,12 +24,13 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { WhatsappComponent } from './components/whatsapp/whatsapp.component';
 
 
 
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent, ConfirmDialogComponent, CarritoComponent, CheckoutComponent],
+  declarations: [NavbarComponent, FooterComponent, ConfirmDialogComponent, CarritoComponent, CheckoutComponent, WhatsappComponent],
   imports: [CommonModule, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule, MatProgressSpinnerModule],
-  exports: [NavbarComponent, FooterComponent, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule, MatProgressSpinnerModule, CheckoutComponent],
+  exports: [NavbarComponent, FooterComponent, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule, MatProgressSpinnerModule, CheckoutComponent, WhatsappComponent],
 })
 export class SharedModule {}
