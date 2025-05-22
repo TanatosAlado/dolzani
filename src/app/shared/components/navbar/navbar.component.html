@@ -53,11 +53,12 @@
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
   </div>
   <div class="offcanvas-body d-flex flex-column gap-3">
-    <a routerLink="/inicio" class="nav-link">Inicio</a>
-    <a routerLink="/productos" class="nav-link">Productos</a>
-    <a routerLink="/nosotros" class="nav-link">Nosotros</a>
-    <a routerLink="/contacto" class="nav-link">Contacto</a>
-    <a *ngIf="usrAdmin" routerLink="/gestiones" class="nav-link">Gestiones</a>
+    <a routerLink="/inicio" class="nav-link" (click)="cerrarMenu()">Inicio</a>
+    <a routerLink="/productos" class="nav-link" (click)="cerrarMenu()">Productos</a>
+    <a routerLink="/nosotros" class="nav-link" (click)="cerrarMenu()">Nosotros</a>
+    <a routerLink="/contacto" class="nav-link" (click)="cerrarMenu()">Contacto</a>
+    <a *ngIf="usrAdmin" routerLink="/gestiones" class="nav-link" (click)="cerrarMenu()">Gestiones</a>
+
   </div>
 </div>
 

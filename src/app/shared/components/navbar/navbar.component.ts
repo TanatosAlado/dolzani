@@ -4,6 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { IngresoComponent } from 'src/app/modules/auth/views/ingreso/ingreso.component';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 import { GeneralService } from '../../services/general.service';
+// Si usás Bootstrap v5
+import * as bootstrap from 'bootstrap';
+
 
 import {
   trigger,
@@ -165,4 +168,14 @@ export class NavbarComponent {
     console.log('Carrito abierto');
     // Si usas Bootstrap para el offcanvas, puedes hacerlo con código JavaScript o Angular
   }
+
+cerrarMenu() {
+  const closeButton = document.querySelector('#offcanvasMenu .btn-close') as HTMLElement;
+  if (closeButton) {
+    closeButton.click(); 
+  }
+}
+
+
+
 }
