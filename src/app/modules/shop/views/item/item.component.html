@@ -28,7 +28,7 @@
       Precio s/imp. nacionales: ${{ producto.precioSinImpuestoNacional }}
     </p>
 
-    <button mat-raised-button color="primary" [disabled]="loadingCarrito[producto.id]"
+    <button mat-raised-button class="botonesRojos" [disabled]="loadingCarrito[producto.id]"
       (click)="agregarCarrito(producto)">
       <ng-container *ngIf="!loadingCarrito[producto.id]; else loading">
         Agregar al carrito

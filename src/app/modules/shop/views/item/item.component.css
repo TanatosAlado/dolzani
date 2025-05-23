@@ -64,3 +64,8 @@
 .fondo-card{
   background-color: rgb(228, 228, 228);
 }
+
+.fondo-card button{
+  background-color: red;
+  color: white;
+}

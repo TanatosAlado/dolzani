@@ -2,14 +2,7 @@
     Gestión de Pedidos
 </app-encabezado>
 
-
-
-
 <div class="container-section">
-
-    <!-- <div class="container-section-left">
-
-    </div> -->
     <div class="container-section-right">
         <div class="title-section">
 
@@ -174,7 +167,10 @@
                     </a>
                     <h3>Pedido de {{pedidoEncontrado.user}}</h3>
                     <div *ngFor="let carro of pedidoEncontrado.carrito" class="producto">
-                        <img [src]="carro.imagen" alt="Producto">
+                        <div class="contenedor-imagen-pedido">
+                            <img [src]="carro.imagen" alt="Producto" class="imagen-pedido">
+                        </div>
+
                         <div class="detalle">
                             <p>{{carro.nombre}}</p>
                             <div *ngIf="!carro.editandoCantidad; else inputCantidad"
