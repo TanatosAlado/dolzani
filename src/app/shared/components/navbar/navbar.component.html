@@ -26,7 +26,7 @@
       <a routerLink="/inicio">Inicio</a>
       <a routerLink="/productos">Productos</a>
       <a routerLink="/nosotros">Nosotros</a>
-      <a routerLink="/contacto">Contacto</a>
+      <!-- <a routerLink="/contacto">Contacto</a> -->
       <a *ngIf="usrAdmin" routerLink="/gestiones">Gestiones</a>
     </div>
 
@@ -56,7 +56,7 @@
     <a routerLink="/inicio" class="nav-link" (click)="cerrarMenu()">Inicio</a>
     <a routerLink="/productos" class="nav-link" (click)="cerrarMenu()">Productos</a>
     <a routerLink="/nosotros" class="nav-link" (click)="cerrarMenu()">Nosotros</a>
-    <a routerLink="/contacto" class="nav-link" (click)="cerrarMenu()">Contacto</a>
+    <!-- <a routerLink="/contacto" class="nav-link" (click)="cerrarMenu()">Contacto</a> -->
     <a *ngIf="usrAdmin" routerLink="/gestiones" class="nav-link" (click)="cerrarMenu()">Gestiones</a>
 
   </div>

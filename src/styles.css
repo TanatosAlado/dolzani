@@ -4,3 +4,26 @@
     border-radius: 10px;
     padding: 1rem;
   }
+
+  .estilosSnackBar {
+    text-align: center;
+  
+  }
+  
+  .background-color-green {
+    --mdc-snackbar-container-color: green !important;
+    --mdc-snackbar-supporting-text-color: #fff !important;
+    
+  }
+  
+  .background-color-red {
+    --mdc-snackbar-container-color: red !important;
+    --mdc-snackbar-supporting-text-color: #fff !important;
+   
+  }
+
+  .background-color-yellow {
+    --mdc-snackbar-container-color: #B3B300 !important;
+    --mdc-snackbar-supporting-text-color: #fff !important;
+   
+  }

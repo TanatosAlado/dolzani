@@ -81,7 +81,7 @@
                                 </table>
                             </div>
                             <div class="paginator-container">
-                                <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons
+                                <mat-paginator  #paginatorPendientes [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons
                                     aria-label="Select page of pedidosPendientes">
                                 </mat-paginator>
                             </div>
@@ -151,7 +151,7 @@
 
                             </div>
                             <div class="paginator-container">
-                                <mat-paginator [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons
+                                <mat-paginator #paginatorFinalizados [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons
                                     aria-label="Select page of pedidosFinalizados">
                                 </mat-paginator>
                             </div>

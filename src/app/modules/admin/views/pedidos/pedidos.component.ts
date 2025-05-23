@@ -1,8 +1,13 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Pedido } from 'src/app/shared/models/pedido.model';
 import { PedidosService } from 'src/app/shared/services/pedidos.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { ViewChild, AfterViewInit } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+
+
 
 @Component({
   selector: 'app-pedidos',
@@ -32,13 +37,26 @@ export class PedidosComponent {
   showFormAgregarCliente: boolean = false
   showTablaVerCliente: boolean = false
 
+  @ViewChild('paginatorPendientes') paginatorPendientes!: MatPaginator;
+  @ViewChild('paginatorFinalizados') paginatorFinalizados!: MatPaginator;
 
-  constructor(private pedidosService: PedidosService, private toastService: ToastService){}
+
+
+  constructor(private pedidosService: PedidosService, private toastService: ToastService, private cdRef: ChangeDetectorRef){}
 
   ngOnInit(){
     this.getPedidos()
   }
 
+  ngAfterViewInit() {
+  if (this.datasourcePedidosPendientes) {
+    this.datasourcePedidosPendientes.paginator = this.paginatorPendientes;
+  }
+
+  if (this.datasourcePedidosFinalizados) {
+    this.datasourcePedidosFinalizados.paginator = this.paginatorFinalizados;
+  }
+}
 
   applyFilter(event: Event, datasource: MatTableDataSource<any>) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -78,6 +96,8 @@ export class PedidosComponent {
     this.pedidosService.pedidoPendiente$.subscribe(data => {
       this.pedidosPendientes = data;
       this.datasourcePedidosPendientes = new MatTableDataSource(this.pedidosPendientes);
+      this.cdRef.detectChanges();
+      this.datasourcePedidosPendientes.paginator = this.paginatorPendientes;
     });
   
     // Pedidos Finalizados
@@ -85,6 +105,8 @@ export class PedidosComponent {
     this.pedidosService.pedidoFinalizado$.subscribe(data => {
       this.pedidosFinalizados = data;
       this.datasourcePedidosFinalizados = new MatTableDataSource(this.pedidosFinalizados);
+      this.cdRef.detectChanges();
+      this.datasourcePedidosFinalizados.paginator = this.paginatorFinalizados;
     });
   }
 
@@ -180,5 +202,16 @@ activarEdicion(carro: any) {
       })
 
   }
+
+
+onTabChange(event: MatTabChangeEvent) {
+  this.cdRef.detectChanges();
+
+  if (event.index === 0) {
+    this.datasourcePedidosPendientes.paginator = this.paginatorPendientes;
+  } else if (event.index === 1) {
+    this.datasourcePedidosFinalizados.paginator = this.paginatorFinalizados;
+  }
+}
 
 }

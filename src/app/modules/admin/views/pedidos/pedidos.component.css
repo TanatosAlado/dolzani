@@ -142,7 +142,6 @@ th {
 .producto img {
   width: 80px;
   height: 80px;
-  object-fit: cover;
   border-radius: 5px;
 }
 
@@ -166,18 +165,18 @@ th {
 }
 
 .contenedor-imagen-pedido {
-  width: 100px;
-  height: 100px;
-  flex-shrink: 0;
+  width: auto;  /* o un valor mayor si querés */
+  max-width: 150px;
+  height: auto;
+  max-height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  overflow: visible; /* para no cortar */
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
-
 .imagen-pedido {
   max-width: 100%;
   max-height: 100%;
