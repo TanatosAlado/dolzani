@@ -25,8 +25,8 @@
 
 .product-img {
   display: block;
-  margin: 1rem auto;
-  max-height: 120px;
+  margin: 0.5rem auto;
+  max-height: 160px; /* antes 120px */
   object-fit: contain;
 }
 
@@ -66,6 +66,6 @@
 }
 
 .fondo-card button{
-  background-color: red;
+  background-color: #ec133e;
   color: white;
 }
