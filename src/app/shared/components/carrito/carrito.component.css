@@ -115,6 +115,11 @@ button {
   margin-top: 10%;
 }
 
+.info-precios {
+  display: flex;
+  flex-direction: column;
+}
+
 .precio-oferta {
   color:  #999;
   font-weight: 500;
