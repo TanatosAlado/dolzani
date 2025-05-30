@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { doc, Firestore, updateDoc } from '@angular/fire/firestore';
 
 
 
@@ -35,6 +36,7 @@ export class PedidosComponent {
   columnsPedidosPendietes: string[] = ['numero','hora', 'usuario', 'celular','direccion','entrega', 'pago','total', 'acciones']
   columnsPedidosFinalizados: string[] = ['numero','hora', 'usuario', 'celular','direccion','entrega', 'pago','total', 'acciones']
   columnsPedidosEliminados: string[] = ['numero','hora', 'usuario', 'celular','direccion','entrega', 'pago','total', 'acciones']
+  mostrarModalImpresion: boolean = false;
 
 
   showFormAgregarProducto: boolean = false
@@ -48,7 +50,7 @@ export class PedidosComponent {
 
 
 
-  constructor(private pedidosService: PedidosService, private toastService: ToastService, private cdRef: ChangeDetectorRef, private dialog: MatDialog){}
+  constructor(private pedidosService: PedidosService, private toastService: ToastService, private cdRef: ChangeDetectorRef, private dialog: MatDialog, private firestore: Firestore){}
 
   ngOnInit(){
     this.getPedidos()
@@ -224,14 +226,19 @@ activarEdicion(carro: any) {
   moverDocumento(id: string, origen: string, destino: string){
     this.pedidosService.moverDocumento(id,origen,destino)
       .then(() => {
-        if(origen == 'Pedidos Finalizados'){
-          this.toastService.toatsMessage('Pedido recuperado con éxito', 'green',2000);
-        }else{
+        if((origen == 'Pedidos Pendientes') && (destino == 'Pedidos Finalizados')){
           this.toastService.toatsMessage('Pedido finalizado con éxito', 'green',2000);
+        } else if((origen == 'Pedidos Pendientes') && (destino == 'Pedidos Eliminados')){
+          this.toastService.toatsMessage('Pedido eliminado con éxito', 'green',2000);
+        } else if((origen == 'Pedidos Finalizados') && (destino == 'Pedidos Pendientes')){
+          this.toastService.toatsMessage('Pedido regresado a pendientes con éxito', 'green',2000);
+        } else if((origen == 'Pedidos Finalizados') && (destino == 'Pedidos Eliminados')){
+          this.toastService.toatsMessage('Pedido eliminado con éxito', 'green',2000);
+        } else if((origen == 'Pedidos Eliminados') && (destino == 'Pedidos Pendientes')){
+          this.toastService.toatsMessage('Pedido regresado a pendientes con éxito', 'green',2000);
         }
-        this.getPedidos();
+        //this.getPedidos();
       })
-
   }
 
 
@@ -242,6 +249,37 @@ onTabChange(event: MatTabChangeEvent) {
     this.datasourcePedidosPendientes.paginator = this.paginatorPendientes;
   } else if (event.index === 1) {
     this.datasourcePedidosFinalizados.paginator = this.paginatorFinalizados;
+  }
+}
+
+abrirModalImpresion() {
+  this.mostrarModalImpresion = true;
+}
+
+cerrarModalImpresion() {
+  this.mostrarModalImpresion = false;
+}
+
+imprimir() {
+  if (this.pedidoEncontrado && this.pedidoEncontrado.id) {
+    const pedidoId = this.pedidoEncontrado.id;
+
+    const ref = doc(this.firestore, 'Pedidos Pendientes', pedidoId); 
+
+    updateDoc(ref, { estado: 'En preparación' })
+      .then(() => {
+        console.log('Estado actualizado a En preparación');
+        window.print();
+        this.cerrarModalImpresion(); 
+      })
+      .catch(error => {
+        console.error('Error al actualizar el estado:', error);
+        window.print(); 
+        this.cerrarModalImpresion();
+      });
+  } else {
+    window.print();
+    this.cerrarModalImpresion();
   }
 }
 

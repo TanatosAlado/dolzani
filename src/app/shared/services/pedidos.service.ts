@@ -47,24 +47,46 @@ export class PedidosService {
   }
 
   //SERVICIO PARA MOVER UN CARRO DE PEDIDO PENDIENTE A PEDIDO FINALIZADO
-  async moverDocumento(id: string, origen: string, destino: string): Promise<void> {
-    try {
-      const refOrigen = doc(this.firestore, origen, id);
-      const snap = await getDoc(refOrigen);
+async moverDocumento(id: string, origen: string, destino: string): Promise<void> {
+  try {
+    const refOrigen = doc(this.firestore, origen, id);
+    const snap = await getDoc(refOrigen);
 
-      if (snap.exists()) {
-        const data = snap.data();
-        const refDestino = doc(this.firestore, destino, id);
-        await setDoc(refDestino, data);
-        await deleteDoc(refOrigen);
-        console.log('Documento movido con éxito.');
-      } else {
-        console.log('El documento no existe.');
+    if (snap.exists()) {
+      const data = snap.data();
+
+      // Determinar el nuevo estado
+      let nuevoEstado = '';
+      if (destino === 'Pedidos Finalizados') {
+        nuevoEstado = 'Finalizado';
+      } else if (destino === 'Pedidos Pendientes') {
+        nuevoEstado = 'Pendiente';
+      } else if (destino === 'Pedidos Eliminados') {
+        nuevoEstado = 'Eliminado';
       }
-    } catch (err) {
-      console.error('Error al mover el documento:', err);
+
+      // Actualizar el campo estado
+      const dataActualizada = {
+        ...data,
+        estado: nuevoEstado
+      };
+
+      // Guardar en destino con estado actualizado
+      const refDestino = doc(this.firestore, destino, id);
+      await setDoc(refDestino, dataActualizada);
+
+      // Eliminar del origen
+      await deleteDoc(refOrigen);
+
+      console.log('Documento movido con éxito.');
+    } else {
+      console.log('El documento no existe.');
     }
+  } catch (err) {
+    console.error('Error al mover el documento:', err);
   }
+}
+
 
   //SERVICIO PARA ACTUALIZAR LA CANTIDAD DE PRODUCTOS Y TOTAL EN PEDIDOS PENDIENTES
   updateCarroEnPedido(idPedido: string, nuevoCarro: any[]) {

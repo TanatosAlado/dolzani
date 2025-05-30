@@ -72,8 +72,8 @@
                                                 class="pointer" title="Finalizar Pedido">
                                                 <i class="fa-solid fa-circle-check"></i>
                                             </a>
-                                            <a (click)="openConfirmDialog(pedidos.id,'Pedidos Pendientes')" class="pointer"
-                                                title="Eliminar Pedido">
+                                            <a (click)="openConfirmDialog(pedidos.id,'Pedidos Pendientes')"
+                                                class="pointer" title="Eliminar Pedido">
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
                                         </td>
@@ -82,14 +82,14 @@
                                     <tr mat-header-row *matHeaderRowDef="columnsPedidosPendietes"></tr>
                                     <tr mat-row *matRowDef="let row; columns: columnsPedidosPendietes;"></tr>
                                     <tr class="mat-row" *matNoDataRow>
-                                        <td class="mat-cell" colspan="5">No data matching the filter "{{ input.value }}"
+                                        <td class="mat-cell" colspan="5">Sin pedidos en esta categoría
                                         </td>
                                     </tr>
                                 </table>
                             </div>
                             <div class="paginator-container">
-                                <mat-paginator  #paginatorPendientes [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons
-                                    aria-label="Select page of pedidosPendientes">
+                                <mat-paginator #paginatorPendientes [pageSizeOptions]="[5, 10, 15]" [pageSize]="10"
+                                    showFirstLastButtons aria-label="Select page of pedidosPendientes">
                                 </mat-paginator>
                             </div>
                         </div>
@@ -147,8 +147,8 @@
                                                 class="pointer" title="Pasar a Pendiente">
                                                 <i class="fa-solid fa-hourglass-half"></i>
                                             </a>
-                                            <a (click)="openConfirmDialog(pedidos.id,'Pedidos Finalizados')" class="pointer"
-                                                title="Eliminar Pedido">
+                                            <a (click)="openConfirmDialog(pedidos.id,'Pedidos Finalizados')"
+                                                class="pointer" title="Eliminar Pedido">
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
                                         </td>
@@ -156,15 +156,15 @@
                                     <tr mat-header-row *matHeaderRowDef="columnsPedidosFinalizados"></tr>
                                     <tr mat-row *matRowDef="let row; columns: columnsPedidosFinalizados;"></tr>
                                     <tr class="mat-row" *matNoDataRow>
-                                        <td class="mat-cell" colspan="5">No data matching the filter "{{ input.value }}"
+                                        <td class="mat-cell" colspan="5">Sin pedidos en esta categoría
                                         </td>
                                     </tr>
                                 </table>
 
                             </div>
                             <div class="paginator-container">
-                                <mat-paginator #paginatorFinalizados [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons
-                                    aria-label="Select page of pedidosFinalizados">
+                                <mat-paginator #paginatorFinalizados [pageSizeOptions]="[5, 10, 15]" [pageSize]="10"
+                                    showFirstLastButtons aria-label="Select page of pedidosFinalizados">
                                 </mat-paginator>
                             </div>
                         </div>
@@ -231,15 +231,15 @@
                                     <tr mat-header-row *matHeaderRowDef="columnsPedidosEliminados"></tr>
                                     <tr mat-row *matRowDef="let row; columns: columnsPedidosEliminados;"></tr>
                                     <tr class="mat-row" *matNoDataRow>
-                                        <td class="mat-cell" colspan="5">No data matching the filter "{{ input.value }}"
+                                        <td class="mat-cell" colspan="5">Sin pedidos en esta categoría
                                         </td>
                                     </tr>
                                 </table>
 
                             </div>
                             <div class="paginator-container">
-                                <mat-paginator #paginatorFinalizados [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons
-                                    aria-label="Select page of pedidosEliminados">
+                                <mat-paginator #paginatorFinalizados [pageSizeOptions]="[5, 10, 15]" [pageSize]="10"
+                                    showFirstLastButtons aria-label="Select page of pedidosEliminados">
                                 </mat-paginator>
                             </div>
                         </div>
@@ -252,7 +252,8 @@
                     <a (click)="showBodyPedidos()" class="add-icon-pedido" title="Ver Tabla Pedido">
                         <i class="fa-solid fa-table-list"></i>
                     </a>
-                    <h3>Pedido #{{pedidoEncontrado.nroPedido}} - {{pedidoEncontrado.nombreCliente}} {{pedidoEncontrado.apellidoCliente}}</h3>
+                    <h3>Pedido #{{pedidoEncontrado.nroPedido}} - {{pedidoEncontrado.nombreCliente}}
+                        {{pedidoEncontrado.apellidoCliente}}</h3>
                     <div *ngFor="let carro of pedidoEncontrado.carrito" class="producto">
                         <div class="contenedor-imagen-pedido">
                             <img [src]="carro.imagen" alt="Producto" class="imagen-pedido">
@@ -279,9 +280,43 @@
                         </div>
                     </div>
                     <div class="total">Total: ${{pedidoEncontrado.total}}</div>
+                    <div class="acciones-pedido">
+                        <i class="fas fa-print print-icon" title="Imprimir pedido" (click)="abrirModalImpresion()"
+                            style="cursor: pointer; margin-top: 20px; font-size: 1.3rem; color: #333;"></i>
+                    </div>
+
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" *ngIf="mostrarModalImpresion">
+    <div class="modal-contenido">
+        <div class="contenido-imprimir">
+            <h2>Pedido #{{pedidoEncontrado.nroPedido}} - {{pedidoEncontrado.nombreCliente}}
+                {{pedidoEncontrado.apellidoCliente}}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let producto of pedidoEncontrado.carrito">
+                        <td>{{producto.nombre}}</td>
+                        <td>{{producto.cantidad}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Botones que NO deben imprimirse -->
+        <div class="botones-modal no-imprimir">
+            <button (click)="imprimir()">🖨️ Imprimir</button>
+            <button (click)="cerrarModalImpresion()">❌ Cerrar</button>
         </div>
     </div>
 </div>

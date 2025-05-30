@@ -12,11 +12,11 @@ export class Pedido {
     domicilioEntrega:string;
     carrito: Carrito[] = [];
     total:number;
-    estado: 'pendiente' | 'en proceso' | 'finalizado';
+    estado: string;
     nombreCliente: string;
     apellidoCliente: string;
   
-    constructor(id: string, nroPedido:number, user: string, mail: string, telefono: number,entrega:string,pago:string,fecha:string, domicilioEntrega:string, carrito: Carrito[],total:number,  estado: 'pendiente' | 'en proceso' | 'finalizado' = 'pendiente', nombre: string, apellido: string) {
+    constructor(id: string, nroPedido:number, user: string, mail: string, telefono: number,entrega:string,pago:string,fecha:string, domicilioEntrega:string, carrito: Carrito[],total:number,  estado: 'Pendiente', nombre: string, apellido: string) {
       this.id = id;
       this.nroPedido=nroPedido
       this.fecha = fecha;
