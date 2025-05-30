@@ -6,6 +6,8 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 import { ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -20,16 +22,19 @@ export class PedidosComponent {
   activeTab: number = 1;
   datasourcePedidosPendientes: MatTableDataSource<Pedido>
   datasourcePedidosFinalizados: MatTableDataSource<Pedido>
+  datasourcePedidosEliminados: MatTableDataSource<Pedido>
   pedidoEncontrado: any = null;
   pedidosPendientes: Pedido[] = []
   pedidosFinalizados: Pedido[] = []
+  pedidosEliminados: Pedido[] = []
   showCarroPedido:boolean=false
   showFormPedido:Boolean=false
   showDeleteCarro:boolean=true
   columnsProductos: string[] = ['imagen', 'marca', 'nombre', 'rubro', 'subRubro','precio', 'acciones']
   columnsClientes: string[] = ['apellido','dni', 'mail', 'celular', 'direccion', 'acciones']
-  columnsPedidosPendietes: string[] = ['hora', 'usuario', 'celular','direccion','entrega', 'pago','total', 'acciones']
-  columnsPedidosFinalizados: string[] = ['hora', 'usuario', 'celular','direccion','entrega', 'pago','total', 'acciones']
+  columnsPedidosPendietes: string[] = ['numero','hora', 'usuario', 'celular','direccion','entrega', 'pago','total', 'acciones']
+  columnsPedidosFinalizados: string[] = ['numero','hora', 'usuario', 'celular','direccion','entrega', 'pago','total', 'acciones']
+  columnsPedidosEliminados: string[] = ['numero','hora', 'usuario', 'celular','direccion','entrega', 'pago','total', 'acciones']
 
 
   showFormAgregarProducto: boolean = false
@@ -39,10 +44,11 @@ export class PedidosComponent {
 
   @ViewChild('paginatorPendientes') paginatorPendientes!: MatPaginator;
   @ViewChild('paginatorFinalizados') paginatorFinalizados!: MatPaginator;
+  @ViewChild('paginatorEliminados') paginatorEliminados!: MatPaginator;
 
 
 
-  constructor(private pedidosService: PedidosService, private toastService: ToastService, private cdRef: ChangeDetectorRef){}
+  constructor(private pedidosService: PedidosService, private toastService: ToastService, private cdRef: ChangeDetectorRef, private dialog: MatDialog){}
 
   ngOnInit(){
     this.getPedidos()
@@ -85,30 +91,55 @@ export class PedidosComponent {
    this.activeTab=2
   }
 
+  //FUNCION PARA MOSTRAR LA TABLA CON EL PEDIDO DEL CLIENTE
+  showCarritoPedidoEliminado(id: any) {
+    this.pedidoEncontrado = this.pedidosEliminados.find(p => p.id === id);
+
+    this.showTablaPedido = false
+    this.showCarroPedido = true
+    this.showFormPedido = true
+    this.showDeleteCarro = false
+    this.activeTab = 3
+  }
+
   //FUNCION PARA ELIMINAR UN PEDIDO ESPECIFICO
   deletePedido(id: string, tabla: string) {
     this.pedidosService.deletePedidoById(id, tabla)
   }
 
-  getPedidos() {
-    // Pedidos Pendientes
-    this.pedidosService.getPedidos('Pedidos Pendientes');
-    this.pedidosService.pedidoPendiente$.subscribe(data => {
-      this.pedidosPendientes = data;
-      this.datasourcePedidosPendientes = new MatTableDataSource(this.pedidosPendientes);
-      this.cdRef.detectChanges();
-      this.datasourcePedidosPendientes.paginator = this.paginatorPendientes;
-    });
-  
-    // Pedidos Finalizados
-    this.pedidosService.getPedidos('Pedidos Finalizados');
-    this.pedidosService.pedidoFinalizado$.subscribe(data => {
-      this.pedidosFinalizados = data;
-      this.datasourcePedidosFinalizados = new MatTableDataSource(this.pedidosFinalizados);
-      this.cdRef.detectChanges();
-      this.datasourcePedidosFinalizados.paginator = this.paginatorFinalizados;
+  openConfirmDialog(id: string, tabla: string) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        message: `¿Está seguro que desea eliminar este pedido?`,
+        confirmAction: () => this.moverDocumento(id, tabla, 'Pedidos Eliminados') // Acción a ejecutar si se confirma
+      }
     });
   }
+
+getPedidos() {
+  this.pedidosService.getPedidosPorTipo('Pedidos Pendientes').subscribe(data => {
+    this.pedidosPendientes = data;
+    this.datasourcePedidosPendientes = new MatTableDataSource(this.pedidosPendientes);
+    this.datasourcePedidosPendientes.paginator = this.paginatorPendientes;
+    this.cdRef.detectChanges();
+  });
+
+  this.pedidosService.getPedidosPorTipo('Pedidos Finalizados').subscribe(data => {
+    this.pedidosFinalizados = data;
+    this.datasourcePedidosFinalizados = new MatTableDataSource(this.pedidosFinalizados);
+    this.datasourcePedidosFinalizados.paginator = this.paginatorFinalizados;
+    this.cdRef.detectChanges();
+  });
+
+  this.pedidosService.getPedidosPorTipo('Pedidos Eliminados').subscribe(data => {
+    this.pedidosEliminados = data;
+    this.datasourcePedidosEliminados = new MatTableDataSource(this.pedidosEliminados);
+    this.datasourcePedidosEliminados.paginator = this.paginatorEliminados;
+    this.cdRef.detectChanges();
+  });
+}
+
 
   showBodyProductos() {
     this.showFormAgregarProducto = false

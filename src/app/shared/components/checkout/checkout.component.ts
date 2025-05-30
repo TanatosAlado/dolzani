@@ -161,7 +161,10 @@ export class CheckoutComponent {
       carrito: carritoCliente,
       entrega: envio,
       pago: pago,
-      total: total
+      total: total,
+      estado: 'pendiente',
+      nombreCliente: this.clienteEncontrado.nombre,
+      apellidoCliente: this.clienteEncontrado.apellido
     };
 
     this.pedidoService.createPedido(unPedido).then((doc) => {

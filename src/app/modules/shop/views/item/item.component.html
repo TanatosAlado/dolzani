@@ -1,4 +1,9 @@
 <div class="card item-card shadow-sm position-relative">
+  <!-- Banda "Sin stock" en diagonal -->
+<div *ngIf="producto.stock === 0" class="stock-banner">
+  SIN STOCK
+</div>
+
   <!-- Descuento arriba a la izquierda -->
   <div *ngIf="producto.oferta" class="badge bg-purple discount-badge">
     -{{ calcularDescuento(producto) }}%
@@ -28,7 +33,7 @@
       Precio s/imp. nacionales: ${{ producto.precioSinImpuestoNacional }}
     </p>
 
-    <button mat-raised-button class="botonesRojos" [disabled]="loadingCarrito[producto.id]"
+    <button mat-raised-button class="botonesRojos" [disabled]="loadingCarrito[producto.id] || producto.stock === 0"
       (click)="agregarCarrito(producto)">
       <ng-container *ngIf="!loadingCarrito[producto.id]; else loading">
         Agregar al carrito
@@ -37,6 +42,7 @@
         <mat-spinner diameter="20" strokeWidth="3"></mat-spinner>
       </ng-template>
     </button>
+
 
   </div>
 </div>

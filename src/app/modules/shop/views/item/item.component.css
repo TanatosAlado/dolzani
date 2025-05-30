@@ -69,3 +69,27 @@
   background-color: #ec133e;
   color: white;
 }
+
+.fondo-card button:disabled {
+  background-color: #cccccc !important; 
+  color: #666666 !important;            
+  cursor: not-allowed;
+  box-shadow: none;                     
+  opacity: 0.7;                         
+}
+
+.stock-banner {
+  position: absolute;
+  top: 2rem;                 
+  left: -1rem;               
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.25rem 2.5rem;
+  transform: rotate(-45deg);
+  z-index: 10;
+  pointer-events: none;
+  text-align: center;
+  box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,0.2);
+}

@@ -49,7 +49,7 @@ export class FormProductoComponent implements OnInit {
       oferta: [false, Validators.required],
       precioOferta: [{ value: '', disabled: true }, this.soloNumerosValidator()],
       impuestoNacional: [false, Validators.required],
-      precioImpuestoNacional: [{ value: '', disabled: true }, this.soloNumerosValidator()],
+      precioSinImpuestoNacional: [{ value: '', disabled: true }, this.soloNumerosValidator()],
     });
 
     this.setupAutocomplete();

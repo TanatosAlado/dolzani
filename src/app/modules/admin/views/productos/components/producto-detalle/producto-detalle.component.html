@@ -12,7 +12,7 @@
   <p><strong>Oferta:</strong> {{ producto.oferta ? 'Sí' : 'No' }}</p>
   <p *ngIf="producto.oferta"><strong>Precio Oferta:</strong> ${{ producto.precioOferta }}</p>
   <p><strong>Impuesto Nacional:</strong> {{ producto.impuestoNacional ? 'Sí' : 'No' }}</p>
-  <p *ngIf="producto.impuestoNacional"><strong>Precio con Impuesto Nacional:</strong> ${{ producto.precioImpuestoNacional }}</p>
+  <p *ngIf="producto.impuestoNacional"><strong>Precio sin Impuesto Nacional:</strong> ${{ producto.precioSinImpuestoNacional }}</p>
 
   <div *ngIf="producto.imagen" class="product-img">
     <p><strong>Imagen:</strong></p>
