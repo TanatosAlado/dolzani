@@ -74,10 +74,12 @@ export class ClientesService {
   }
 
 
-  actualizarCliente(id: string, datosParciales: Partial<Cliente>): Promise<void> {
-    const clienteDocRef = doc(this.firestore, 'Clientes', id);
-    return updateDoc(clienteDocRef, datosParciales);
-  }
+actualizarCliente(id: string, datosParciales: Partial<Cliente>): Promise<void> {
+  console.log('Actualizando cliente con ID:', id, 'y datos:', datosParciales);
+  const clienteDocRef = doc(this.firestore, 'Clientes', id);
+  const datosPlano = JSON.parse(JSON.stringify(datosParciales)); // 🔧 conversión segura
+  return updateDoc(clienteDocRef, datosPlano);
+}
   
   
 

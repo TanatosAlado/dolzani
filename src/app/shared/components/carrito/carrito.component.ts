@@ -69,6 +69,8 @@ export class CarritoComponent {
     this.carritoService.deleteProductoCarrito(clienteId, productoId).then(() => {
       // ✅ Eliminar del array local
       this.cliente.carrito = this.cliente.carrito.filter((producto: any) => producto.id !== productoId);
+      this.guardarCambiosCarrito()
+      this.carritoService.actualizarCantidadProductos(this.cliente)
     });
   }
 }
