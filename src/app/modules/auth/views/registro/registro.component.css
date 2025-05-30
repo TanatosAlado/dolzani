@@ -5,7 +5,8 @@
   max-height: 85vh;
   overflow-y: auto;
   padding: 24px;
-  min-width: 800px; 
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-grid {
@@ -20,10 +21,32 @@ mat-form-field {
 
 .actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 12px;
+  margin-top: 16px;
 }
 
-h2{
+h2 {
   text-align: center;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+}
+
+/* Opcional: centrar y limitar el ancho del mat-card */
+mat-card {
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
