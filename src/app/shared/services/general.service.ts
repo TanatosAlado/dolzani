@@ -105,7 +105,8 @@ export class GeneralService {
             nombre: producto.nombre,
             cantidad: cantidad,
             precioOferta: producto.oferta,
-            precioFinal: producto.precio,
+            stock:producto.stock,
+            precioFinal:producto.oferta? producto.precioOferta: producto.precio,
           });
         }
 

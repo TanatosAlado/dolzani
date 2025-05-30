@@ -62,17 +62,17 @@ export class CarritoComponent {
   }
 
 
-  eliminarDelCarrito(productoId: string) {
-    console.log(this.cliente)
-      const clienteEncontrado = this.cliente
-      if (clienteEncontrado) {
-        const clienteId = clienteEncontrado.id;
-        this.carritoService.deleteProductoCarrito(clienteId, productoId).then(() => {
-         
-        });
-      }
-       this.clienteService.getClientes();
+ eliminarDelCarrito(productoId: string) {
+  const clienteEncontrado = this.cliente;
+  if (clienteEncontrado) {
+    const clienteId = clienteEncontrado.id;
+    this.carritoService.deleteProductoCarrito(clienteId, productoId).then(() => {
+      // ✅ Eliminar del array local
+      this.cliente.carrito = this.cliente.carrito.filter((producto: any) => producto.id !== productoId);
+    });
   }
+}
+
 
   navigateCheckout(){
     // Forzar cierre manual quitando clases de Bootstrap

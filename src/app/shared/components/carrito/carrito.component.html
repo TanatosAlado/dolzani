@@ -11,14 +11,11 @@
           <div class="contenedor-productos">
             <button class="btn-menos" (click)="disminuirCantidad(producto)">−</button>
             <input class="input-productos" type="text" [(ngModel)]="producto.cantidad" readonly>
-            <button class="btn-mas" (click)="aumentarCantidad(producto)">+</button>
+            <button [disabled]="producto.cantidad==producto.stock" class="btn-mas" (click)="aumentarCantidad(producto)">+</button>
           </div>
           <div class="info-precios mt-2">
-            <div class="fila-oferta" *ngIf="producto.porcentajeOferta && producto.precioOferta">
-              <strong class="oferta-tachada">{{ producto.porcentajeOferta }}% OFF</strong>
-              <strong class="precio-oferta">${{ producto.precioOferta }}</strong>
-            </div>
-            <strong class="precio-final">${{ producto.precioFinal * producto.cantidad }}</strong>
+             <label>Stock:{{ producto.stock }}</label>
+            <strong class="precio-final">{{ producto.precioFinal * producto.cantidad |currency}}</strong>
           </div>
         </div>
       </div>
@@ -32,7 +29,7 @@
   <div class="resumen-carrito mt-3" *ngIf="cliente.carrito && cliente.carrito.length > 0">
     <div class="resumen-linea">
       <span>Total a pagar:</span>
-      <span>${{ this.generalService.getTotalPrecio(cliente) }}</span>
+      <span>{{ this.generalService.getTotalPrecio(cliente)|currency }}</span>
     </div>
   </div>
 
