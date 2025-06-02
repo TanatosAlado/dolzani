@@ -10,6 +10,7 @@
   text-align: center;
   max-height: 90vh;
   overflow-y: auto;
+  
 }
 
 form {
@@ -18,7 +19,6 @@ form {
   gap: 20px;
   width: 100%;
   margin-top: 20px;
-
 }
 
 mat-form-field {
@@ -82,7 +82,7 @@ button[type="submit"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999
+  z-index: 999;
 }
 
 .fadeInDown {
@@ -190,4 +190,3 @@ button[type="submit"] {
   -moz-animation-delay: 0.7s;
   animation-delay: 0.7s;
 }
-
