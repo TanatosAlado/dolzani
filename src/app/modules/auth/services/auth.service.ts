@@ -31,7 +31,7 @@ export class AuthService {
   openRegistroModal(): Observable<any> {
     const dialogRef = this.dialog.open(RegistroComponent, {
       width: '90vw',
-      maxWidth: '850px',
+      maxWidth: '950px',
       data: {},
     });
   

@@ -1,128 +1,136 @@
-<mat-card>
-  <h2 mat-dialog-title>Registro de Cliente</h2>
+  <div class="overlay">
+  <mat-card class="fadeInDown" >
+    <!-- <h2 mat-dialog-title>Registro de Cliente</h2> -->
 
-  <form [formGroup]="formRegistroCliente" (ngSubmit)="crearCliente()" class="form-container">
-    <div class="form-grid">
-      <!-- Usuario -->
-      <mat-form-field appearance="outline">
-        <mat-label>Usuario</mat-label>
-        <input matInput formControlName="usuario" required />
-        <mat-error *ngIf="formRegistroCliente.get('usuario')?.hasError('required')">
-          Usuario es obligatorio
-        </mat-error>
-        <mat-error *ngIf="formRegistroCliente.get('usuario')?.hasError('minlength')">
-          Mínimo 6 caracteres
-        </mat-error>
-        <mat-error *ngIf="formRegistroCliente.get('usuario')?.hasError('pattern')">
-          Solo letras y números, sin espacios ni símbolos
-        </mat-error>
-      </mat-form-field>
-
-      <!-- Nombre -->
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="nombre" required />
-        <mat-error *ngIf="formRegistroCliente.get('nombre')?.hasError('required')">
-          Nombre es obligatorio
-        </mat-error>
-        <mat-error *ngIf="formRegistroCliente.get('nombre')?.hasError('pattern')">
-          Solo se permiten letras
-        </mat-error>
-      </mat-form-field>
-
-      <!-- Apellido -->
-      <mat-form-field appearance="outline">
-        <mat-label>Apellido</mat-label>
-        <input matInput formControlName="apellido" required />
-        <mat-error *ngIf="formRegistroCliente.get('apellido')?.hasError('required')">
-          Apellido es obligatorio
-        </mat-error>
-        <mat-error *ngIf="formRegistroCliente.get('apellido')?.hasError('pattern')">
-          Solo se permiten letras
-        </mat-error>
-      </mat-form-field>
-
-      <!-- Contraseña -->
-      <mat-form-field appearance="outline">
-        <mat-label>Contraseña</mat-label>
-        <input matInput type="password" formControlName="contrasena" required />
-        <mat-error *ngIf="formRegistroCliente.get('contrasena')?.hasError('required')">
-          Contraseña es obligatoria
-        </mat-error>
-      </mat-form-field>
-
-      <!-- DNI -->
-      <mat-form-field appearance="outline">
-        <mat-label>DNI</mat-label>
-        <input matInput formControlName="dni" required />
-        <mat-error *ngIf="formRegistroCliente.get('dni')?.hasError('required')">
-          DNI es obligatorio
-        </mat-error>
-        <mat-error *ngIf="formRegistroCliente.get('dni')?.hasError('pattern')">
-          El DNI debe contener 7 u 8 números
-        </mat-error>
-      </mat-form-field>
-
-      <!-- CUIT -->
-      <mat-form-field appearance="outline">
-        <mat-label>CUIT</mat-label>
-        <input matInput formControlName="cuit" />
-        <mat-hint>Opcional</mat-hint>
-        <mat-error *ngIf="formRegistroCliente.get('cuit')?.hasError('pattern')">
-          El CUIT debe tener 11 números
-        </mat-error>
-      </mat-form-field>
-
-      <!-- Mail -->
-      <mat-form-field appearance="outline">
-        <mat-label>Mail</mat-label>
-        <input matInput type="email" formControlName="mail" required />
-        <mat-error *ngIf="formRegistroCliente.get('mail')?.hasError('required')">
-          Email es obligatorio
-        </mat-error>
-        <mat-error *ngIf="formRegistroCliente.get('mail')?.hasError('email')">
-          Formato de email inválido
-        </mat-error>
-      </mat-form-field>
-
-      <!-- Teléfono -->
-      <mat-form-field appearance="outline">
-        <mat-label>Teléfono</mat-label>
-        <input matInput type="text" formControlName="telefono" required />
-        <mat-error *ngIf="formRegistroCliente.get('telefono')?.hasError('required')">
-          Teléfono es obligatorio
-        </mat-error>
-        <mat-error *ngIf="formRegistroCliente.get('telefono')?.hasError('pattern')">
-          Solo se permiten números
-        </mat-error>
-      </mat-form-field>
-
-      <!-- Dirección -->
-      <mat-form-field appearance="outline">
-        <mat-label>Dirección</mat-label>
-        <input matInput formControlName="direccion" required />
-        <mat-error *ngIf="formRegistroCliente.get('direccion')?.hasError('required')">
-          Dirección es obligatoria
-        </mat-error>
-      </mat-form-field>
-
-      <!-- Razón Social -->
-      <mat-form-field appearance="outline">
-        <mat-label>Razón Social</mat-label>
-        <input matInput formControlName="razonSocial" required />
-        <mat-error *ngIf="formRegistroCliente.get('razonSocial')?.hasError('required')">
-          Razón social es obligatoria
-        </mat-error>
-      </mat-form-field>
+    <div class="imagen-central fadeIn first">
+      <img src="../../../../../assets/LogoDolzani.png" alt="Login" />
     </div>
 
-    <mat-divider></mat-divider>
+    <form [formGroup]="formRegistroCliente" (ngSubmit)="crearCliente()" class="form-container">
+      <div class="form-grid">
+        <!-- Usuario -->
+        <mat-form-field appearance="outline"color="accent" class="fadeIn first">
+          <mat-label>Usuario</mat-label>
+          <input matInput formControlName="usuario" required />
+          <mat-error *ngIf="formRegistroCliente.get('usuario')?.hasError('required')">
+            Usuario es obligatorio
+          </mat-error>
+          <mat-error *ngIf="formRegistroCliente.get('usuario')?.hasError('minlength')">
+            Mínimo 6 caracteres
+          </mat-error>
+          <mat-error *ngIf="formRegistroCliente.get('usuario')?.hasError('pattern')">
+            Solo letras y números, sin espacios ni símbolos
+          </mat-error>
+        </mat-form-field>
 
-    <div class="actions">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!formRegistroCliente.valid">
-        Registrar
-      </button>
-      <button mat-button type="button" (click)="cerrar()">Cancelar</button>
-    </div>
-  </form>
-</mat-card>
+        <!-- Nombre -->
+        <mat-form-field appearance="outline"color="accent" class="fadeIn first">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" required />
+          <mat-error *ngIf="formRegistroCliente.get('nombre')?.hasError('required')">
+            Nombre es obligatorio
+          </mat-error>
+          <mat-error *ngIf="formRegistroCliente.get('nombre')?.hasError('pattern')">
+            Solo se permiten letras
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Apellido -->
+        <mat-form-field appearance="outline" color="accent"class="fadeIn second">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="apellido" required />
+          <mat-error *ngIf="formRegistroCliente.get('apellido')?.hasError('required')">
+            Apellido es obligatorio
+          </mat-error>
+          <mat-error *ngIf="formRegistroCliente.get('apellido')?.hasError('pattern')">
+            Solo se permiten letras
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Contraseña -->
+        <mat-form-field appearance="outline"color="accent" class="fadeIn second">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" formControlName="contrasena" required />
+          <mat-error *ngIf="formRegistroCliente.get('contrasena')?.hasError('required')">
+            Contraseña es obligatoria
+          </mat-error>
+        </mat-form-field>
+
+        <!-- DNI -->
+        <mat-form-field appearance="outline"color="accent" class="fadeIn third">
+          <mat-label>DNI</mat-label>
+          <input matInput formControlName="dni" required />
+          <mat-error *ngIf="formRegistroCliente.get('dni')?.hasError('required')">
+            DNI es obligatorio
+          </mat-error>
+          <mat-error *ngIf="formRegistroCliente.get('dni')?.hasError('pattern')">
+            El DNI debe contener 7 u 8 números
+          </mat-error>
+        </mat-form-field>
+
+        <!-- CUIT -->
+        <mat-form-field appearance="outline" color="accent"class="fadeIn third">
+          <mat-label>CUIT</mat-label>
+          <input matInput formControlName="cuit" />
+          <mat-hint>Opcional</mat-hint>
+          <mat-error *ngIf="formRegistroCliente.get('cuit')?.hasError('pattern')">
+            El CUIT debe tener 11 números
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Mail -->
+        <mat-form-field appearance="outline"color="accent" class="fadeIn third">
+          <mat-label>Mail</mat-label>
+          <input matInput type="email" formControlName="mail" required />
+          <mat-error *ngIf="formRegistroCliente.get('mail')?.hasError('required')">
+            Email es obligatorio
+          </mat-error>
+          <mat-error *ngIf="formRegistroCliente.get('mail')?.hasError('email')">
+            Formato de email inválido
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Teléfono -->
+        <mat-form-field appearance="outline"color="accent" class="fadeIn third">
+          <mat-label>Teléfono</mat-label>
+          <input matInput type="text" formControlName="telefono" required />
+          <mat-error *ngIf="formRegistroCliente.get('telefono')?.hasError('required')">
+            Teléfono es obligatorio
+          </mat-error>
+          <mat-error *ngIf="formRegistroCliente.get('telefono')?.hasError('pattern')">
+            Solo se permiten números
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Dirección -->
+        <mat-form-field appearance="outline"color="accent" class="fadeIn fourth">
+          <mat-label>Dirección</mat-label>
+          <input matInput formControlName="direccion" required />
+          <mat-error *ngIf="formRegistroCliente.get('direccion')?.hasError('required')">
+            Dirección es obligatoria
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Razón Social -->
+        <mat-form-field appearance="outline"color="accent" class="fadeIn fourth">
+          <mat-label>Razón Social</mat-label>
+          <input matInput formControlName="razonSocial" required />
+          <mat-error *ngIf="formRegistroCliente.get('razonSocial')?.hasError('required')">
+            Razón social es obligatoria
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="actions">
+        <button class="fadeIn fourth" mat-raised-button color="primary" type="submit"
+          [disabled]="!formRegistroCliente.valid"
+           [ngClass]="formRegistroCliente.valid ? 'botonesRojos' : ''">
+          Registrar
+        </button>
+        <button class="fadeIn fourth" mat-button type="button" (click)="cerrar()">Cancelar</button>
+      </div>
+    </form>
+  </mat-card>
+  </div>
