@@ -44,6 +44,7 @@ export class IngresoComponent {
 
   // Método para abrir el modal de registro
   abrirRegistro() {
+    this.cerrar()
     this.authService.openRegistroModal();
   }
 
