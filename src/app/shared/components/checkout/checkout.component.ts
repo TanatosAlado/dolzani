@@ -175,7 +175,8 @@ export class CheckoutComponent {
         carrito:carritoCliente,
         entrega:unPedido.entrega,
         pago:unPedido.pago,
-        total:unPedido.total
+        total:unPedido.total,
+        id: doc.id,
       }
      this.clienteEncontrado.historial.push(historico);
       this.clienteEncontrado.carrito=[]

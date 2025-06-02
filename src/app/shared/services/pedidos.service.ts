@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Pedido } from '../models/pedido.model';
-import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, getDoc, getDocs, setDoc, updateDoc } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, getDoc, getDocs, getFirestore, setDoc, updateDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -14,6 +14,8 @@ export class PedidosService {
   pedidoFinalizado$ = this.pedidoFinalizadoSubject.asObservable();
   pedidoEliminadoSubject = new BehaviorSubject<Pedido[]>([]);
   pedidoEliminado$ = this.pedidoFinalizadoSubject.asObservable();
+
+  private db = getFirestore();
 
   constructor(private firestore: Firestore) { }
 
@@ -122,4 +124,39 @@ async moverDocumento(id: string, origen: string, destino: string): Promise<void>
     });
   }
 
+    async obtenerEstadoPedido(idPedido: string): Promise<string> {
+    const colecciones = [
+      { nombre: 'Pedidos Pendientes' },
+      { nombre: 'Pedidos Finalizados' },
+      { nombre: 'Pedidos Eliminados' },
+    ];
+
+    for (const col of colecciones) {
+      const ref = doc(this.db, col.nombre, idPedido);
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        const data = snap.data();
+        return data?.['estado'] || 'Sin estado';
+      }
+    }
+
+    return 'Desconocido';
+  }
+
+  async obtenerHistorialCompleto(
+    pedidosCliente: { id: string; nroPedido: number; fecha: string }[]
+  ): Promise<{ nroPedido: number; fecha: string; estado: string }[]> {
+    const resultado = await Promise.all(
+      pedidosCliente.map(async (pedido) => {
+        const estado = await this.obtenerEstadoPedido(pedido.id);
+        return {
+          nroPedido: pedido.nroPedido,
+          fecha: pedido.fecha,
+          estado,
+        };
+      })
+    );
+    return resultado;
+  }
 }
+

@@ -74,7 +74,6 @@ export class PedidosComponent {
   //FUNCION PARA MOSTRAR LA TABLA CON EL PEDIDO DEL CLIENTE
   showCarritoPedidoPendiente(id:any){
      this.pedidoEncontrado = this.pedidosPendientes.find(p => p.id === id);
-    console.log("pedido pendiente",this.pedidoEncontrado)
    this.showTablaPedido=false
    this.showCarroPedido=true
    this.showFormPedido=true
