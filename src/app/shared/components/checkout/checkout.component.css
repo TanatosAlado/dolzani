@@ -266,4 +266,11 @@ button[type=submit]
   .derecha {
     margin-bottom: 2rem;
   }
+
+    .opciones-envio label{
+    width: 100%;
+  }
+  .form-field [type=text]{
+     width: 95%; 
+  }
 }
