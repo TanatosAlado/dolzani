@@ -39,6 +39,7 @@ export class PedidosService {
   //SERVICE PARA CREAR PEDIDO
   createPedido(pedido: Pedido): Promise<any> {
     const clienteRef = collection(this.firestore, 'Pedidos Pendientes');
+    
     return addDoc(clienteRef, pedido);
   }
 
