@@ -9,6 +9,8 @@ import { ContadorService } from '../../services/contador.service';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 import { Router } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-checkout',
@@ -35,7 +37,7 @@ export class CheckoutComponent {
   contador: Contador[] = []
 
 
-  constructor(private fb: FormBuilder, private clienteService: ClientesService, public pedidoService: PedidosService, public generalService: GeneralService, private contadorService: ContadorService, private router: Router, private carritoService: CarritoService) {
+  constructor(private firestore: Firestore, private fb: FormBuilder, private clienteService: ClientesService, public pedidoService: PedidosService, public generalService: GeneralService, private contadorService: ContadorService, private router: Router, private carritoService: CarritoService) {
 
     this.formCheckout = this.fb.group({
       user: ['', [Validators.required]],
@@ -48,7 +50,7 @@ export class CheckoutComponent {
   ngOnInit() {
     this.getCliente()
     this.getContadorPedidos()
-    
+
   }
   //FUNCION PARA BUSCAR EL CLIENTE LOGUEADO Y  GUARDARLO EN UNA VARIABLE
   getCliente() {
@@ -134,20 +136,15 @@ export class CheckoutComponent {
 
   //FUNCION PARA CREAR EL PEDIDO
   createPedido() {
-    let carritoCliente = this.clienteEncontrado.carrito
-    let envio
-    let pago = 'S/P'
-    let direccion = 'S/E'
-    let total = this.generalService.getTotalPrecio(this.clienteEncontrado)
-    envio = this.radioButtonSeleccionado === 'domicilio' ? 'Envío' : 'Retiro';
+    const carritoCliente = this.clienteEncontrado.carrito;
+    const total = this.generalService.getTotalPrecio(this.clienteEncontrado);
+    let direccion = 'S/E';
+    let pago = 'S/P';
+    const envio = this.radioButtonSeleccionado === 'domicilio' ? 'Envío' : 'Retiro';
+
     if (this.radioButtonSeleccionado === 'domicilio') {
-      direccion = this.formCheckout.get('domicilioEntrega')?.value
-      if (this.opcionPagoSeleccionada === 'efectivo') {
-        pago = "Efectivo"
-      }
-      else {
-        pago = "Transferencia"
-      }
+      direccion = this.formCheckout.get('domicilioEntrega')?.value;
+      pago = this.opcionPagoSeleccionada === 'efectivo' ? 'Efectivo' : 'Transferencia';
     }
 
     const unPedido: Pedido = {
@@ -167,22 +164,42 @@ export class CheckoutComponent {
       apellidoCliente: this.clienteEncontrado.apellido
     };
 
-    this.pedidoService.createPedido(unPedido).then((doc) => {
-       this.updateIdPedido(doc.id, unPedido);
-      const historico={
-        fecha:unPedido.fecha,
-        nroPedido:unPedido.nroPedido,
-        carrito:carritoCliente,
-        entrega:unPedido.entrega,
-        pago:unPedido.pago,
-        total:unPedido.total,
-        id: doc.id,
+    this.pedidoService.createPedido(unPedido).then(async (docRef) => {
+      this.updateIdPedido(docRef.id, unPedido);
+      const historico = {
+        fecha: unPedido.fecha,
+        nroPedido: unPedido.nroPedido,
+        carrito: carritoCliente,
+        entrega: unPedido.entrega,
+        pago: unPedido.pago,
+        total: unPedido.total,
+        id: docRef.id,
+      };
+      this.clienteEncontrado.historial.push(historico);
+      this.clienteEncontrado.carrito = [];
+      await this.clienteService.actualizarCliente(this.clienteEncontrado.id, this.clienteEncontrado);
+      for (const item of carritoCliente) {
+        const productoRef = doc(this.firestore, 'productos', item.id);
+        try {
+          const productoSnap = await getDoc(productoRef);
+          if (productoSnap.exists()) {
+            const productoData: any = productoSnap.data();
+            const stockActual = productoData.stock ?? 0;
+            const cantidadComprada = item.cantidad ?? 0;
+            const stockNuevo = Math.max(stockActual - cantidadComprada, 0);
+            await updateDoc(productoRef, { stock: stockNuevo });
+            console.log(`Producto ${item.id}: Stock actualizado de ${stockActual} a ${stockNuevo}`);
+          } else {
+            console.warn(`Producto con ID ${item.id} no encontrado`);
+          }
+        } catch (error) {
+          console.error(`Error al actualizar stock del producto ${item.id}:`, error);
+        }
       }
-     this.clienteEncontrado.historial.push(historico);
-      this.clienteEncontrado.carrito=[]
-     this.clienteService.actualizarCliente(this.clienteEncontrado.id, this.clienteEncontrado)
-    })
-    
+      console.log("Pedido creado exitosamente:", unPedido);
+    }).catch((error) => {
+      console.error("Error al crear el pedido:", error);
+    });
   }
 
   //FUNCION PARA ACTUALIZAR EL ID EN EL ARREGLO CLIENTES CON EL DE FIREBASE
@@ -223,7 +240,7 @@ export class CheckoutComponent {
   sumarContador() {
     if (this.contador.length > 0) {
       this.contador[0].contador += 1;
-    } 
+    }
   }
 
 }

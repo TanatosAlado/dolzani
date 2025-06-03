@@ -18,7 +18,6 @@
     width: 30%;
     background-color: #f0f0f0; 
     margin-right: 3%;
-    height:  100vh;
   }
   h3{
     margin-top: 3%;
@@ -66,7 +65,7 @@
     max-width: 100%;
   }
   img{
-    width: 50%;
+    width: 30%;
   }
   
   .opciones-envio {
