@@ -26,11 +26,12 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { WhatsappComponent } from './components/whatsapp/whatsapp.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { HistorialPedidosModalComponent } from './components/historial-pedidos-modal/historial-pedidos-modal.component';
 
 
 
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent, ConfirmDialogComponent, CarritoComponent, CheckoutComponent, WhatsappComponent],
+  declarations: [NavbarComponent, FooterComponent, ConfirmDialogComponent, CarritoComponent, CheckoutComponent, WhatsappComponent, HistorialPedidosModalComponent],
   imports: [CommonModule, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule, MatProgressSpinnerModule, MatTabsModule],
   exports: [NavbarComponent, FooterComponent, MatDialogModule, RouterModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSlideToggleModule, MatDividerModule, MatSnackBarModule, MatTooltipModule, MatBadgeModule, MatAutocompleteModule, MatProgressSpinnerModule, CheckoutComponent, WhatsappComponent, MatTabsModule],
 })

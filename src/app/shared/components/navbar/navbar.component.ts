@@ -20,6 +20,8 @@ import { ClientesService } from '../../services/clientes.service';
 import { ProductosService } from '../../services/productos.service';
 import { CarritoComponent } from '../carrito/carrito.component';
 import { CarritoService } from '../../services/carrito.service';
+import { PedidosService } from '../../services/pedidos.service';
+import { HistorialPedidosModalComponent } from '../historial-pedidos-modal/historial-pedidos-modal.component';
 
 
 @Component({
@@ -43,9 +45,10 @@ export class NavbarComponent {
   productos:any[]=[]
   cantidadProductos: number = 0;
   cantidadProductos$ = this.carritoService.cantidadProductos$;
+  clienteLogueado: Cliente | null = null;
 
 
-  constructor(private carritoService: CarritoService, private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router, private clientesService: ClientesService, private productoService:ProductosService) {}
+  constructor(private carritoService: CarritoService, private authService: AuthService, private dialog: MatDialog, public generalService: GeneralService, private router: Router, private clientesService: ClientesService, private productoService:ProductosService, private pedidosService: PedidosService) {}
 
   ngOnInit() {
 
@@ -98,6 +101,7 @@ export class NavbarComponent {
         this.usuarioLogueado = true;
         this.usrAdmin = cliente.administrador;
         this.generalService.setCliente(cliente);
+        this.clienteLogueado = cliente; // Guardar el cliente logueado
         localStorage.setItem('cliente', cliente.id); // clienteId = 'ApdVnmooZNKXXhu5sL01'
 
 
@@ -124,6 +128,7 @@ export class NavbarComponent {
           this.generalService.logout();
           this.usuarioLogueado = false;
           this.usrAdmin = false;
+          this.clienteLogueado = null; // Limpiar el cliente logueado
           this.router.navigate(['/']); // redirigir al home
         }
       }
@@ -174,6 +179,17 @@ cerrarMenu() {
   if (closeButton) {
     closeButton.click(); 
   }
+}
+
+
+
+async abrirHistorial() {
+  const historial = await this.pedidosService.obtenerHistorialCompleto(this.clienteLogueado.historial);
+
+  this.dialog.open(HistorialPedidosModalComponent, {
+    width: '600px',
+    data: historial,
+  });
 }
 
 

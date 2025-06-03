@@ -26,7 +26,7 @@
       <a routerLink="/inicio">Inicio</a>
       <a routerLink="/productos">Productos</a>
       <a routerLink="/nosotros">Nosotros</a>
-      <!-- <a routerLink="/contacto">Contacto</a> -->
+      <a routerLink="/contacto">Contacto</a>
       <a *ngIf="usrAdmin" routerLink="/gestiones">Gestiones</a>
     </div>
 
@@ -40,6 +40,8 @@
         data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito">
         shopping_cart
       </mat-icon>
+
+      <mat-icon *ngIf="((usuarioLogueado) && !(usrAdmin))" (click)="abrirHistorial()" class="icono-header">history</mat-icon>
 
       <mat-icon *ngIf="usuarioLogueado" (click)="closeSesion()" class="icono-header">logout</mat-icon>
     </div>
