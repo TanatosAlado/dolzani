@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { NosotrosComponent } from './components/nosotros/nosotros.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -13,7 +13,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    TranslateModule
   ]
 })
 export class SocialesModule { }

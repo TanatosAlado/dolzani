@@ -57,6 +57,7 @@ export class NavbarComponent {
   // Escuchar cambios del cliente en todo momento
   this.generalService.getCliente().subscribe(cliente => {
     if (cliente) {
+        console.log("CARRITO INICIAL:", cliente.carrito);
       this.usuarioLogueado = true;
       this.usrAdmin = cliente.administrador;
       this.cantidadProductos = this.getCantidadProductos(cliente.carrito);
@@ -97,10 +98,12 @@ export class NavbarComponent {
     // Escuchar el cierre del modal y obtener el cliente logueado
     dialogRef.afterClosed().subscribe((cliente: Cliente) => {
       if (cliente) {
+        this.carritoService.actualizarCantidadProductos(cliente); 
         this.cantidadProductos= this.getCantidadProductos(cliente.carrito)
         this.usuarioLogueado = true;
         this.usrAdmin = cliente.administrador;
         this.generalService.setCliente(cliente);
+        
         this.clienteLogueado = cliente; // Guardar el cliente logueado
         localStorage.setItem('cliente', cliente.id); // clienteId = 'ApdVnmooZNKXXhu5sL01'
 
@@ -129,6 +132,10 @@ export class NavbarComponent {
           this.usuarioLogueado = false;
           this.usrAdmin = false;
           this.clienteLogueado = null; // Limpiar el cliente logueado
+          this.cantidadProductos = 0;
+          this.carritoService.actualizarCantidadProductos(null); // Actualizar el contador de productos en el carrito
+          this.carritoService.resetEstadoCarrito();
+
           this.router.navigate(['/']); // redirigir al home
         }
       }
