@@ -118,6 +118,16 @@ export class PedidosComponent {
     });
   }
 
+    openConfirmDialogDel(id: string, tabla: string) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        message: `¿Está seguro que desea eliminar este pedido?`,
+        confirmAction: () => this.deletePedido(id, 'Pedidos Eliminados') // Acción a ejecutar si se confirma
+      }
+    });
+  }
+
 getPedidos() {
   this.pedidosService.getPedidosPorTipo('Pedidos Pendientes').subscribe(data => {
     this.pedidosPendientes = data;

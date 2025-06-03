@@ -1,5 +1,56 @@
-<!-- <app-navbar></app-navbar>
-<br>
-<h2>Contacto</h2>
-<br>
-<app-footer></app-footer> -->
+<div class="trama">
+  <section class="form-container">
+    <!-- Contacto -->
+    <h1 class="form-header form-item2">CONTACTO</h1>
+    <form (ngSubmit)="submitForm()" #formMail="ngForm">
+      <div class="form">
+        <div class="form-item form-item3">
+          <!-- Apellido -->
+          <label for="apellido">APELLIDO</label>
+          <input id="apellido" type="text" name="apellido" [(ngModel)]="formData.apellido" required>
+        </div>
+
+        <div class="form-item form-item3">
+          <!-- Nombre -->
+          <label for="nombre">NOMBRE</label>
+          <input for="nombre" type="text" name="nombre" [(ngModel)]="formData.nombre" required>
+        </div>
+
+        <div class="form-item form-item4">
+          <!-- Nro. Celular -->
+          <label for="telefono">CELULAR</label>
+          <input id="telefono" type="number" name="telefono" [(ngModel)]="formData.telefono" required>
+        </div>
+
+        <div class="form-item form-item4">
+          <!-- Mail -->
+          <label for="mail">MAIL</label>
+          <input id="mail" type="email" name="mail" [(ngModel)]="formData.mail" required>
+        </div>
+
+        <div class="textarea-div form-item5">
+          <!-- Consulta -->
+          <label for="mensaje">CONSULTA</label>
+          <!-- Deje aquí su consulta... -->
+          <textarea id="mensaje" type="text" name="mensaje" placeholder='INGRESE SU CONSULTA AQUÍ...'
+            [(ngModel)]="formData.mensaje" required></textarea>
+        </div>
+        <div class="btn-container form-item form-item6">
+          <input type="submit" id="submit" onclick="clearForm()" class="btn btn-glow form-btn"
+            [disabled]="!formMail.valid || !mailValid(formData.mail)" value='ENVIAR CONSULTA'>
+        </div>
+      </div>
+    </form>
+   
+  </section>
+  <app-whatsapp></app-whatsapp>
+</div>
+
+
+<div class="modal" *ngIf="modalMail">
+  <div class="modal-content"[class.closing]="modalClose">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Consulta enviada!</h2>
+    <p>Nos estaremos comunicando a la brevedad</p>
+  </div>
+</div>

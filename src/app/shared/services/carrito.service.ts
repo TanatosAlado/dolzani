@@ -58,11 +58,20 @@ export class CarritoService {
   }
 
   actualizarCantidadProductos(cliente: Cliente) {
-    const total = cliente.carrito?.reduce((sum, p) => sum + p.cantidad, 0) || 0;
-    this.cantidadProductosSubject.next(total);
+    if (!cliente || !cliente.carrito) {
+      this.cantidadProductosSubject.next(0);
+      return;
+    } else {
+      const total = cliente.carrito?.reduce((sum, p) => sum + p.cantidad, 0) || 0;
+      this.cantidadProductosSubject.next(total);
+    }
+  
   }
 
-
+resetEstadoCarrito() {
+  this.cantidadProductosSubject.next(0);
+  this.carritoSubject.next([]);
+}
 
 
 
