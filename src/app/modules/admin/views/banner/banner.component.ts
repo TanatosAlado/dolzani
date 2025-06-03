@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { BannerService } from '../../service/banner.service';
-// import { inject } from '@angular/core';
-// import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage'; // ✅ modular
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 

@@ -379,6 +379,8 @@ th {
   width: 20%;
 }
 
+
+/* Fondo overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -392,18 +394,31 @@ th {
   z-index: 999;
 }
 
+/* Contenido del modal */
 .modal-contenido {
   background-color: #fff;
-  padding: 20px 30px;
+  padding: 25px 35px;
   border-radius: 8px;
   width: 80%;
   max-width: 600px;
+  box-shadow: 0 8px 20px rgba(236, 19, 62, 0.25);
 }
 
+/* Título - reutilizamos clase dialog-title */
+.dialog-title {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #ec133e;
+  border-bottom: 2px solid #ec133e;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Tabla */
 .tabla-impresion {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .tabla-impresion th,
@@ -411,21 +426,58 @@ th {
   border: 1px solid #ccc;
   padding: 10px;
   text-align: left;
+  font-size: 1rem;
+  color: #333;
 }
 
+.tabla-impresion th {
+  background-color: #f9f9f9;
+}
+
+/* Contenedor de botones */
 .acciones-modal {
   margin-top: 20px;
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 1rem;
 }
 
-.acciones-modal button {
+/* Botón Cancelar - reutilizamos clase btn-cancel */
+.btn-cancel {
+  color: #777;
+  font-weight: 600;
+  text-transform: uppercase;
   padding: 8px 16px;
   font-size: 1rem;
+  border: none;
+  background: transparent;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+.btn-cancel:hover {
+  color: #ec133e;
 }
 
+/* Botón Confirmar (Imprimir) - reutilizamos clase btn-confirm */
+.btn-confirm {
+  background-color: #ec133e;
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(236, 19, 62, 0.4);
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.btn-confirm:hover {
+  background-color: #b10e2b;
+  box-shadow: 0 6px 12px rgba(177, 14, 43, 0.6);
+}
+
+/* Media print */
 @media print {
   body * {
     visibility: hidden;
@@ -446,4 +498,3 @@ th {
     display: none !important;
   }
 }
-

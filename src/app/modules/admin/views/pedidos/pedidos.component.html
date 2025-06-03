@@ -222,7 +222,7 @@
                                                 class="pointer" title="Pasar a Pendiente">
                                                 <i class="fa-solid fa-rotate-left"></i>
                                             </a>
-                                            <a (click)="deletePedido(pedidos.id,'Pedidos Eliminados')" class="pointer"
+                                            <a (click)="openConfirmDialogDel(pedidos.id,'Pedidos Eliminados')" class="pointer"
                                                 title="Eliminar Pedido">
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
@@ -293,30 +293,31 @@
 </div>
 
 <div class="modal-overlay" *ngIf="mostrarModalImpresion">
-    <div class="modal-contenido">
-        <div class="contenido-imprimir">
-            <h2>Pedido #{{pedidoEncontrado.nroPedido}} - {{pedidoEncontrado.nombreCliente}}
-                {{pedidoEncontrado.apellidoCliente}}</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let producto of pedidoEncontrado.carrito">
-                        <td>{{producto.nombre}}</td>
-                        <td>{{producto.cantidad}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Botones que NO deben imprimirse -->
-        <div class="botones-modal no-imprimir">
-            <button (click)="imprimir()">🖨️ Imprimir</button>
-            <button (click)="cerrarModalImpresion()">❌ Cerrar</button>
-        </div>
+  <div class="modal-contenido">
+    <div class="contenido-imprimir">
+      <h2 class="dialog-title">
+        Pedido #{{pedidoEncontrado.nroPedido}} - {{pedidoEncontrado.nombreCliente}} {{pedidoEncontrado.apellidoCliente}}
+      </h2>
+      <table class="tabla-impresion">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of pedidoEncontrado.carrito">
+            <td>{{producto.nombre}}</td>
+            <td>{{producto.cantidad}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
+    <!-- Botones que NO deben imprimirse -->
+    <div class="botones-modal no-imprimir acciones-modal">
+      <button (click)="imprimir()" class="btn-confirm">🖨️ Imprimir</button>
+      <button (click)="cerrarModalImpresion()" class="btn-cancel">❌ Cerrar</button>
+    </div>
+  </div>
 </div>
