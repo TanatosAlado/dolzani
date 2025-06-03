@@ -18,18 +18,19 @@
     width: 30%;
     background-color: #f0f0f0; 
     margin-right: 3%;
+    height:  100vh;
   }
   h3{
     margin-top: 3%;
     font-weight: bolder;
-    color:#068c89 ;
+    color:#e71634;
   }
   h4{
-    color:#068c89 ;
+    color:#e71634;
     font-weight: bolder;
   }
   h2{
-    color: #068c89;
+    color: #e71634;
     text-align: center;
     margin-top: 2%;
     margin-bottom: 4%;
@@ -64,6 +65,9 @@
     padding: 1rem;
     max-width: 100%;
   }
+  img{
+    width: 50%;
+  }
   
   .opciones-envio {
     display: flex;
@@ -90,13 +94,13 @@
   }
   
   .opciones-envio label:hover {
-    border-color: #068c89;
+    border-color: #e71634;
     background-color: #eef6ff;
     cursor: pointer;
   }
   
   .opciones-envio input[type="radio"] {
-    accent-color: #068c89;
+    accent-color: #e71634;
     transform: scale(1.2);
     margin-right: 0.5rem;
   }
@@ -107,7 +111,7 @@
    
   .info-opcion {
     font-weight: bold;
-    color:#068c89;
+    color:#e71634;
     white-space: nowrap;
   }
 
@@ -123,7 +127,7 @@
   justify-content: space-between;
   margin-bottom: 0.5rem;
   margin-top: 5%;
-  color: #068c89;
+  color: #e71634;
   font-weight: bolder;
 }
 
@@ -180,7 +184,7 @@
 
 button[type=submit]
 {
-  background-color: #068c89;
+  background-color: #e71634;
   font-weight: bold;
   border: none;
   color: white;
@@ -237,7 +241,7 @@ button[type=submit]
 .modal-content button {
   margin-top: 1.5rem;
   padding: 0.7rem 1.2rem;
-  background-color: #068c89;
+  background-color: #e71634;
   color: white;
   border: none;
   border-radius: 5px;
@@ -245,7 +249,7 @@ button[type=submit]
   cursor: pointer;
 }
 .precio-final{
-  color: #068c89;
+  color: #e71634;
   font-weight: bold;
 }
 
