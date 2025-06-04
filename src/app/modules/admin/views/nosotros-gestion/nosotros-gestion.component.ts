@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { BannerService } from '../../service/banner.service';
+import { NosotrosService } from 'src/app/shared/services/nosotros.service';
+import { Nosotros } from 'src/app/shared/models/nosotros.models';
 
 @Component({
   selector: 'app-nosotros-gestion',
@@ -9,56 +10,80 @@ import { BannerService } from '../../service/banner.service';
   styleUrls: ['./nosotros-gestion.component.css']
 })
 export class NosotrosGestionComponent {
- archivoSeleccionado: File | null = null;
+  archivoSeleccionado: File | null = null;
+  descripcion: string = '';
   subiendo = false;
   urlArchivo: string | null = null;
-  archivos: { nombre: string, url: string }[] = [];
-  carpeta = 'uploads';
+  archivos: Nosotros[] = [];
+  carpeta = 'Nosotros';
 
-  constructor(private bannerService: BannerService, private dialog: MatDialog){
-
-  }
+  constructor(private nosotrosService: NosotrosService, private dialog: MatDialog) {}
 
 
-
+//FUNCION PARA ELEIGR UNA IMAGEN
   onFileSelected(event: any) {
     this.archivoSeleccionado = event.target.files[0] || null;
-    this.urlArchivo = null; // Limpiar URL anterior si existía
+    this.urlArchivo = null;
   }
 
-    eliminar(nombre: string) {
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        data: {
-          message: `¿Deseás eliminar el archivo "${nombre}"?`,
-          confirmAction: async () => {
-            await this.bannerService.eliminarArchivo(`${this.carpeta}/${nombre}`);
-            this.cargarArchivos(); // refresca el listado
-          }
+ //FUNCOIN PARA SUBIR UN ARCHIVO
+async subirArchivo() {
+  if (!this.archivoSeleccionado || !this.descripcion.trim()) return;
+
+  this.subiendo = true;
+  const nombreImagen=`${Date.now()}_${this.archivoSeleccionado.name}`
+  const filePath = `${this.carpeta}/${nombreImagen}`;
+
+  try {
+    const url = await this.nosotrosService.uploadFile(this.archivoSeleccionado, filePath);
+    this.urlArchivo = url;
+
+    const idGenerado = await this.nosotrosService.guardarInfoImagen({
+      descripcion: this.descripcion,
+      nombreImagen: nombreImagen,
+      urlImagen:this.urlArchivo
+    });
+
+    console.log('ID del documento guardado:', idGenerado);
+
+    this.descripcion = '';
+    this.archivoSeleccionado = null;
+    await this.cargarArchivos();
+
+  } catch (error) {
+    console.error('Error al subir el archivo:', error);
+  }
+
+  this.subiendo = false;
+}
+abrirImagen(url: string): void {
+  window.open(url, '_blank');
+}
+
+
+  //FUNCION PARA CARGAR LOS ARCHIVOS
+  async cargarArchivos() {
+    this.archivos = await this.nosotrosService.listarImagenes();
+    console.log(this.archivos)
+  }
+
+  //FUNCION PARA ELIMINAR UN ARCHIVO
+  eliminar(archivo: Nosotros) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: `¿Deseás eliminar el archivo "${archivo.nombreImagen}"?`,
+        confirmAction: async () => {
+          await this.nosotrosService.eliminarArchivo(archivo.urlImagen, archivo.id!);
+          this.cargarArchivos();
         }
-      });
-    }
-
-    async cargarArchivos() {
-    this.archivos = await this.bannerService.listarArchivos(this.carpeta);
+      }
+    });
   }
 
-   subirArchivo() {
-    if (!this.archivoSeleccionado) return;
-
-    this.subiendo = true;
-    const filePath = `uploads/${Date.now()}_${this.archivoSeleccionado.name}`;
-
-    this.bannerService.uploadFile(this.archivoSeleccionado, filePath)
-      .then(url => {
-        this.urlArchivo = url;
-        this.subiendo = false;
-      })
-      .catch(error => {
-        console.error('Error al subir el archivo:', error);
-        this.subiendo = false;
-      });
+  ngOnInit() {
+    this.cargarArchivos();
+    
   }
-
 }
 
 
