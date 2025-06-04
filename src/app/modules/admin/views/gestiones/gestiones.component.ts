@@ -33,6 +33,12 @@ export class GestionesComponent {
       icono: 'fas fa-image',
       ruta: '/gestiones/banner',
     },
+    {
+      titulo: 'Nosotros',
+      descripcion: 'Gestión de nosotros',
+      icono: 'fa-solid fa-address-card',
+      ruta: '/gestiones/nosotros',
+    },
   ];
 
   constructor(private router: Router) {}
