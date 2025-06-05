@@ -20,6 +20,11 @@ export class NosotrosGestionComponent {
   constructor(private nosotrosService: NosotrosService, private dialog: MatDialog) {}
 
 
+    ngOnInit() {
+    this.cargarArchivos();
+    
+  }
+
 //FUNCION PARA ELEIGR UNA IMAGEN
   onFileSelected(event: any) {
     this.archivoSeleccionado = event.target.files[0] || null;
@@ -80,10 +85,7 @@ abrirImagen(url: string): void {
     });
   }
 
-  ngOnInit() {
-    this.cargarArchivos();
-    
-  }
+
 }
 
 

@@ -12,8 +12,8 @@ export class NosotrosService {
   private storage = getStorage();
   private firestore = getFirestore();
   private coleccion = collection(this.firestore, 'Nosotros');
-    nosotrosSubject = new BehaviorSubject<Nosotros[]>([]);
-    nosotros$ = this.nosotrosSubject.asObservable();
+  nosotrosSubject = new BehaviorSubject<Nosotros[]>([]);
+  nosotros$ = this.nosotrosSubject.asObservable();
 
   constructor() { }
 
@@ -60,5 +60,14 @@ export class NosotrosService {
     const docRef = doc(this.firestore, 'Nosotros', idFirestore);
     await deleteDoc(docRef);
   }
+
+  // En tu servicio NosotrosService
+getNosotros(): void {
+  this.listarImagenes().then(imagenes => {
+    this.nosotrosSubject.next(imagenes);
+  }).catch(error => {
+    console.error('Error al listar imágenes:', error);
+  });
+}
 }
 

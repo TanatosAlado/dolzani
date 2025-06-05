@@ -1,0 +1,14 @@
+<div class="nosotros-container">
+  <div
+    class="nosotros-item"
+    *ngFor="let item of nosotros; let i = index"
+    [ngClass]="{ 'reverse': i % 2 === 1 }"
+  >
+    <div class="nosotros-imagen">
+      <img [src]="item.urlImagen" [alt]="item.descripcion" />
+    </div>
+    <div class="nosotros-texto">
+      <p>{{ item.descripcion }}</p>
+    </div>
+  </div>
+</div>
