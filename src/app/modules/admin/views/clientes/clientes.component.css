@@ -48,7 +48,7 @@ tr.mat-row:hover {
   background-color: #f9f9f9;
 }
 td{
-  text-align: center;
+  text-align: center !important;
 }
 
 /* Filas pares */
