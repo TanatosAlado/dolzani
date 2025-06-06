@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -13,7 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.css']
+  styleUrls: ['./clientes.component.css'],
+   encapsulation: ViewEncapsulation.None
 })
 export class ClientesComponent {
 
