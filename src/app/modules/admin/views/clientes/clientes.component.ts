@@ -70,7 +70,7 @@ export class ClientesComponent {
       this.loadClientes(this.clientesService.ultimoCliente);
     } else {
       // Retrocediendo aún no implementado (hay que hacer una pila si querés)
-      console.log('Retroceder no implementado aún');
+     
     }
   }
 
@@ -83,15 +83,11 @@ export class ClientesComponent {
   
     dialogRef.afterClosed().subscribe(resultado => {
       if (resultado) {
-       
-        console.log('Datos actualizados:', resultado);
         this.clientesService.actualizarCliente(resultado.id, resultado)
         .then(() => {
-          console.log('Cliente actualizado correctamente en Firebase');
           this.loadClientes();
         })
         .catch(error => {
-          console.error('Error al actualizar el cliente:', error);
         });
       }
     });
@@ -109,7 +105,6 @@ export class ClientesComponent {
   }
 
   eliminarCliente(): void {
-    console.log('Eliminar', this.clienteAEliminar);
     // LLAMAR AL SERVICIO, SUSCRIBIRSE E INFIRMAR AL USUARIO
   }
 
@@ -122,7 +117,6 @@ export class ClientesComponent {
 
   abrirRegistro(){
     this.authService.openRegistroModal().subscribe((resultado) => {
-      console.log('El modal de registro se cerró');
       if (resultado) {
         this.ultimoCliente = null;
         this.clientesStack = [];

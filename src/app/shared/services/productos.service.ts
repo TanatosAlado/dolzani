@@ -21,11 +21,10 @@ export class ProductosService {
     if (!this.productos$) {
       const ref = collection(this.firestore, 'productos') as CollectionReference<Producto>;
       this.productos$ = collectionData(ref, { idField: 'id' }).pipe(
-        tap(productos => console.log('Productos cargados desde Firebase')),
+        tap(productos => console.log('')),
         shareReplay(1)
       );
     } else {
-      console.log('Productos cargados desde caché en memoria');
     }
     return this.productos$;
   }

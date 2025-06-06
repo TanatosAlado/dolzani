@@ -84,7 +84,6 @@ export class PedidosComponent {
     //FUNCION PARA MOSTRAR LA TABLA CON EL PEDIDO DEL CLIENTE
   showCarritoPedidoFinalizado(id:any){
   this.pedidoEncontrado = this.pedidosFinalizados.find(p => p.id === id);
-    console.log("pedido finalizado",this.pedidoEncontrado)
    this.showTablaPedido=false
    this.showCarroPedido=true
    this.showFormPedido=true
@@ -187,10 +186,8 @@ activarEdicion(carro: any) {
    // Actualizar en Firestore
    this.pedidosService.updateCarroEnPedido(this.pedidoEncontrado.id, this.pedidoEncontrado.carrito)
    .then(() => {
-     console.log('Cantidad actualizada en Firestore');
    })
    .catch(err => {
-     console.error('Error actualizando la cantidad', err);
    });
   }
 
@@ -277,12 +274,10 @@ imprimir() {
 
     updateDoc(ref, { estado: 'En preparación' })
       .then(() => {
-        console.log('Estado actualizado a En preparación');
         window.print();
         this.cerrarModalImpresion(); 
       })
       .catch(error => {
-        console.error('Error al actualizar el estado:', error);
         window.print(); 
         this.cerrarModalImpresion();
       });

@@ -64,7 +64,6 @@ export class CheckoutComponent {
     this.contadorService.contador$.subscribe(data => {
       this.contador = data
     })
-    console.log("contador pedidos", this.contador)
   }
 
 
@@ -188,17 +187,13 @@ export class CheckoutComponent {
             const cantidadComprada = item.cantidad ?? 0;
             const stockNuevo = Math.max(stockActual - cantidadComprada, 0);
             await updateDoc(productoRef, { stock: stockNuevo });
-            console.log(`Producto ${item.id}: Stock actualizado de ${stockActual} a ${stockNuevo}`);
           } else {
-            console.warn(`Producto con ID ${item.id} no encontrado`);
+            
           }
-        } catch (error) {
-          console.error(`Error al actualizar stock del producto ${item.id}:`, error);
+        } catch (error) {  
         }
       }
-      console.log("Pedido creado exitosamente:", unPedido);
     }).catch((error) => {
-      console.error("Error al crear el pedido:", error);
     });
   }
 

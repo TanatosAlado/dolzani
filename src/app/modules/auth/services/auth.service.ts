@@ -24,7 +24,6 @@ export class AuthService {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('El modal de ingreso se cerró');
     });
   }
 

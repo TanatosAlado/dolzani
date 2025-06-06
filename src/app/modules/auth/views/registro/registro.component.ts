@@ -92,7 +92,6 @@ export class RegistroComponent {
   
     this.authService.getClienteById({ mail: formValues.mail }).subscribe((clienteEncontrado) => {
       if (clienteEncontrado) {
-        console.log('Cliente ya existe:', clienteEncontrado);
       } else {
         const _cliente: Cliente = {
           id: "1",

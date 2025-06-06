@@ -24,7 +24,6 @@ ngOnInit(): void {
     this.nosotrosService.getNosotros();
     this.nosotrosService.nosotros$.subscribe(data => {
       this.nosotros = data;
-      console.log("🔄 Datos de nosotros:", this.nosotros);
     });
   }
 }

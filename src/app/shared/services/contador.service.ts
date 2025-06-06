@@ -23,7 +23,6 @@ export class ContadorService {
         id: doc.id
       }));
       this.contadorSubject.next(contador);
-      console.log(contador)
     }).catch(error => {
       console.error('Error al obtener contador:', error);
     });
@@ -31,8 +30,6 @@ export class ContadorService {
 
   //SERVICE PARA ACTUALIZAR CONTADOR DE PEDIDOS
     updateContador(id: string, contador: any) {
-      console.log(id)
-      console.log(contador)
       const contadorRef = doc(this.firestore, 'Contador Pedidos', id);
       return updateDoc(contadorRef, contador);
     }

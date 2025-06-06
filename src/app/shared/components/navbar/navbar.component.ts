@@ -57,7 +57,6 @@ export class NavbarComponent {
   // Escuchar cambios del cliente en todo momento
   this.generalService.getCliente().subscribe(cliente => {
     if (cliente) {
-        console.log("CARRITO INICIAL:", cliente.carrito);
       this.usuarioLogueado = true;
       this.usrAdmin = cliente.administrador;
       this.cantidadProductos = this.getCantidadProductos(cliente.carrito);
@@ -109,7 +108,6 @@ export class NavbarComponent {
 
 
       } else {
-        console.log('El usuario cerró el modal sin loguearse');
       }
     });
   }
@@ -151,7 +149,6 @@ export class NavbarComponent {
       this.resultados = this.productos.filter(item =>
         item.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
-      console.log(this.resultados)
     }
 
       //FUNCION PARA SELECCIONAR EL PRODUCTO ENCONTRADO Y VER SUS DETALLES
@@ -177,7 +174,6 @@ export class NavbarComponent {
 
     abrirCarrito() {
     // Lógica para abrir el offcanvas o cualquier acción que necesites
-    console.log('Carrito abierto');
     // Si usas Bootstrap para el offcanvas, puedes hacerlo con código JavaScript o Angular
   }
 

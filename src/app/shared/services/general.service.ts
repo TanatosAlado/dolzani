@@ -39,7 +39,6 @@ export class GeneralService {
   }  
   
   private loadClienteFromLocalStorage(): Observable<Cliente | null> {
-    console.log('Cargando cliente desde localStorage...');
     const clienteId = localStorage.getItem('cliente');
     if (clienteId) {
       return this.clientesService.getClienteById(clienteId);

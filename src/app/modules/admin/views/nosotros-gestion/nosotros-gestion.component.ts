@@ -49,8 +49,6 @@ async subirArchivo() {
       urlImagen:this.urlArchivo
     });
 
-    console.log('ID del documento guardado:', idGenerado);
-
     this.descripcion = '';
     this.archivoSeleccionado = null;
     await this.cargarArchivos();
@@ -69,7 +67,6 @@ abrirImagen(url: string): void {
   //FUNCION PARA CARGAR LOS ARCHIVOS
   async cargarArchivos() {
     this.archivos = await this.nosotrosService.listarImagenes();
-    console.log(this.archivos)
   }
 
   //FUNCION PARA ELIMINAR UN ARCHIVO

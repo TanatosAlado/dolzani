@@ -56,8 +56,8 @@ export class CarritoComponent {
      const cliente = this.cliente
      if (cliente) {
        this.clienteService.actualizarCliente(cliente.id, cliente)
-         .then(() => console.log('Carrito actualizado al cerrar'))
-         .catch(err => console.error('Error actualizando carrito:', err));
+         .then(() => (''))
+         .catch(err => console.error( err));
      }
   }
 
