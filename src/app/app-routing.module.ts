@@ -12,6 +12,7 @@ import { BannerComponent } from './modules/admin/views/banner/banner.component';
 import { AdminGuard } from './guards/admin.guard';
 import { GrillaItemsComponent } from './modules/shop/views/grilla-items/grilla-items.component';
 import { CheckoutComponent } from './shared/components/checkout/checkout.component';
+import { NosotrosGestionComponent } from './modules/admin/views/nosotros-gestion/nosotros-gestion.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'prefix' },
@@ -39,6 +40,7 @@ const routes: Routes = [
       { path: 'productos', component: ProductosComponent },
       { path: 'pedidos', component: PedidosComponent },
       { path: 'banner', component: BannerComponent },
+      { path: 'nosotros', component: NosotrosGestionComponent },
       
     ]
   },

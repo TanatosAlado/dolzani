@@ -27,7 +27,6 @@ export class PedidosService {
   // SERVICIO PARA ELIMINAR UN PEDIDO POR ID
   async deletePedidoById(id: string, tabla: string): Promise<void> {
     const productoRef = doc(this.firestore, `${tabla}/${id}`);
-    console.log(`${{ tabla }}/${id}`)
     try {
       await deleteDoc(productoRef);
      // this.getPedidos(tabla);
@@ -80,13 +79,9 @@ async moverDocumento(id: string, origen: string, destino: string): Promise<void>
 
       // Eliminar del origen
       await deleteDoc(refOrigen);
-
-      console.log('Documento movido con éxito.');
     } else {
-      console.log('El documento no existe.');
     }
   } catch (err) {
-    console.error('Error al mover el documento:', err);
   }
 }
 

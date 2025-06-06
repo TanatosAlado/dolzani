@@ -11,10 +11,8 @@ export class MailsService {
   sendMails(url:any,formData:any) {
     this.http.post(url, formData).subscribe(
       (response) => {
-        console.log('Formulario enviado con éxito', response);
       },
       (error) => {
-        console.error('Error al enviar el formulario', error);
       }
     )
   }

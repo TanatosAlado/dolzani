@@ -50,10 +50,9 @@ export class CarritoService {
         const nuevoCarrito = carritoActual.filter((producto: any) => producto.id !== productoId);
         await updateDoc(clienteRef, { carrito: nuevoCarrito });
         this.carritoSubject.next(nuevoCarrito);
-        console.log('Producto eliminado y carrito actualizado');
+
       }
     } catch (error) {
-      console.error('Error al eliminar el producto del carrito:', error);
     }
   }
 
