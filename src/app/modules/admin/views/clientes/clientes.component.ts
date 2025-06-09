@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
 import { ClientesService } from 'src/app/shared/services/clientes.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.css']
+  styleUrls: ['./clientes.component.css'],
 })
 export class ClientesComponent {
 
@@ -58,6 +58,11 @@ export class ClientesComponent {
     });
   }
 
+    //FUNCION PARA FILTRAR POR CUALQUIER PALABRA QUE SE ESCRIBA EN EL FILTRO
+  applyFilter(event: Event, datasource: MatTableDataSource<any>) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    datasource.filter = filterValue.trim().toLowerCase();
+  }
   loadTotalClientes(): void {
     this.clientesService.getClientesCount().subscribe(total => {
       this.totalClientes = total;

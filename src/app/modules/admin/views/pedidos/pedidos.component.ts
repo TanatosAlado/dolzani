@@ -28,17 +28,16 @@ export class PedidosComponent {
   pedidosPendientes: Pedido[] = []
   pedidosFinalizados: Pedido[] = []
   pedidosEliminados: Pedido[] = []
-  showCarroPedido:boolean=false
-  showFormPedido:Boolean=false
-  showDeleteCarro:boolean=true
-  columnsProductos: string[] = ['imagen', 'marca', 'nombre', 'rubro', 'subRubro','precio', 'acciones']
-  columnsClientes: string[] = ['apellido','dni', 'mail', 'celular', 'direccion', 'acciones']
-  columnsPedidosPendietes: string[] = ['numero','hora', 'usuario', 'celular','direccion','entrega', 'pago','total', 'acciones']
-  columnsPedidosFinalizados: string[] = ['numero','hora', 'usuario', 'celular','direccion','entrega', 'pago','total', 'acciones']
-  columnsPedidosEliminados: string[] = ['numero','hora', 'usuario', 'celular','direccion','entrega', 'pago','total', 'acciones']
+  showCarroPedido: boolean = false
+  showFormPedido: Boolean = false
+  showDeleteCarro: boolean = true
+  columnsProductos: string[] = ['imagen', 'marca', 'nombre', 'rubro', 'subRubro', 'precio', 'acciones']
+  columnsClientes: string[] = ['apellido', 'dni', 'mail', 'celular', 'direccion', 'acciones']
+  columnsPedidosPendietes: string[] = ['numero', 'hora', 'usuario', 'celular', 'direccion', 'entrega', 'pago', 'total', 'acciones']
+  columnsPedidosFinalizados: string[] = ['numero', 'hora', 'usuario', 'celular', 'direccion', 'entrega', 'pago', 'total', 'acciones']
+  columnsPedidosEliminados: string[] = ['numero', 'hora', 'usuario', 'celular', 'direccion', 'entrega', 'pago', 'total', 'acciones']
   mostrarModalImpresion: boolean = false;
-
-
+  paginator!: MatPaginator;
   showFormAgregarProducto: boolean = false
   showTablaVerProducto: boolean = false
   showFormAgregarCliente: boolean = false
@@ -50,21 +49,51 @@ export class PedidosComponent {
 
 
 
-  constructor(private pedidosService: PedidosService, private toastService: ToastService, private cdRef: ChangeDetectorRef, private dialog: MatDialog, private firestore: Firestore){}
+  constructor(private pedidosService: PedidosService, private toastService: ToastService, private cdRef: ChangeDetectorRef, private dialog: MatDialog, private firestore: Firestore) {
 
-  ngOnInit(){
+    this.datasourcePedidosPendientes = new MatTableDataSource(this.pedidosPendientes);
+    this.datasourcePedidosFinalizados = new MatTableDataSource(this.pedidosFinalizados);
+    this.datasourcePedidosEliminados = new MatTableDataSource(this.pedidosEliminados);
+    }
+
+
+  
+  ngOnInit() {
     this.getPedidos()
   }
 
-  ngAfterViewInit() {
-  if (this.datasourcePedidosPendientes) {
-    this.datasourcePedidosPendientes.paginator = this.paginatorPendientes;
+
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    if (mp) {
+      this.paginator = mp;
+      this.paginator._intl.itemsPerPageLabel = 'Pedidos por Página';
+      this.paginator._intl.firstPageLabel = 'Primera Página';
+      this.paginator._intl.previousPageLabel = 'Página Anterior';
+      this.paginator._intl.nextPageLabel = 'Siguiente Página';
+      this.paginator._intl.lastPageLabel = 'Última Página';
+    }
+    this.setDataSourceAttributes();
   }
 
-  if (this.datasourcePedidosFinalizados) {
-    this.datasourcePedidosFinalizados.paginator = this.paginatorFinalizados;
+  ngAfterViewInit() {
+    this.setDataSourceAttributes()
   }
-}
+
+
+  setDataSourceAttributes() {
+    if (this.datasourcePedidosPendientes && this.activeTab===1) {
+      this.datasourcePedidosPendientes.paginator = this.paginator;
+    }
+
+    if (this.datasourcePedidosFinalizados&& this.activeTab===2) {
+      this.datasourcePedidosFinalizados.paginator = this.paginator;
+    }
+     if (this.datasourcePedidosEliminados&& this.activeTab===3) {
+      this.datasourcePedidosEliminados.paginator = this.paginator;
+    }
+  }
+
+
 
   applyFilter(event: Event, datasource: MatTableDataSource<any>) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -72,23 +101,29 @@ export class PedidosComponent {
   }
 
   //FUNCION PARA MOSTRAR LA TABLA CON EL PEDIDO DEL CLIENTE
-  showCarritoPedidoPendiente(id:any){
-     this.pedidoEncontrado = this.pedidosPendientes.find(p => p.id === id);
-   this.showTablaPedido=false
-   this.showCarroPedido=true
-   this.showFormPedido=true
-   this.showDeleteCarro=true
-   this.activeTab=1
+  showCarritoPedidoPendiente(id: any) {
+    this.pedidoEncontrado = this.pedidosPendientes.find(p => p.id === id);
+    this.showTablaPedido = false
+    this.showCarroPedido = true
+    this.showFormPedido = true
+    this.showDeleteCarro = true
+    this.activeTab = 1
   }
 
-    //FUNCION PARA MOSTRAR LA TABLA CON EL PEDIDO DEL CLIENTE
-  showCarritoPedidoFinalizado(id:any){
-  this.pedidoEncontrado = this.pedidosFinalizados.find(p => p.id === id);
-   this.showTablaPedido=false
-   this.showCarroPedido=true
-   this.showFormPedido=true
-   this.showDeleteCarro=false
-   this.activeTab=2
+  //FUNCION PARA MOSTRAR LA TABLA CON EL PEDIDO DEL CLIENTE
+  showCarritoPedidoFinalizado(id: any) {
+    this.pedidoEncontrado = this.pedidosFinalizados.find(p => p.id === id);
+    this.showTablaPedido = false
+    this.showCarroPedido = true
+    this.showFormPedido = true
+    this.showDeleteCarro = false
+    this.activeTab = 2
+  }
+
+  setPaginator(tab:number){
+   this.activeTab = tab;
+  this.setDataSourceAttributes();
+
   }
 
   //FUNCION PARA MOSTRAR LA TABLA CON EL PEDIDO DEL CLIENTE
@@ -117,7 +152,7 @@ export class PedidosComponent {
     });
   }
 
-    openConfirmDialogDel(id: string, tabla: string) {
+  openConfirmDialogDel(id: string, tabla: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: {
@@ -127,28 +162,28 @@ export class PedidosComponent {
     });
   }
 
-getPedidos() {
-  this.pedidosService.getPedidosPorTipo('Pedidos Pendientes').subscribe(data => {
-    this.pedidosPendientes = data;
-    this.datasourcePedidosPendientes = new MatTableDataSource(this.pedidosPendientes);
-    this.datasourcePedidosPendientes.paginator = this.paginatorPendientes;
-    this.cdRef.detectChanges();
-  });
+  getPedidos() {
+    this.pedidosService.getPedidosPorTipo('Pedidos Pendientes').subscribe(data => {
+      this.pedidosPendientes = data;
+      this.datasourcePedidosPendientes = new MatTableDataSource(this.pedidosPendientes);
+      this.datasourcePedidosPendientes.paginator = this.paginatorPendientes;
+      this.cdRef.detectChanges();
+    });
 
-  this.pedidosService.getPedidosPorTipo('Pedidos Finalizados').subscribe(data => {
-    this.pedidosFinalizados = data;
-    this.datasourcePedidosFinalizados = new MatTableDataSource(this.pedidosFinalizados);
-    this.datasourcePedidosFinalizados.paginator = this.paginatorFinalizados;
-    this.cdRef.detectChanges();
-  });
+    this.pedidosService.getPedidosPorTipo('Pedidos Finalizados').subscribe(data => {
+      this.pedidosFinalizados = data;
+      this.datasourcePedidosFinalizados = new MatTableDataSource(this.pedidosFinalizados);
+      this.datasourcePedidosFinalizados.paginator = this.paginatorFinalizados;
+      this.cdRef.detectChanges();
+    });
 
-  this.pedidosService.getPedidosPorTipo('Pedidos Eliminados').subscribe(data => {
-    this.pedidosEliminados = data;
-    this.datasourcePedidosEliminados = new MatTableDataSource(this.pedidosEliminados);
-    this.datasourcePedidosEliminados.paginator = this.paginatorEliminados;
-    this.cdRef.detectChanges();
-  });
-}
+    this.pedidosService.getPedidosPorTipo('Pedidos Eliminados').subscribe(data => {
+      this.pedidosEliminados = data;
+      this.datasourcePedidosEliminados = new MatTableDataSource(this.pedidosEliminados);
+      this.datasourcePedidosEliminados.paginator = this.paginatorEliminados;
+      this.cdRef.detectChanges();
+    });
+  }
 
 
   showBodyProductos() {
@@ -156,52 +191,52 @@ getPedidos() {
     this.showTablaVerProducto = true
     this.showFormAgregarCliente = false
     this.showTablaVerCliente = false
-}
+  }
 
-activarEdicion(carro: any) {
+  activarEdicion(carro: any) {
     carro.editandoCantidad = true;
-}
+  }
 
-//FUNCION PARA DESHABILITAR EL INPUT PARA CAMBIAR CANTIDAD DE PRODUCTOS
+  //FUNCION PARA DESHABILITAR EL INPUT PARA CAMBIAR CANTIDAD DE PRODUCTOS
   desactivarEdicion(carro: any) {
     carro.editandoCantidad = false;
     this.actualizarTotal();
     this.updatePedidoCarrito()
-    
+
   }
-  
+
   actualizarTotal() {
     if (!this.pedidoEncontrado || !this.pedidoEncontrado.carrito) return;
-  
+
     let nuevoTotal = 0;
     for (let item of this.pedidoEncontrado.carrito) {
       nuevoTotal += item.precioFinal * item.cantidad;
     }
-  
+
     this.pedidoEncontrado.total = nuevoTotal;
   }
-  
+
   //FUNCION PARA ACTUALIZAR EL PEDIDO DEL CARRO EN ADMIN
-  updatePedidoCarrito(){
-   // Actualizar en Firestore
-   this.pedidosService.updateCarroEnPedido(this.pedidoEncontrado.id, this.pedidoEncontrado.carrito)
-   .then(() => {
-   })
-   .catch(err => {
-   });
+  updatePedidoCarrito() {
+    // Actualizar en Firestore
+    this.pedidosService.updateCarroEnPedido(this.pedidoEncontrado.id, this.pedidoEncontrado.carrito)
+      .then(() => {
+      })
+      .catch(err => {
+      });
   }
 
-// FUNCION PARA MOSTRAR LA TABLA DEL CUERPO PRODUCTO Y OCULTAR LAS DEMAS
+  // FUNCION PARA MOSTRAR LA TABLA DEL CUERPO PRODUCTO Y OCULTAR LAS DEMAS
   showBodyPedidos() {
-     if (this.pedidoEncontrado?.carrito?.length) {
-    this.pedidoEncontrado.carrito.forEach((carro: any) => {
-      this.desactivarEdicion(carro);
-    });
-  }
+    if (this.pedidoEncontrado?.carrito?.length) {
+      this.pedidoEncontrado.carrito.forEach((carro: any) => {
+        this.desactivarEdicion(carro);
+      });
+    }
     this.showFormAgregarProducto = false
     this.showTablaVerProducto = true
-    this.showTablaPedido=true
-    this.showFormPedido=false
+    this.showTablaPedido = true
+    this.showFormPedido = false
     // this.activeTab=2
   }
 
@@ -209,14 +244,14 @@ activarEdicion(carro: any) {
   eliminarProductoCarro(carro: any) {
     const idPedido = this.pedidoEncontrado.id;
     const idProducto = carro.id;
-  
+
     this.pedidosService.deleteProductoDelCarrito(idPedido, idProducto)
       .then(() => {
-        this.toastService.toatsMessage('Producto eliminado con éxito', 'green',2000);
+        this.toastService.toatsMessage('Producto eliminado con éxito', 'green', 2000);
         this.pedidoEncontrado.carrito = this.pedidoEncontrado.carrito.filter((p: { id: any; }) => p.id !== idProducto);
         if (this.pedidoEncontrado.carrito.length === 0) {
           this.showCarroPedido = false;
-          this.toastService.toatsMessage('Producto eliminado con éxito', 'green',2000);
+          this.toastService.toatsMessage('Producto eliminado con éxito', 'green', 2000);
         } else {
           this.pedidoEncontrado.total = this.pedidoEncontrado.carrito.reduce(
             (acc: number, producto: any) => acc + producto.precioFinal * producto.cantidad, 0
@@ -225,66 +260,66 @@ activarEdicion(carro: any) {
       })
       .catch((error) => {
         console.error('Error al eliminar producto:', error);
-        this.toastService.toatsMessage('Producto eliminado con éxito', 'red',2000);
+        this.toastService.toatsMessage('Producto eliminado con éxito', 'red', 2000);
       });
   }
 
-  moverDocumento(id: string, origen: string, destino: string){
-    this.pedidosService.moverDocumento(id,origen,destino)
+  moverDocumento(id: string, origen: string, destino: string) {
+    this.pedidosService.moverDocumento(id, origen, destino)
       .then(() => {
-        if((origen == 'Pedidos Pendientes') && (destino == 'Pedidos Finalizados')){
-          this.toastService.toatsMessage('Pedido finalizado con éxito', 'green',2000);
-        } else if((origen == 'Pedidos Pendientes') && (destino == 'Pedidos Eliminados')){
-          this.toastService.toatsMessage('Pedido eliminado con éxito', 'green',2000);
-        } else if((origen == 'Pedidos Finalizados') && (destino == 'Pedidos Pendientes')){
-          this.toastService.toatsMessage('Pedido regresado a pendientes con éxito', 'green',2000);
-        } else if((origen == 'Pedidos Finalizados') && (destino == 'Pedidos Eliminados')){
-          this.toastService.toatsMessage('Pedido eliminado con éxito', 'green',2000);
-        } else if((origen == 'Pedidos Eliminados') && (destino == 'Pedidos Pendientes')){
-          this.toastService.toatsMessage('Pedido regresado a pendientes con éxito', 'green',2000);
+        if ((origen == 'Pedidos Pendientes') && (destino == 'Pedidos Finalizados')) {
+          this.toastService.toatsMessage('Pedido finalizado con éxito', 'green', 2000);
+        } else if ((origen == 'Pedidos Pendientes') && (destino == 'Pedidos Eliminados')) {
+          this.toastService.toatsMessage('Pedido eliminado con éxito', 'green', 2000);
+        } else if ((origen == 'Pedidos Finalizados') && (destino == 'Pedidos Pendientes')) {
+          this.toastService.toatsMessage('Pedido regresado a pendientes con éxito', 'green', 2000);
+        } else if ((origen == 'Pedidos Finalizados') && (destino == 'Pedidos Eliminados')) {
+          this.toastService.toatsMessage('Pedido eliminado con éxito', 'green', 2000);
+        } else if ((origen == 'Pedidos Eliminados') && (destino == 'Pedidos Pendientes')) {
+          this.toastService.toatsMessage('Pedido regresado a pendientes con éxito', 'green', 2000);
         }
         //this.getPedidos();
       })
   }
 
 
-onTabChange(event: MatTabChangeEvent) {
-  this.cdRef.detectChanges();
+  onTabChange(event: MatTabChangeEvent) {
+    this.cdRef.detectChanges();
 
-  if (event.index === 0) {
-    this.datasourcePedidosPendientes.paginator = this.paginatorPendientes;
-  } else if (event.index === 1) {
-    this.datasourcePedidosFinalizados.paginator = this.paginatorFinalizados;
+    if (event.index === 0) {
+      this.datasourcePedidosPendientes.paginator = this.paginatorPendientes;
+    } else if (event.index === 1) {
+      this.datasourcePedidosFinalizados.paginator = this.paginatorFinalizados;
+    }
   }
-}
 
-abrirModalImpresion() {
-  this.mostrarModalImpresion = true;
-}
-
-cerrarModalImpresion() {
-  this.mostrarModalImpresion = false;
-}
-
-imprimir() {
-  if (this.pedidoEncontrado && this.pedidoEncontrado.id) {
-    const pedidoId = this.pedidoEncontrado.id;
-
-    const ref = doc(this.firestore, 'Pedidos Pendientes', pedidoId); 
-
-    updateDoc(ref, { estado: 'En preparación' })
-      .then(() => {
-        window.print();
-        this.cerrarModalImpresion(); 
-      })
-      .catch(error => {
-        window.print(); 
-        this.cerrarModalImpresion();
-      });
-  } else {
-    window.print();
-    this.cerrarModalImpresion();
+  abrirModalImpresion() {
+    this.mostrarModalImpresion = true;
   }
-}
+
+  cerrarModalImpresion() {
+    this.mostrarModalImpresion = false;
+  }
+
+  imprimir() {
+    if (this.pedidoEncontrado && this.pedidoEncontrado.id) {
+      const pedidoId = this.pedidoEncontrado.id;
+
+      const ref = doc(this.firestore, 'Pedidos Pendientes', pedidoId);
+
+      updateDoc(ref, { estado: 'En preparación' })
+        .then(() => {
+          window.print();
+          this.cerrarModalImpresion();
+        })
+        .catch(error => {
+          window.print();
+          this.cerrarModalImpresion();
+        });
+    } else {
+      window.print();
+      this.cerrarModalImpresion();
+    }
+  }
 
 }

@@ -5,63 +5,60 @@
 <div class="container mt-5">
   <div class="tabla-container">
     <div class="button-container">
-      <button mat-raised-button color="primary" (click)="abrirRegistro()">Nuevo</button>
+      <button mat-raised-button class="boton-nuevo" (click)="abrirRegistro()">Nuevo</button>
     </div>
+    <input class="search-input" (keyup)="applyFilter($event,dataSource)" placeholder="Búsqueda Cliente" #input>
     <table mat-table [dataSource]="dataSource.data" class="mat-elevation-z8" style="width: 100%;">
-      
       <!-- Nombre Column -->
       <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <th mat-header-cell *matHeaderCellDef class="cabecera"> Nombre </th>
         <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
       </ng-container>
 
       <!-- Apellido Column -->
       <ng-container matColumnDef="apellido">
-        <th mat-header-cell *matHeaderCellDef> Apellido </th>
+        <th mat-header-cell *matHeaderCellDef class="cabecera"> Apellido </th>
         <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
       </ng-container>
 
       <!-- Razon Social Column -->
       <ng-container matColumnDef="razonSocial">
-        <th mat-header-cell *matHeaderCellDef> Razon Social </th>
+        <th mat-header-cell *matHeaderCellDef class="cabecera"> Razon Social </th>
         <td mat-cell *matCellDef="let element"> {{element.razonSocial}} </td>
       </ng-container>
 
       <!-- Estado -->
       <ng-container matColumnDef="estado">
-        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <th mat-header-cell *matHeaderCellDef class="cabecera"> Estado </th>
         <td mat-cell *matCellDef="let element"> {{ element.estado ? 'Activo' : 'Inactivo' }} </td>
       </ng-container>
 
       <!-- Acciones Column -->
       <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef> Acciones </th>
-        <td mat-cell *matCellDef="let element" class="acciones-cell">
-          <button mat-icon-button color="primary" matTooltip="Ver cliente" (click)="verCliente(element)">
+        <th mat-header-cell *matHeaderCellDef class="cabecera"> Acciones </th>
+        <td mat-cell *matCellDef="let element" class="icons">
+          <a title="Ver cliente" (click)="verCliente(element)">
             <mat-icon>remove_red_eye</mat-icon>
-          </button>
-          <button mat-icon-button color="primary" matTooltip="Editar cliente" (click)="editarCliente(element)">
+          </a>
+          <a title="Editar cliente" (click)="editarCliente(element)">
             <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="primary" matTooltip="Restablecer contraseña" (click)="restablecerPass(element)">
+          </a>
+          <a title="Restablecer contraseña" (click)="restablecerPass(element)">
             <mat-icon>autorenew</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" matTooltip="Eliminar cliente" (click)="openConfirmDialog(element)">
+          </a>
+          <a title="Eliminar cliente" (click)="openConfirmDialog(element)">
             <mat-icon>delete</mat-icon>
-          </button>
+          </a>
         </td>
       </ng-container>
-  
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
+
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-      [length]="totalClientes" [pageSize]="10"
-      showFirstLastButtons
-      (page)="onPageChange($event)"
-      aria-label="Select page of periodic elements">
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="totalClientes" [pageSize]="10" showFirstLastButtons
+      (page)="onPageChange($event)" aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
 </div>

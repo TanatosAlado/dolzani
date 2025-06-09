@@ -16,6 +16,14 @@ table {
   min-width: 600px; /* Evita que la tabla se achique demasiado */
 }
 
+/* Estilos Encabezados */
+.cabecera {
+  background-color:#ec133e !important;
+  color: white !important;
+  font-weight: bold !important;
+  text-align: center !important;
+}
+
 /* Encabezados */
 th.mat-header-cell {
   background-color: #f1f1f1;
@@ -23,7 +31,7 @@ th.mat-header-cell {
   font-size: 16px;
   color: #333;
   padding: 12px 16px;
-  text-align: left;
+  text-align: center;
   border-bottom: 2px solid #e0e0e0;
 }
 
@@ -38,6 +46,9 @@ td.mat-cell {
 /* Fila hover */
 tr.mat-row:hover {
   background-color: #f9f9f9;
+}
+td{
+  text-align: center !important;
 }
 
 /* Filas pares */
@@ -61,9 +72,9 @@ button.mat-icon-button {
   padding: 4px 0; /* Espacio arriba y abajo */
 }
 
-/* Paginador */
-mat-paginator {
-  margin-top: 16px;
+.icons{
+cursor: pointer;
+color:#ec133e;
 }
 
 /* Botón Nuevo a la derecha */
@@ -71,6 +82,21 @@ mat-paginator {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
+}
+
+.boton-nuevo {
+  background-color: #ec133e !important;
+  color: white !important;
+  font-weight: bold; 
+}
+
+
+.search-input {
+  padding: 8px;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
 /* Media query para pantallas muy pequeñas */
@@ -85,3 +111,8 @@ mat-paginator {
     overflow-x: auto;
   }
 }
+
+
+
+
+
