@@ -3,6 +3,16 @@ input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.tabla-container {
+  margin: 20px auto;
+  max-width: 1200px;
+  overflow-x: auto; /* Permite scroll horizontal en la tabla entera */
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
 .tabs-container {
    width: 100%;
   /* max-width: 600px; */
@@ -43,8 +53,8 @@ input[type=number]::-webkit-inner-spin-button {
 
 .table-container {
   width: 100%;
-  overflow-x: auto;
-  margin-bottom: 20px;
+ border-collapse: 0;
+  margin-bottom: 10px;
   /* transform: translateX(-5%); */
 }
 
@@ -81,19 +91,19 @@ input[type=number]::-webkit-inner-spin-button {
   font-weight: bold;
   color: white;
   /* transform: translateX(-5%) translateY(-10px); */
-  border: 1px solid black; 
+  /* border: 1px solid black;  */
 }
 
 table {
   width: 100%;
   margin-top: 1%;
   border-collapse: collapse;
-  border: 1px solid black
+  /* border: 1px solid black */
 }
 
 th,
 td {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   padding: 8px;
   text-align: center;
 }
