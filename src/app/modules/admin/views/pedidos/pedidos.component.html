@@ -10,12 +10,12 @@
                 <div *ngIf="showTablaPedido">
                     <div class="tabs-container">
                         <div class="tabs">
-                            <div class="tab" [class.active]="activeTab === 1" (click)="activeTab = 1">Pedidos Pendientes
+                            <div class="tab" (click)="setPaginator(1)" [class.active]="activeTab === 1" (click)="activeTab = 1">Pedidos Pendientes
                             </div>
-                            <div class="tab" [class.active]="activeTab === 2" (click)="activeTab = 2">Pedidos
+                            <div class="tab"(click)="setPaginator(2)" [class.active]="activeTab === 2" (click)="activeTab = 2">Pedidos
                                 Finalizados
                             </div>
-                            <div class="tab" [class.active]="activeTab === 3" (click)="activeTab = 3">Pedidos Eliminados
+                            <div class="tab"(click)="setPaginator(3)" [class.active]="activeTab === 3" (click)="activeTab = 3">Pedidos Eliminados
                             </div>
                         </div>
 
