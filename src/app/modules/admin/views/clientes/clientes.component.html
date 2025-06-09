@@ -7,8 +7,8 @@
     <div class="button-container">
       <button mat-raised-button class="boton-nuevo" (click)="abrirRegistro()">Nuevo</button>
     </div>
+    <input class="search-input" (keyup)="applyFilter($event,dataSource)" placeholder="Búsqueda Cliente" #input>
     <table mat-table [dataSource]="dataSource.data" class="mat-elevation-z8" style="width: 100%;">
-      
       <!-- Nombre Column -->
       <ng-container matColumnDef="nombre">
         <th mat-header-cell *matHeaderCellDef class="cabecera"> Nombre </th>
@@ -51,17 +51,14 @@
           </a>
         </td>
       </ng-container>
-  
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
+
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-      [length]="totalClientes" [pageSize]="10"
-      showFirstLastButtons
-      (page)="onPageChange($event)"
-      aria-label="Select page of periodic elements">
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="totalClientes" [pageSize]="10" showFirstLastButtons
+      (page)="onPageChange($event)" aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
 </div>

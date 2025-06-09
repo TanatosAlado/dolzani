@@ -77,11 +77,6 @@ cursor: pointer;
 color:#ec133e;
 }
 
-/* Paginador */
-mat-paginator {
-  margin-top: 16px;
-}
-
 /* Botón Nuevo a la derecha */
 .button-container {
   display: flex;
@@ -93,6 +88,15 @@ mat-paginator {
   background-color: #ec133e !important;
   color: white !important;
   font-weight: bold; 
+}
+
+
+.search-input {
+  padding: 8px;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
 /* Media query para pantallas muy pequeñas */
@@ -107,3 +111,8 @@ mat-paginator {
     overflow-x: auto;
   }
 }
+
+
+
+
+

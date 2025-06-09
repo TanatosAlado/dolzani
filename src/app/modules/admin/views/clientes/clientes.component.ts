@@ -14,7 +14,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.css'],
-   encapsulation: ViewEncapsulation.None
 })
 export class ClientesComponent {
 
@@ -59,6 +58,11 @@ export class ClientesComponent {
     });
   }
 
+    //FUNCION PARA FILTRAR POR CUALQUIER PALABRA QUE SE ESCRIBA EN EL FILTRO
+  applyFilter(event: Event, datasource: MatTableDataSource<any>) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    datasource.filter = filterValue.trim().toLowerCase();
+  }
   loadTotalClientes(): void {
     this.clientesService.getClientesCount().subscribe(total => {
       this.totalClientes = total;

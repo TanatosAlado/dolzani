@@ -23,9 +23,9 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 .tab.active {
-  color: #068c89;
+  color: #ec133e;
   font-weight: bolder;
-  border-bottom: 2px solid #068c89;
+  border-bottom: 2px solid #ec133e;
 }
 .tab-content {
   padding: 20px;
@@ -61,7 +61,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 .cabecera {
-  background-color: #068c89 !important;
+  background-color: #ec133e !important;
   color: white !important;
   font-weight: bold !important;
   text-align: center !important;
@@ -71,12 +71,13 @@ input[type=number]::-webkit-inner-spin-button {
   cursor: pointer;
   margin-left: 2%;
   margin-right: 2%;
+  color: #ec133e;
 }
 
 .paginator-container {
   display: flex;
   justify-content: right;
-  background-color: #068c89;
+  background-color: #ec133e;
   font-weight: bold;
   color: white;
   /* transform: translateX(-5%) translateY(-10px); */
