@@ -108,6 +108,10 @@ td {
   text-align: center;
 }
 
+table{
+  overflow-x: auto;
+}
+
 th {
   background-color: #068c89;
   color: white;

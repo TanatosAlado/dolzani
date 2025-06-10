@@ -164,21 +164,21 @@ export class PedidosComponent {
 
   getPedidos() {
     this.pedidosService.getPedidosPorTipo('Pedidos Pendientes').subscribe(data => {
-      this.pedidosPendientes = data;
+      this.pedidosPendientes = data.sort((a, b) => b.nroPedido - a.nroPedido);
       this.datasourcePedidosPendientes = new MatTableDataSource(this.pedidosPendientes);
       this.datasourcePedidosPendientes.paginator = this.paginatorPendientes;
       this.cdRef.detectChanges();
     });
 
     this.pedidosService.getPedidosPorTipo('Pedidos Finalizados').subscribe(data => {
-      this.pedidosFinalizados = data;
+      this.pedidosFinalizados = data.sort((a, b) => b.nroPedido - a.nroPedido);
       this.datasourcePedidosFinalizados = new MatTableDataSource(this.pedidosFinalizados);
       this.datasourcePedidosFinalizados.paginator = this.paginatorFinalizados;
       this.cdRef.detectChanges();
     });
 
     this.pedidosService.getPedidosPorTipo('Pedidos Eliminados').subscribe(data => {
-      this.pedidosEliminados = data;
+      this.pedidosEliminados = data.sort((a, b) => b.nroPedido - a.nroPedido);
       this.datasourcePedidosEliminados = new MatTableDataSource(this.pedidosEliminados);
       this.datasourcePedidosEliminados.paginator = this.paginatorEliminados;
       this.cdRef.detectChanges();
