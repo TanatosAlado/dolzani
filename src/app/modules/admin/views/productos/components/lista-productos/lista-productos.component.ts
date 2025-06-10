@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Producto } from 'src/app/shared/models/producto.model';
 import { ProductosService } from 'src/app/shared/services/productos.service';
@@ -7,6 +7,8 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
 import { ProductoDetalleComponent } from '../producto-detalle/producto-detalle.component';
 import { ProductoEditarComponent } from '../producto-editar/producto-editar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-lista-productos',
@@ -18,24 +20,45 @@ export class ListaProductosComponent {
   productos: Producto[] = [];
   displayedColumns: string[] = ['nombre', 'descripcion', 'precio', 'stock', 'acciones'];
   public productoAEliminar: string = ''; 
-
+  paginator!: MatPaginator;
   rubrosUnicos: string[] = [];
   subrubrosUnicos: string[] = [];
   marcasUnicas: string[] = [];
+  datasourceProductos: MatTableDataSource<Producto>
 
-  constructor(
-    private productosService: ProductosService,  
-    public dialog: MatDialog,
-    private snackBar: MatSnackBar,  
-  ) {}
+  constructor( private productosService: ProductosService, public dialog: MatDialog,private snackBar: MatSnackBar) {
+  this.datasourceProductos = new MatTableDataSource(this.productos);
+  }
 
   ngOnInit(): void {
     this.obtenerProductos();
   }
 
+   ngAfterViewInit() {
+    this.setDataSourceAttributes()
+  }
+
+   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+      if (mp) {
+        this.paginator = mp;
+        this.paginator._intl.itemsPerPageLabel = 'Productos por Página';
+        this.paginator._intl.firstPageLabel = 'Primera Página';
+        this.paginator._intl.previousPageLabel = 'Página Anterior';
+        this.paginator._intl.nextPageLabel = 'Siguiente Página';
+        this.paginator._intl.lastPageLabel = 'Última Página';
+      }
+      this.setDataSourceAttributes();
+    }
+
+  setDataSourceAttributes() {
+    if (this.datasourceProductos) {
+      this.datasourceProductos.paginator = this.paginator;
+    }
+  }
   obtenerProductos(): void {
     this.productosService.obtenerProductos().subscribe((productos: Producto[]) => {
       this.productos = productos;
+      this.datasourceProductos = new MatTableDataSource(this.productos);
       this.rubrosUnicos = [...new Set(productos.map(p => p.rubro.toUpperCase()))];
       this.subrubrosUnicos = [...new Set(productos.map(p => p.subrubro.toUpperCase()))];
       this.marcasUnicas = [...new Set(productos.map(p => p.marca.toUpperCase()))];

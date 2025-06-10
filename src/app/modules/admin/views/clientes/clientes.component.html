@@ -36,18 +36,18 @@
       <!-- Acciones Column -->
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef class="cabecera"> Acciones </th>
-        <td mat-cell *matCellDef="let element" class="icons">
-          <a title="Ver cliente" (click)="verCliente(element)">
-            <mat-icon>remove_red_eye</mat-icon>
+        <td mat-cell *matCellDef="let element">
+          <a class="pointer" title="Ver cliente" (click)="verCliente(element)">
+           <i class="fa-solid fa-eye"></i>
           </a>
-          <a title="Editar cliente" (click)="editarCliente(element)">
-            <mat-icon>edit</mat-icon>
+          <a class="pointer" title="Editar cliente" (click)="editarCliente(element)">
+             <i class="fa-solid fa-pen"></i>
           </a>
-          <a title="Restablecer contraseña" (click)="restablecerPass(element)">
-            <mat-icon>autorenew</mat-icon>
+          <a class="pointer" title="Restablecer contraseña" (click)="restablecerPass(element)">
+           <i class="fa-solid fa-arrows-rotate"></i>
           </a>
-          <a title="Eliminar cliente" (click)="openConfirmDialog(element)">
-            <mat-icon>delete</mat-icon>
+          <a class="pointer" title="Eliminar cliente" (click)="openConfirmDialog(element)">
+          <i class="fa-solid fa-trash"></i>
           </a>
         </td>
       </ng-container>
@@ -58,7 +58,7 @@
     </table>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="totalClientes" [pageSize]="10" showFirstLastButtons
-      (page)="onPageChange($event)" aria-label="Select page of periodic elements">
+      (page)="onPageChange($event)" aria-label="Select page of productos">
     </mat-paginator>
   </div>
 </div>
