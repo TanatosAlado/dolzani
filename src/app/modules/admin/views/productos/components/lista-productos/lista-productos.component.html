@@ -3,7 +3,7 @@
     <div class="button-container">
       <button mat-raised-button class="boton-nuevo" (click)="abrirModalAltaProducto()">Nuevo</button>
     </div>
-    <!-- <input class="search-input" (keyup)="applyFilter($event,dataSource)" placeholder="Búsqueda Cliente" #input> -->
+     <input class="search-input" (keyup)="applyFilter($event,datasourceProductos)" placeholder="Búsqueda Productos" #input> 
     <table mat-table [dataSource]="datasourceProductos" class="mat-elevation-z8" style="width: 100%;">
       <!-- Nombre Column -->
       <ng-container matColumnDef="nombre">

@@ -65,6 +65,12 @@ export class ListaProductosComponent {
     });
   }
 
+     //FUNCION PARA FILTRAR POR CUALQUIER PALABRA QUE SE ESCRIBA EN EL FILTRO
+  applyFilter(event: Event, datasource: MatTableDataSource<any>) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    datasource.filter = filterValue.trim().toLowerCase();
+  }
+
   editarProducto(producto: Producto): void {
     const dialogRef = this.dialog.open(ProductoEditarComponent, {
       width: '600px',

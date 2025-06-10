@@ -25,38 +25,73 @@ export class ClientesComponent {
   currentPage = 0; // página actual
   ultimoCliente: any = null; // último documento de la página actual
   public clienteAEliminar: string = ''; 
-
+  paginator!: MatPaginator;
   displayedColumns: string[] = ['nombre', 'apellido', 'razonSocial', 'estado', 'acciones'];
-  dataSource = new MatTableDataSource<any>([]);
+  dataSourceClientes:MatTableDataSource<Cliente>;
   totalClientes = 0;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  // @ViewChild(MatPaginator) paginator!: MatPaginator;
   
-  constructor(private clientesService: ClientesService, private authService: AuthService, private dialog: MatDialog, private snackBar: MatSnackBar) {}
+  constructor(private clientesService: ClientesService, private authService: AuthService, private dialog: MatDialog, private snackBar: MatSnackBar) {
+
+    this.dataSourceClientes = new MatTableDataSource(this.clientes);
+  }
 
   ngOnInit(): void {
     this.loadClientes();
-    this.loadTotalClientes();
+    // this.loadTotalClientes();
   }
 
-  loadClientes(startAfterDoc?: any, direction: 'next' | 'prev' = 'next') {
-    this.clientesService.getClientes(this.pageSize, startAfterDoc).subscribe(clientes => {
-      this.dataSource.data = clientes;
-  
-      if (direction === 'next') {
-        if (this.ultimoCliente) {
-          this.clientesStack.push(this.ultimoCliente);
-        }
-        if (clientes.length > 0) {
-          this.ultimoCliente = clientes[clientes.length - 1].id;
-        }
-        this.currentPage++;
-      } else if (direction === 'prev') {
-        this.clientesStack.pop(); // sacamos la última
-        this.ultimoCliente = this.clientesStack[this.clientesStack.length - 1];
-        this.currentPage--;
-      }
-    });
+  ngAfterViewInit() {
+    this.setDataSourceAttributes()
   }
+
+  // loadClientes(startAfterDoc?: any, direction: 'next' | 'prev' = 'next') {
+  //   this.clientesService.getClientes(this.pageSize, startAfterDoc).subscribe(clientes => {
+  //        this.dataSourceClientes = new MatTableDataSource(this.clientes);
+  
+  //     if (direction === 'next') {
+  //       if (this.ultimoCliente) {
+  //         this.clientesStack.push(this.ultimoCliente);
+  //       }
+  //       if (clientes.length > 0) {
+  //         this.ultimoCliente = clientes[clientes.length - 1].id;
+  //       }
+  //       this.currentPage++;
+  //     } else if (direction === 'prev') {
+  //       this.clientesStack.pop(); // sacamos la última
+  //       this.ultimoCliente = this.clientesStack[this.clientesStack.length - 1];
+  //       this.currentPage--;
+  //     }
+  //   });
+  // }
+
+
+ @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+      if (mp) {
+        this.paginator = mp;
+        this.paginator._intl.itemsPerPageLabel = 'Clientes por Página';
+        this.paginator._intl.firstPageLabel = 'Primera Página';
+        this.paginator._intl.previousPageLabel = 'Página Anterior';
+        this.paginator._intl.nextPageLabel = 'Siguiente Página';
+        this.paginator._intl.lastPageLabel = 'Última Página';
+      }
+      this.setDataSourceAttributes();
+    }
+
+
+    setDataSourceAttributes() {
+    if (this.dataSourceClientes) {
+      this.dataSourceClientes.paginator = this.paginator;
+    }
+  }
+
+  loadClientes(){
+     this.clientesService.getClientes().subscribe((clientes: Cliente[]) => {
+          this.clientes = clientes;
+          this.dataSourceClientes = new MatTableDataSource(this.clientes);
+          this.dataSourceClientes.paginator = this.paginator;
+        })
+}
 
     //FUNCION PARA FILTRAR POR CUALQUIER PALABRA QUE SE ESCRIBA EN EL FILTRO
   applyFilter(event: Event, datasource: MatTableDataSource<any>) {
@@ -69,15 +104,12 @@ export class ClientesComponent {
     });
   }
 
-  onPageChange(event: PageEvent) {
-    if (event.pageIndex > event.previousPageIndex!) {
-      // Avanzando
-      this.loadClientes(this.clientesService.ultimoCliente);
-    } else {
-      // Retrocediendo aún no implementado (hay que hacer una pila si querés)
-     
-    }
-  }
+  // onPageChange(event: PageEvent) {
+  //   if (event.pageIndex > event.previousPageIndex!) {
+  //     this.loadClientes(this.clientesService.ultimoCliente);
+  //   } else {
+  //   }
+  // }
 
   editarCliente(cliente: any): void {
     const dialogRef = this.dialog.open(ClienteEditarComponent, {
