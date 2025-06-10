@@ -9,17 +9,18 @@
     </div>
     <input class="search-input" (keyup)="applyFilter($event,dataSourceClientes)" placeholder="Búsqueda Cliente" #input>
     <table mat-table [dataSource]="dataSourceClientes" class="mat-elevation-z8" style="width: 100%;">
-      <!-- Nombre Column -->
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef class="cabecera"> Nombre </th>
-        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-      </ng-container>
-
-      <!-- Apellido Column -->
+     
+     <!-- Apellido Column -->
       <ng-container matColumnDef="apellido">
         <th mat-header-cell *matHeaderCellDef class="cabecera"> Apellido </th>
         <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
       </ng-container>
+     
+      <!-- Nombre Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef class="cabecera"> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      </ng-container>    
 
       <!-- Razon Social Column -->
       <ng-container matColumnDef="razonSocial">

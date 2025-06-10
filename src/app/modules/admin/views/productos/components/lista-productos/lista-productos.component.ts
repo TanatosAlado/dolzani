@@ -57,7 +57,7 @@ export class ListaProductosComponent {
   }
   obtenerProductos(): void {
     this.productosService.obtenerProductos().subscribe((productos: Producto[]) => {
-      this.productos = productos;
+      this.productos= productos.sort((a, b) => a.nombre.localeCompare(b.nombre));
       this.datasourceProductos = new MatTableDataSource(this.productos);
       this.rubrosUnicos = [...new Set(productos.map(p => p.rubro.toUpperCase()))];
       this.subrubrosUnicos = [...new Set(productos.map(p => p.subrubro.toUpperCase()))];

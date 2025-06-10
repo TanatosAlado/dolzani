@@ -26,7 +26,7 @@ export class ClientesComponent {
   ultimoCliente: any = null; // último documento de la página actual
   public clienteAEliminar: string = ''; 
   paginator!: MatPaginator;
-  displayedColumns: string[] = ['nombre', 'apellido', 'razonSocial', 'estado', 'acciones'];
+  displayedColumns: string[] = ['apellido', 'nombre', 'razonSocial', 'estado', 'acciones'];
   dataSourceClientes:MatTableDataSource<Cliente>;
   totalClientes = 0;
   // @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -85,13 +85,14 @@ export class ClientesComponent {
     }
   }
 
-  loadClientes(){
-     this.clientesService.getClientes().subscribe((clientes: Cliente[]) => {
-          this.clientes = clientes;
-          this.dataSourceClientes = new MatTableDataSource(this.clientes);
-          this.dataSourceClientes.paginator = this.paginator;
-        })
+ loadClientes() {
+  this.clientesService.getClientes().subscribe((clientes: Cliente[]) => {
+    this.clientes = clientes.sort((a, b) => a.apellido.localeCompare(b.apellido));
+    this.dataSourceClientes = new MatTableDataSource(this.clientes);
+    this.dataSourceClientes.paginator = this.paginator;
+  });
 }
+
 
     //FUNCION PARA FILTRAR POR CUALQUIER PALABRA QUE SE ESCRIBA EN EL FILTRO
   applyFilter(event: Event, datasource: MatTableDataSource<any>) {
