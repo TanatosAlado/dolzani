@@ -1,12 +1,13 @@
 .tabla-container {
   margin: 20px auto;
   max-width: 1200px;
-  overflow-x: auto; /* Permite scroll horizontal en la tabla entera */
+  overflow-x: hidden;  /*Permite scroll horizontal en la tabla entera */
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 16px;
 }
+
 
 /* Estilo general de la tabla */
 table {
@@ -15,6 +16,12 @@ table {
   border-collapse: collapse;
   min-width: 600px; /* Evita que la tabla se achique demasiado */
 }
+
+.tabla-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
 
 /* Estilos Encabezados */
 .cabecera {

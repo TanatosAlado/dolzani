@@ -4,6 +4,7 @@
       <button mat-raised-button class="boton-nuevo" (click)="abrirModalAltaProducto()">Nuevo</button>
     </div>
      <input class="search-input" (keyup)="applyFilter($event,datasourceProductos)" placeholder="Búsqueda Productos" #input> 
+     <div class="tabla-scroll">
     <table mat-table [dataSource]="datasourceProductos" class="mat-elevation-z8" style="width: 100%;">
       <!-- Nombre Column -->
       <ng-container matColumnDef="nombre">
@@ -49,6 +50,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     </table>
+    </div>
     <div class="paginator-container">
       <mat-paginator #paginatorPendientes [pageSizeOptions]="[5, 10, 15]" [pageSize]="10" showFirstLastButtons
         aria-label="Select page of productos">

@@ -95,7 +95,10 @@ color:#ec133e;
   color: white !important;
   font-weight: bold; 
 }
-
+.tabla-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
 
 .search-input {
   padding: 8px;

@@ -7,7 +7,7 @@ input[type=number]::-webkit-inner-spin-button {
 .tabla-container {
   margin: 20px auto;
   max-width: 1200px;
-  overflow-x: auto; /* Permite scroll horizontal en la tabla entera */
+  /*overflow-x: auto;  Permite scroll horizontal en la tabla entera */
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -62,6 +62,7 @@ input[type=number]::-webkit-inner-spin-button {
   padding: 8px;
   width: 100%;
   margin-top: 10px;
+  margin-bottom: 10px;
   box-sizing: border-box;
 }
 
@@ -84,15 +85,14 @@ input[type=number]::-webkit-inner-spin-button {
   color: #ec133e;
 }
 
-.paginator-container {
+/* .paginator-container {
   display: flex;
   justify-content: right;
   background-color: #ec133e;
   font-weight: bold;
   color: white;
-  /* transform: translateX(-5%) translateY(-10px); */
-  /* border: 1px solid black;  */
-}
+  
+} */
 
 table {
   width: 100%;
@@ -109,7 +109,7 @@ td {
 }
 
 table{
-  overflow-x: auto;
+  /* overflow-x: auto; */
 }
 
 th {
@@ -174,9 +174,13 @@ th {
 .total{
   margin-top: 2%;
   margin-bottom: 2%;
-  color: #068c89;
+  color: #ec133e;
   font-weight: bolder;
   font-size: 1.7rem;
+}
+
+a{
+  color: #ec133e;
 }
 
 .contenedor-imagen-pedido {
@@ -197,7 +201,10 @@ th {
   max-height: 100%;
   object-fit: contain;
 }
-
+.tabla-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
 
 /* Responsive para pantallas pequeñas */
 @media (max-width: 768px) {
@@ -278,7 +285,7 @@ th {
 
 /* Pantallas pequeñas (celulares) */
 @media (max-width: 600px) {
-  .paginator-container {
+  /* .paginator-container {
     transform: translateX(-2%) 
   }
     .search-container {
@@ -296,7 +303,7 @@ th {
     #formContent-cargaClientes {
       transform: translateX(-2%);
       width: 100%;
-    }
+    } */
     /* #formContentPass{
       transform: translateX(-2%);
       width: 100%;
@@ -306,7 +313,7 @@ th {
 
 /* Pantallas medianas (tablets) */
 @media (min-width: 601px) and (max-width: 1024px) {
-  .paginator-container {
+  /* .paginator-container {
     transform: translateX(8%);
   }
   .search-container {
@@ -328,7 +335,7 @@ th {
   #formContentPass{
      transform: translateX(15%);
     width: 100%; 
-  }
+  } */
 }
 
 @media (max-width: 768px) {
