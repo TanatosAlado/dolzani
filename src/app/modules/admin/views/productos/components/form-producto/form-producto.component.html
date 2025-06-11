@@ -1,18 +1,20 @@
-<h2 mat-dialog-title>Alta de Producto</h2>
+<div class="imagen-central fadeIn first">
+      <img src="../../../../../assets/LogoDolzani.png" alt="Login" />
+    </div>
 
 <mat-dialog-content [formGroup]="productoForm" class="form-dialog-content">
 
-  <mat-form-field appearance="fill" class="full-width">
+  <mat-form-field appearance="fill" class="full-width fadeIn first">
     <mat-label>Nombre</mat-label>
     <input matInput formControlName="nombre" required />
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
+  <mat-form-field appearance="fill" class="full-width fadeIn first">
     <mat-label>Descripción</mat-label>
     <textarea matInput formControlName="descripcion" required></textarea>
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field class="fadeIn second">
     <mat-label>Rubro</mat-label>
     <input matInput type="text" formControlName="rubro" [matAutocomplete]="autoRubro" />
 
@@ -24,7 +26,7 @@
   </mat-form-field>
 
 
-<mat-form-field appearance="outline" class="w-100">
+<mat-form-field appearance="outline" class="w-100 fadeIn second">
   <mat-label>Subrubro</mat-label>
   <input
     matInput
@@ -40,7 +42,7 @@
   </mat-autocomplete>
 </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field class="fadeIn third">
     <mat-label>Marca</mat-label>
     <input matInput type="text" formControlName="marca" [matAutocomplete]="autoMarca" />
 
@@ -51,26 +53,26 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
+  <mat-form-field appearance="fill" class="full-width fadeIn third">
     <mat-label>Precio</mat-label>
     <input matInput type="text" formControlName="precio" (input)="limpiarCerosIzquierda('precio')" (keypress)="permitirSoloNumeros($event)" />
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
+  <mat-form-field appearance="fill" class="full-width fadeIn third">
     <mat-label>Stock</mat-label>
     <input matInput type="text" formControlName="stock" (input)="limpiarCerosIzquierda('stock')" (keypress)="permitirSoloNumeros($event)" />
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
+  <mat-form-field appearance="fill" class="full-width fadeIn fourth">
     <mat-label>Imagen (URL)</mat-label>
     <input matInput formControlName="imagen" />
   </mat-form-field>
 
-  <mat-checkbox formControlName="destacado">Producto Destacado</mat-checkbox>
+  <mat-checkbox class="fadeIn fourth" formControlName="destacado">Producto Destacado</mat-checkbox>
 
-  <mat-checkbox formControlName="oferta">¿Está en oferta?</mat-checkbox>
+  <mat-checkbox class="fadeIn fourth" formControlName="oferta">¿Está en oferta?</mat-checkbox>
 
-  <mat-form-field appearance="fill" class="full-width" *ngIf="productoForm.get('oferta')?.value">
+  <mat-form-field appearance="fill" class="full-width fadeIn fourth" *ngIf="productoForm.get('oferta')?.value">
     <mat-label>Precio Oferta</mat-label>
     <input matInput type="text" formControlName="precioOferta" (input)="limpiarCerosIzquierda('precioOferta')" (keypress)="permitirSoloNumeros($event)"/>
   </mat-form-field>
@@ -85,8 +87,10 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancelar</button>
-  <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="productoForm.invalid">
+  <button mat-flat-button class="fadeIn fourth" (click)="onSubmit()" [disabled]="productoForm.invalid"
+     [ngClass]="productoForm.valid ? 'botonesRojos' : ''">
     Guardar
   </button>
+  <button class="fadeIn fourth" mat-button mat-dialog-close>Cancelar</button>
+  
 </mat-dialog-actions>

@@ -1,48 +1,50 @@
-<h2 mat-dialog-title>Editar Cliente</h2>
+ <div class="imagen-central fadeIn first">
+      <img src="../../../../../assets/LogoDolzani.png" alt="Login" />
+    </div>
 
 <mat-dialog-content [formGroup]="formCliente" class="contenido-modal">
-    <mat-form-field appearance="fill" class="full-width">
+    <mat-form-field appearance="fill" class="full-width fadeIn first">
         <mat-label>Nombre</mat-label>
         <input matInput formControlName="nombre">
       </mat-form-field>
       
 
-  <mat-form-field appearance="outline" class="full-width">
+  <mat-form-field appearance="outline" class="full-width fadeIn first">
     <mat-label>Apellido</mat-label>
     <input matInput formControlName="apellido">
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width">
+  <mat-form-field appearance="outline" class="full-width fadeIn first">
     <mat-label>Razón Social</mat-label>
     <input matInput formControlName="razonSocial">
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width">
+  <mat-form-field appearance="outline" class="full-width fadeIn second">
     <mat-label>Dirección</mat-label>
     <input matInput formControlName="direccion">
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width">
+  <mat-form-field appearance="outline" class="full-width fadeIn second">
     <mat-label>Teléfono</mat-label>
     <input matInput formControlName="telefono">
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width">
+  <mat-form-field appearance="outline" class="full-width fadeIn third">
     <mat-label>Mail</mat-label>
     <input matInput type="email" formControlName="mail">
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width">
+  <mat-form-field appearance="outline" class="full-width fadeIn third">
     <mat-label>Usuario</mat-label>
     <input matInput formControlName="usuario">
   </mat-form-field>
 
-  <mat-slide-toggle formControlName="estado">Activo</mat-slide-toggle>
+  <mat-slide-toggle class="fadeIn fourth" formControlName="estado">Activo</mat-slide-toggle>
 
-  <mat-slide-toggle formControlName="administrador">Administrador</mat-slide-toggle>
+  <mat-slide-toggle class="fadeIn fourth" formControlName="administrador">Administrador</mat-slide-toggle>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
+<mat-dialog-actions class="fadeIn fourth" align="end">
+   <button class="botonesRojos" mat-raised-button (click)="guardar()">Guardar</button>
   <button mat-button mat-dialog-close>Cancelar</button>
-  <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
 </mat-dialog-actions>
