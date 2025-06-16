@@ -9,6 +9,7 @@ import { ProductoEditarComponent } from '../producto-editar/producto-editar.comp
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-lista-productos',
@@ -25,6 +26,9 @@ export class ListaProductosComponent {
   subrubrosUnicos: string[] = [];
   marcasUnicas: string[] = [];
   datasourceProductos: MatTableDataSource<Producto>
+  erroresCarga: string[] = [];
+  cargandoExcel: boolean = false;
+
 
   constructor( private productosService: ProductosService, public dialog: MatDialog,private snackBar: MatSnackBar) {
   this.datasourceProductos = new MatTableDataSource(this.productos);
@@ -136,6 +140,102 @@ abrirModalAltaProducto(): void {
       });
     })
   }
+
+onArchivoExcelCargado(event: any): void {
+  const archivo = event.target.files[0];
+  if (!archivo) return;
+
+  this.cargandoExcel = true;
+
+  const lector = new FileReader();
+  lector.onload = async (e: any) => {
+    const datos = new Uint8Array(e.target.result);
+    const workbook = XLSX.read(datos, { type: 'array' });
+    const hoja = workbook.Sheets[workbook.SheetNames[0]];
+    const filas = XLSX.utils.sheet_to_json<any>(hoja, { defval: '' });
+
+    this.erroresCarga = [];
+    await this.cargarProductosDesdeExcel(filas);
+
+    this.cargandoExcel = false;
+    this.mostrarSnackbar('Archivo procesado correctamente');
+  };
+  lector.readAsArrayBuffer(archivo);
+}
+
+mostrarSnackbar(mensaje: string): void {
+  this.snackBar.open(mensaje, 'Cerrar', {
+    duration: 3000,
+    horizontalPosition: 'end',
+    verticalPosition: 'bottom',
+    panelClass: ['snackbar-exito']
+  });
+}
+
+async cargarProductosDesdeExcel(filas: any[]): Promise<void> {
+  let exitos = 0;
+
+  for (let index = 0; index < filas.length; index++) {
+    const fila = filas[index];
+    const errorPrefijo = `Fila ${index + 2}:`;
+
+    try {
+      const producto: Producto = {
+        id: '',
+        nombre: fila.nombre?.toString() || '',
+        descripcion: fila.descripcion?.toString() || '',
+        rubro: fila.rubro?.toString().toUpperCase() || '',
+        subrubro: fila.subrubro?.toString().toUpperCase() || '',
+        marca: fila.marca?.toString().toUpperCase() || '',
+        precio: Number(fila.precio),
+        stock: Number(fila.stock),
+        destacado: fila.destacado === true || fila.destacado?.toString().toLowerCase() === 'true',
+        imagen: fila.imagen?.toString() || '',
+        cantidad: 1,
+        oferta: fila.oferta === true || fila.oferta?.toString().toLowerCase() === 'true',
+        precioOferta: 0,
+        impuestoNacional: fila.impuestoNacional === true || fila.impuestoNacional?.toString().toLowerCase() === 'true',
+        precioSinImpuestoNacional: 0,
+      };
+
+      if (producto.oferta) {
+        if (!fila.precioOferta && fila.precioOferta !== 0) {
+          this.erroresCarga.push(`${errorPrefijo} Producto en oferta sin precioOferta`);
+          continue;
+        }
+        producto.precioOferta = Number(fila.precioOferta);
+      }
+
+      if (producto.impuestoNacional) {
+        if (!fila.precioSinImpuestoNacional && fila.precioSinImpuestoNacional !== 0) {
+          this.erroresCarga.push(`${errorPrefijo} Producto con impuestoNacional sin precioSinImpuestoNacional`);
+          continue;
+        }
+        producto.precioSinImpuestoNacional = Number(fila.precioSinImpuestoNacional);
+      }
+
+      if (isNaN(producto.precio) || isNaN(producto.stock)) {
+        this.erroresCarga.push(`${errorPrefijo} Precio o stock no numérico`);
+        continue;
+      }
+
+      const docRef = await this.productosService.agregarProducto(producto);
+      producto.id = docRef.id;
+      await this.productosService.actualizarProducto(producto);
+      exitos++;
+
+    } catch (error) {
+      this.erroresCarga.push(`${errorPrefijo} Error al procesar producto: ${error}`);
+    }
+  }
+
+  // Mostrar snackbar de confirmación
+  this.snackBar.open(
+    `Carga completada: ${exitos} producto(s) agregados, ${this.erroresCarga.length} con errores.`,
+    'Cerrar',
+    { duration: 5000, panelClass: 'snackbar-success' }
+  );
+}
 
 
 }

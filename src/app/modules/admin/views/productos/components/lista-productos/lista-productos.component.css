@@ -87,6 +87,7 @@ color:#ec133e;
 .button-container {
   display: flex;
   justify-content: flex-end;
+  gap: 10px; /* separación horizontal entre botones */
   margin-bottom: 10px;
 }
 
@@ -121,7 +122,22 @@ color:#ec133e;
   }
 }
 
+.errores-carga {
+  margin-top: 1rem;
+  background-color: #ffe0e0;
+  padding: 1rem;
+  border: 1px solid #ffaaaa;
+  border-radius: 5px;
+}
 
+::ng-deep .snackbar-success {
+  background-color: #4caf50;
+  color: #fff;
+  font-weight: bold;
+}
 
-
-
+.snackbar-exito {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}
