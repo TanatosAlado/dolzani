@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import * as XLSX from 'xlsx';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-lista-productos',
@@ -30,7 +31,7 @@ export class ListaProductosComponent {
   cargandoExcel: boolean = false;
 
 
-  constructor( private productosService: ProductosService, public dialog: MatDialog,private snackBar: MatSnackBar) {
+  constructor(private toastService:ToastService, private productosService: ProductosService, public dialog: MatDialog,private snackBar: MatSnackBar) {
   this.datasourceProductos = new MatTableDataSource(this.productos);
   }
 
@@ -62,10 +63,11 @@ export class ListaProductosComponent {
   obtenerProductos(): void {
     this.productosService.obtenerProductos().subscribe((productos: Producto[]) => {
       this.productos= productos.sort((a, b) => a.nombre.localeCompare(b.nombre));
-      this.datasourceProductos = new MatTableDataSource(this.productos);
       this.rubrosUnicos = [...new Set(productos.map(p => p.rubro.toUpperCase()))];
       this.subrubrosUnicos = [...new Set(productos.map(p => p.subrubro.toUpperCase()))];
       this.marcasUnicas = [...new Set(productos.map(p => p.marca.toUpperCase()))];
+      this.datasourceProductos = new MatTableDataSource(this.productos);
+      this.datasourceProductos.paginator = this.paginator;
     });
   }
 
@@ -135,9 +137,7 @@ abrirModalAltaProducto(): void {
 
   eliminarProducto(id: string): void {
     this.productosService.eliminarProducto(id).then(() => {
-      this.snackBar.open('Cliente eliminado con éxito', 'Cerrar', {
-        duration: 3000,
-      });
+     this.toastService.toatsMessage('Producto eliminado con éxito', 'green', 2000);
     })
   }
 

@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ClienteEditarComponent } from './components/cliente-editar/cliente-editar.component';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-clientes',
@@ -31,7 +32,7 @@ export class ClientesComponent {
   totalClientes = 0;
   // @ViewChild(MatPaginator) paginator!: MatPaginator;
   
-  constructor(private clientesService: ClientesService, private authService: AuthService, private dialog: MatDialog, private snackBar: MatSnackBar) {
+  constructor(private toastService:ToastService,private clientesService: ClientesService, private authService: AuthService, private dialog: MatDialog, private snackBar: MatSnackBar) {
 
     this.dataSourceClientes = new MatTableDataSource(this.clientes);
   }
@@ -118,9 +119,7 @@ export class ClientesComponent {
 
   eliminarCliente(idCliente: string): void {
     this.clientesService.eliminarCliente(idCliente).then(() => {
-      this.snackBar.open('Cliente eliminado con éxito', 'Cerrar', {
-        duration: 3000,
-      });
+       this.toastService.toatsMessage('Cliente eliminado con éxito', 'green', 2000);
     })
   }
 
