@@ -1,16 +1,18 @@
-<div *ngIf="imagenes.length > 0; else sinImagenes"
-     id="bannerCarousel"
-     class="carousel slide banner-container container"
-     data-bs-ride="carousel"
-     data-bs-interval="3000"
-     data-bs-pause="false">
+<div *ngIf="mediaItems.length > 0; else sinImagenes" id="bannerCarousel"
+  class="carousel slide banner-container container" data-bs-ride="carousel" data-bs-interval="3000"
+  data-bs-pause="false">
   <div class="carousel-inner banner">
-    <div
-      class="carousel-item position-relative"
-      *ngFor="let img of imagenes; let i = index"
-      [class.active]="i === 0"
-    >
-      <img [src]="img.url" class="d-block w-100" alt="Banner" />
+    <div class="carousel-item position-relative" *ngFor="let img of mediaItems; let i = index" [class.active]="i === 0">
+
+      <ng-container *ngIf="img.tipo === 'imagen'; else videoTemplate">
+        <img [src]="img.url" class="d-block w-100" alt="Banner" />
+      </ng-container>
+
+      <ng-template #videoTemplate>
+        <video [src]="img.url" class="d-block w-100" autoplay muted loop playsinline
+          style="object-fit: contain; width: 100%; height: 100%;"></video>
+
+      </ng-template>
     </div>
   </div>
 

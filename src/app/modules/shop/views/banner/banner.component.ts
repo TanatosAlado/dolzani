@@ -10,7 +10,7 @@ declare var bootstrap: any;
 })
 export class BannerComponent {
 
-  imagenes: { nombre: string, url: string }[] = [];
+  mediaItems: { nombre: string, url: string, tipo: 'imagen' | 'video' }[] = [];
 
 
   constructor(private bannerService: BannerService) { }
@@ -19,10 +19,26 @@ export class BannerComponent {
     this.cargarImagenes();
   }
 
-  async cargarImagenes() {
-    this.imagenes = await this.bannerService.listarArchivos('uploads');
+  private esVideo(ext: string): boolean {
+    return ['mp4', 'webm', 'ogg'].includes(ext);
+  }
 
-    // Esperamos un "tick" para que Angular pinte el DOM actualizado
+  private esImagen(ext: string): boolean {
+    return ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext);
+  }
+
+  async cargarImagenes() {
+    const archivos = await this.bannerService.listarArchivos('uploads');
+
+    this.mediaItems = archivos.map(item => {
+      const ext = item.nombre.split('.').pop()?.toLowerCase() || '';
+      let tipo: 'imagen' | 'video' = this.esVideo(ext) ? 'video' : 'imagen';
+      return { ...item, tipo };
+    });
+
+    // 👇 Agregamos el log
+    console.log('Media items cargados:', this.mediaItems);
+
     setTimeout(() => {
       const el = document.querySelector('#bannerCarousel');
       if (el) {
@@ -35,6 +51,7 @@ export class BannerComponent {
       }
     });
   }
+
 
 
 }
