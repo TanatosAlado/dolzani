@@ -36,9 +36,6 @@ export class BannerComponent {
       return { ...item, tipo };
     });
 
-    // 👇 Agregamos el log
-    console.log('Media items cargados:', this.mediaItems);
-
     setTimeout(() => {
       const el = document.querySelector('#bannerCarousel');
       if (el) {

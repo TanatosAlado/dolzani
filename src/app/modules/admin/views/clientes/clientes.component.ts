@@ -45,26 +45,6 @@ export class ClientesComponent {
     this.setDataSourceAttributes()
   }
 
-  // loadClientes(startAfterDoc?: any, direction: 'next' | 'prev' = 'next') {
-  //   this.clientesService.getClientes(this.pageSize, startAfterDoc).subscribe(clientes => {
-  //        this.dataSourceClientes = new MatTableDataSource(this.clientes);
-  
-  //     if (direction === 'next') {
-  //       if (this.ultimoCliente) {
-  //         this.clientesStack.push(this.ultimoCliente);
-  //       }
-  //       if (clientes.length > 0) {
-  //         this.ultimoCliente = clientes[clientes.length - 1].id;
-  //       }
-  //       this.currentPage++;
-  //     } else if (direction === 'prev') {
-  //       this.clientesStack.pop(); // sacamos la última
-  //       this.ultimoCliente = this.clientesStack[this.clientesStack.length - 1];
-  //       this.currentPage--;
-  //     }
-  //   });
-  // }
-
 
  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
       if (mp) {
@@ -105,12 +85,6 @@ export class ClientesComponent {
     });
   }
 
-  // onPageChange(event: PageEvent) {
-  //   if (event.pageIndex > event.previousPageIndex!) {
-  //     this.loadClientes(this.clientesService.ultimoCliente);
-  //   } else {
-  //   }
-  // }
 
   editarCliente(cliente: any): void {
     const dialogRef = this.dialog.open(ClienteEditarComponent, {
@@ -137,14 +111,20 @@ export class ClientesComponent {
       width: '400px',
       data: {
         message: `¿Está seguro que desea eliminar este cliente: ${cliente.nombre}?`,
-        confirmAction: () => this.eliminarCliente() // Acción a ejecutar si se confirma
+        confirmAction: () => this.eliminarCliente(cliente.id) // Acción a ejecutar si se confirma
       }
     });
   }
 
-  eliminarCliente(): void {
-    // LLAMAR AL SERVICIO, SUSCRIBIRSE E INFIRMAR AL USUARIO
+  eliminarCliente(idCliente: string): void {
+    this.clientesService.eliminarCliente(idCliente).then(() => {
+      this.snackBar.open('Cliente eliminado con éxito', 'Cerrar', {
+        duration: 3000,
+      });
+    })
   }
+
+
 
   verCliente(cliente: any): void {
     this.dialog.open(ClienteDetalleComponent, {

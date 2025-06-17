@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { collection, Firestore, orderBy, query, limit, startAfter, getDocs, getDoc, doc, updateDoc, collectionData } from '@angular/fire/firestore';
 import { BehaviorSubject, from, map, Observable, shareReplay, tap } from 'rxjs';
 import { Cliente } from 'src/app/modules/auth/models/cliente.model';
-import { CollectionReference } from 'firebase/firestore';
+import { CollectionReference, deleteDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -17,45 +17,17 @@ export class ClientesService {
 
   constructor() { }
 
-  // getClientes(limitValue: number = 10, startAfterDoc?: any): Observable<any[]> {
-  //   const clientesRef = collection(this.firestore, 'Clientes');
-    
-  //   // Crear la consulta con limit y orderBy
-  //   let q = query(clientesRef, orderBy('nombre'), limit(limitValue));
-
-  //   // Si se pasa un documento de paginación, añadir el operador startAfter
-  //   if (startAfterDoc) {
-  //     q = query(q, startAfter(startAfterDoc));
-  //   }
-
-  //   // Ejecutar la consulta y devolver los resultados como un Observable
-  //   return from(getDocs(q)).pipe(
-  //     map(snapshot => {
-  //       const actions = snapshot.docs.map(doc => ({
-  //         id: doc.id,
-  //         ...doc.data()
-  //       }));
-
-  //       if (actions.length > 0) {
-  //         this.ultimoCliente = actions[actions.length - 1];
-  //       }
-
-  //       return actions;
-  //     })
-  //   );
-  // }
-
-    getClientes(): Observable<Cliente[]> {
-      if (!this.cliente$) {
-        const ref = collection(this.firestore, 'Clientes') as CollectionReference<Cliente>;
-        this.cliente$ = collectionData(ref, { idField: 'id' }).pipe(
-          tap(clientes => console.log('')),
-          shareReplay(1)
-        );
-      } else {
-      }
-      return this.cliente$;
+  getClientes(): Observable<Cliente[]> {
+    if (!this.cliente$) {
+      const ref = collection(this.firestore, 'Clientes') as CollectionReference<Cliente>;
+      this.cliente$ = collectionData(ref, { idField: 'id' }).pipe(
+        tap(clientes => console.log('')),
+        shareReplay(1)
+      );
+    } else {
     }
+    return this.cliente$;
+  }
 
   getClientesCount(): Observable<number> {
     const clientesRef = collection(this.firestore, 'Clientes');
@@ -78,7 +50,7 @@ export class ClientesService {
         if (!data) {
           throw new Error('Cliente no encontrado');
         }
-  
+
         return {
           id: snapshot.id,
           ...data
@@ -88,12 +60,19 @@ export class ClientesService {
   }
 
 
-actualizarCliente(id: string, datosParciales: Partial<Cliente>): Promise<void> {
-  const clienteDocRef = doc(this.firestore, 'Clientes', id);
-  const datosPlano = JSON.parse(JSON.stringify(datosParciales)); // 🔧 conversión segura
-  return updateDoc(clienteDocRef, datosPlano);
-}
-  
-  
+  actualizarCliente(id: string, datosParciales: Partial<Cliente>): Promise<void> {
+    const clienteDocRef = doc(this.firestore, 'Clientes', id);
+    const datosPlano = JSON.parse(JSON.stringify(datosParciales)); // 🔧 conversión segura
+    return updateDoc(clienteDocRef, datosPlano);
+  }
+
+
+  eliminarCliente(id: string): Promise<void> {
+    const ref = doc(this.firestore, 'Clientes', id);
+    return deleteDoc(ref);
+  }
+
+
+
 
 }
