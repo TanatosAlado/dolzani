@@ -1,8 +1,8 @@
 <div class="card item-card shadow-sm position-relative">
   <!-- Banda "Sin stock" en diagonal -->
-<div *ngIf="producto.stock === 0" class="stock-banner">
-  SIN STOCK
-</div>
+  <div *ngIf="producto.stock === 0" class="stock-banner">
+    SIN STOCK
+  </div>
 
   <!-- Descuento arriba a la izquierda -->
   <div *ngIf="producto.oferta" class="badge bg-purple discount-badge">
@@ -15,7 +15,9 @@
   </div>
 
   <!-- Imagen del producto -->
-  <img [src]="producto.imagen" class="product-img" alt="{{ producto.nombre }}" />
+  <div class="image-wrapper">
+    <img [src]="producto.imagen" class="product-img" alt="{{ producto.nombre }}" />
+  </div>
 
   <div class="card-body text-center fondo-card">
     <h5 class="card-title fw-bold" style="min-height: 3rem;">{{ producto.nombre }}</h5>
