@@ -1,0 +1,24 @@
+<!-- <p>Opción 1: Rubros se generan automaticamente acorde a los rubros definidos en los productos creados</p>
+<p>Pros: van a figurar todos los rubros existentes - Se actualizan los rubros automáticamente</p>
+<p>Contra: no tienen fotos</p>
+<div class="container mt-5">
+    <div class="grid-productos">
+        <div class="item" *ngFor="let destacado of destacados">
+            <h3>{{destacado.rubro}}</h3>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+<p>Opción 2: Definimos 5 rubros principales y les ponemos una foto alusiva</p>
+<p>Pros: Tienen foto alusiva - No ocupan demasiado espacio, ya que al haber muchos rubros el listado puede ser grande
+</p>
+<p>Contra: No figuran todos los rubros</p>
+<div class="container mt-5">
+    <div class="grid-productos">
+        <div class="item" *ngFor="let destacado of rubrosDestacados">
+            <i class="fa-solid" [ngClass]="destacado.icon"></i>
+            <span>{{ destacado.rubro }}</span>
+        </div>
+    </div>
+</div>
+<app-whatsapp></app-whatsapp> -->

@@ -18,6 +18,7 @@ import { ProductoDetalleComponent } from './views/productos/components/producto-
 import { ProductoEditarComponent } from './views/productos/components/producto-editar/producto-editar.component';
 import { CambioPassComponent } from '../auth/views/cambio-pass/cambio-pass.component';
 import { NosotrosGestionComponent } from './views/nosotros-gestion/nosotros-gestion.component';
+import { EmpresaComponent } from './views/empresa/empresa.component';
 
 
 
@@ -38,7 +39,8 @@ import { NosotrosGestionComponent } from './views/nosotros-gestion/nosotros-gest
     ProductoDetalleComponent,
     ProductoEditarComponent,
     CambioPassComponent,
-    NosotrosGestionComponent
+    NosotrosGestionComponent,
+    EmpresaComponent
   ],
   imports: [
     CommonModule,

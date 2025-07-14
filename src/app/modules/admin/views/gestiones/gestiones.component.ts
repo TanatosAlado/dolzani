@@ -39,6 +39,12 @@ export class GestionesComponent {
       icono: 'fa-solid fa-address-card',
       ruta: '/gestiones/nosotros',
     },
+    {
+      titulo: 'Información de la Empresa',
+      descripcion: 'Gestión de información de la empresa',
+      icono: 'fa-solid fa-building',
+      ruta: '/gestiones/empresa',
+    },
   ];
 
   constructor(private router: Router) {}

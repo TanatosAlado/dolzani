@@ -13,6 +13,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { GrillaItemsComponent } from './modules/shop/views/grilla-items/grilla-items.component';
 import { CheckoutComponent } from './shared/components/checkout/checkout.component';
 import { NosotrosGestionComponent } from './modules/admin/views/nosotros-gestion/nosotros-gestion.component';
+import { EmpresaComponent } from './modules/admin/views/empresa/empresa.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'prefix' },
@@ -41,6 +42,7 @@ const routes: Routes = [
       { path: 'pedidos', component: PedidosComponent },
       { path: 'banner', component: BannerComponent },
       { path: 'nosotros', component: NosotrosGestionComponent },
+      { path: 'empresa', component: EmpresaComponent },
       
     ]
   },
