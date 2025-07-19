@@ -32,10 +32,67 @@
                     <span class="texto-opcion">Efectivo</span>
                 </label>
 
-                <label>
+                <!-- <label>
                     <input type="radio" name="efectivo" [(ngModel)]="opcionPagoSeleccionada" value="transferencia" />
                     <span class="texto-opcion">Transferencia</span>
+                </label> -->
+
+                <label>
+                    <input
+                        type="radio"
+                        name="efectivo"
+                        [(ngModel)]="opcionPagoSeleccionada"
+                        value="qr"
+                    />
+                    <span class="texto-opcion">Transferencia / QR</span>
                 </label>
+
+                <!-- Inicio Datos de Pago -->
+                <div class="qr-pago-container" *ngIf="opcionPagoSeleccionada === 'qr' && infoEmpresa">
+                    <h4>Transferencia bancaria sin comisiones</h4>
+                    <p>Escaneá este código QR desde tu app bancaria para hacer la transferencia.</p>
+
+                    <div class="qr-bloque">
+                        <img [src]="generarQR(infoEmpresa.alias || infoEmpresa.cvu)" alt="QR de pago" />
+
+                        <div class="qr-datos">
+                            <p><strong>Alias:</strong> {{ infoEmpresa.alias }}</p>
+                            <p><strong>CVU:</strong> {{ infoEmpresa.cvu }}</p>
+                            <p><strong>Total a pagar:</strong> {{ getTotal() | currency }}</p>
+
+                            <button (click)="copiarCVU(infoEmpresa.cvu!)">
+                                📋 Copiar CVU
+                            </button>
+                        </div>
+                    </div>
+
+                    <small>Importante: el QR no tiene monto predefinido, debés ingresarlo manualmente al transferir.</small>
+                </div>
+
+
+
+
+
+                <!-- <div *ngIf="opcionPagoSeleccionada === 'qr' && infoEmpresa">
+                    <h4>Datos para Transferencia</h4>
+                    <p><strong>Alias:</strong> {{ infoEmpresa.alias }}</p>
+                    <p>
+                        <strong>CVU:</strong> {{ infoEmpresa.cvu }}
+                        <button (click)="copiarCVU(infoEmpresa.cvu!)" mat-icon-button matTooltip="Copiar CVU">
+                        📋
+                        </button>
+                    </p>
+
+                    <div class="qr-container">
+                        <img [src]="generarQR(infoEmpresa.cvu!, getTotal())" alt="QR de pago" />
+                        <p><strong>Total a pagar:</strong> {{ getTotal() | currency }}</p>
+                    </div>
+                </div> -->
+
+
+
+                <!-- Fin Datos de Pago -->
+
                 <div class="error-message" *ngIf="pagoTocado && !opcionPagoSeleccionada && showOpcionesPago">
                     <span>Debe seleccionar una forma de pago</span>
                 </div>

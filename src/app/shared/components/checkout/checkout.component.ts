@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
+import { InfoEmpresa } from '../../models/infoEmpresa.model';
+import { InfoEmpresaService } from '../../services/info-empresa.service';
 
 @Component({
   selector: 'app-checkout',
@@ -35,9 +37,10 @@ export class CheckoutComponent {
   direccionEditable = false;
   mostrarModal = false;
   contador: Contador[] = []
+  infoEmpresa: InfoEmpresa | null = null;
 
 
-  constructor(private firestore: Firestore, private fb: FormBuilder, private clienteService: ClientesService, public pedidoService: PedidosService, public generalService: GeneralService, private contadorService: ContadorService, private router: Router, private carritoService: CarritoService) {
+  constructor(private infoEmpresaService: InfoEmpresaService, private firestore: Firestore, private fb: FormBuilder, private clienteService: ClientesService, public pedidoService: PedidosService, public generalService: GeneralService, private contadorService: ContadorService, private router: Router, private carritoService: CarritoService) {
 
     this.formCheckout = this.fb.group({
       user: ['', [Validators.required]],
@@ -50,8 +53,16 @@ export class CheckoutComponent {
   ngOnInit() {
     this.getCliente()
     this.getContadorPedidos()
-
+    this.getDatosEmpresa()
   }
+
+  //FUNCION PARA OBTENER LOS DATOS DE LA EMPRESA
+  getDatosEmpresa() {
+    this.infoEmpresaService.obtenerInfoGeneral().subscribe(data => {
+      this.infoEmpresa = data;
+    });
+  }
+
   //FUNCION PARA BUSCAR EL CLIENTE LOGUEADO Y  GUARDARLO EN UNA VARIABLE
   getCliente() {
     this.generalService.getCliente().subscribe(cliente => {
@@ -237,5 +248,28 @@ export class CheckoutComponent {
       this.contador[0].contador += 1;
     }
   }
+
+  //FUNCION PARA COPIAR EL CVU AL PORTAPAPELES, podemos volarlo
+  copiarCVU(cvu: string) {
+    navigator.clipboard.writeText(cvu).then(() => {
+      alert('CVU copiado al portapapeles');
+    }).catch(() => {
+      alert('No se pudo copiar el CVU');
+    });
+  }
+
+  // generarQR(cvu: string, monto: number): string {
+  //   const textoQR = `Transferencia a CVU: ${cvu} - Monto: ${monto}`;
+  //   return `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(textoQR)}&size=200x200`;
+  // }
+
+  getTotal(): number {
+    return this.generalService.getTotalPrecio(this.clienteEncontrado);
+  }
+
+  generarQR(aliasOCvu: string): string {
+    return `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(aliasOCvu)}&size=200x200`;
+  }
+
 
 }
