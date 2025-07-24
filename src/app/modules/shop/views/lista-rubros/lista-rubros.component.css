@@ -1,13 +1,52 @@
 .grid-productos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
 
-  .item{
-    background-color: #f8f9fa;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+
+.item {
+  background-color: #ec133e;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.3rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 0.85rem; 
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.item:hover {
+  transform: scale(1.03); 
+}
+
+.item h5 {
+  font-size: 1rem; 
+  margin: 0;
+}
+
+.submenu button {
+  background-color: white;
+  color: #ec133e;
+  border: none;
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-left: 5px;
+}
+
+.submenu button:hover {
+  background-color: #f8d7da;
+}
+
+.titulo {
+  background-color: #ec133e;
+  color: white;
+  text-align: center;
+  font-size: 1.3rem;
+  padding: 0.5rem;
+}
