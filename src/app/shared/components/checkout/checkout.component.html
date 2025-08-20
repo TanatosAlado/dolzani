@@ -44,16 +44,18 @@
                         [(ngModel)]="opcionPagoSeleccionada"
                         value="qr"
                     />
-                    <span class="texto-opcion">Transferencia / QR</span>
+                    <!-- <span class="texto-opcion">Transferencia / QR</span> -->
+                     <span class="texto-opcion">Transferencia</span>
                 </label>
 
                 <!-- Inicio Datos de Pago -->
                 <div class="qr-pago-container" *ngIf="opcionPagoSeleccionada === 'qr' && infoEmpresa">
-                    <h4>Transferencia bancaria sin comisiones</h4>
-                    <p>Escaneá este código QR desde tu app bancaria para hacer la transferencia.</p>
+                    <!-- <h4>Transferencia bancaria sin comisiones</h4> -->
+                    <h4>Datos para transferencia bancaria</h4>
+                    <!-- <p>Escaneá este código QR desde tu app bancaria para hacer la transferencia.</p> -->
 
                     <div class="qr-bloque">
-                        <img [src]="generarQR(infoEmpresa.alias || infoEmpresa.cvu)" alt="QR de pago" />
+                        <!-- <img [src]="generarQR(infoEmpresa.alias || infoEmpresa.cvu)" alt="QR de pago" /> -->
 
                         <div class="qr-datos">
                             <p><strong>Alias:</strong> {{ infoEmpresa.alias }}</p>
@@ -66,7 +68,7 @@
                         </div>
                     </div>
 
-                    <small>Importante: el QR no tiene monto predefinido, debés ingresarlo manualmente al transferir.</small>
+                    <!-- <small>Importante: el QR no tiene monto predefinido, debés ingresarlo manualmente al transferir.</small> -->
                 </div>
 
 

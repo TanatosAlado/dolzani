@@ -12,6 +12,8 @@ export class BannerComponent {
 
   mediaItems: { nombre: string, url: string, tipo: 'imagen' | 'video' }[] = [];
 
+  subBannerItems: { nombre: string, url: string, tipo: 'imagen' | 'video' }[] = [];
+
 
   constructor(private bannerService: BannerService) { }
 
@@ -27,27 +29,36 @@ export class BannerComponent {
     return ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext);
   }
 
-  async cargarImagenes() {
-    const archivos = await this.bannerService.listarArchivos('uploads');
+async cargarImagenes() {
+  // Banner principal
+  const archivos = await this.bannerService.listarArchivos('uploads');
+  this.mediaItems = archivos.map(item => {
+    const ext = item.nombre.split('.').pop()?.toLowerCase() || '';
+    let tipo: 'imagen' | 'video' = this.esVideo(ext) ? 'video' : 'imagen';
+    return { ...item, tipo };
+  });
 
-    this.mediaItems = archivos.map(item => {
-      const ext = item.nombre.split('.').pop()?.toLowerCase() || '';
-      let tipo: 'imagen' | 'video' = this.esVideo(ext) ? 'video' : 'imagen';
-      return { ...item, tipo };
-    });
+  // Sub banners
+  const subArchivos = await this.bannerService.listarArchivos('sub-banners');
+  this.subBannerItems = subArchivos.map(item => {
+    const ext = item.nombre.split('.').pop()?.toLowerCase() || '';
+    let tipo: 'imagen' | 'video' = this.esVideo(ext) ? 'video' : 'imagen';
+    return { ...item, tipo };
+  });
 
-    setTimeout(() => {
-      const el = document.querySelector('#bannerCarousel');
-      if (el) {
-        const carousel = bootstrap.Carousel.getOrCreateInstance(el, {
-          interval: 3000,
-          ride: 'carousel',
-          pause: false
-        });
-        carousel.cycle();
-      }
-    });
-  }
+  // Inicia el carousel principal
+  setTimeout(() => {
+    const el = document.querySelector('#bannerCarousel');
+    if (el) {
+      const carousel = bootstrap.Carousel.getOrCreateInstance(el, {
+        interval: 3000,
+        ride: 'carousel',
+        pause: false
+      });
+      carousel.cycle();
+    }
+  });
+}
 
 
 

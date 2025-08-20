@@ -29,3 +29,44 @@
   background-size: 100% 100%;
   filter: brightness(0.8);
 }
+
+
+
+
+/* Contenedor del sub banner */
+.sub-banner-container {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+
+  /* 👇 Nuevo: limitar ancho y centrar */
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Relación 3:1 → 750x250 */
+.sub-banner {
+  aspect-ratio: 3 / 1;
+  background-color: black;
+  border-radius: 10px;
+}
+
+/* Imagen dentro del sub-banner */
+.sub-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 10px;
+}
+
+/* Si el sub-banner tiene video */
+.sub-banner video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
