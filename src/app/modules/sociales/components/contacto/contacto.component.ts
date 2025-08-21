@@ -11,7 +11,7 @@ export class ContactoComponent {
   formData:any={}
   modalMail:boolean=false
   modalClose:boolean=false
-  private formUrl='https://formspree.io/f/xkgwrkrz'
+  private formUrl='https://formspree.io/f/mnnzkrqb'
 
   constructor(private _mailService:MailsService){
   }
@@ -19,8 +19,16 @@ export class ContactoComponent {
 
 //FUNCION PARA ENVIAR MAILS 
   submitForm() {
-    this._mailService.sendMails(this.formUrl,this.formData)
-    this.clearForm()
+  this._mailService.sendMails(this.formUrl, this.formData).subscribe({
+    next: (res) => {
+      console.log('Enviado!', res);
+      this.clearForm();
+    },
+    error: (err) => {
+      console.error('Error al enviar', err);
+      // Podés mostrar un modal de error si querés
+    }
+  });
   }
 
   //FUNCION QUE ABRE Y CIERRA EL MODAL DE ENVIO DE MAIL
