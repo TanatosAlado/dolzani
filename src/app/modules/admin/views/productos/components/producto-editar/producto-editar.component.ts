@@ -2,6 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Producto } from 'src/app/shared/models/producto.model';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
 
 @Component({
   selector: 'app-producto-editar',
@@ -11,6 +13,8 @@ import { Producto } from 'src/app/shared/models/producto.model';
 export class ProductoEditarComponent {
 
   formProducto!: FormGroup;
+  subiendoImagen = false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -76,5 +80,31 @@ export class ProductoEditarComponent {
 
     this.dialogRef.close(productoActualizado); // o enviá al backend desde aquí
   }
+
+  async onFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (!input.files || input.files.length === 0) return;
+
+  const file = input.files[0];
+  const storage = getStorage();
+
+  const filePath = `productos/${this.producto.id}_${Date.now()}_${file.name}`;
+  const storageRef = ref(storage, filePath);
+
+  try {
+    this.subiendoImagen = true;
+
+    await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(storageRef);
+
+    this.formProducto.get('imagen')?.setValue(downloadURL);
+
+  } catch (error) {
+    console.error('Error subiendo imagen', error);
+  } finally {
+    this.subiendoImagen = false;
+  }
+}
+
 
 }

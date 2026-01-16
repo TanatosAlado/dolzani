@@ -26,7 +26,7 @@
   </mat-form-field>
 
 
-<mat-form-field appearance="outline" class="w-100 fadeIn second">
+<mat-form-field class="w-100 fadeIn second">
   <mat-label>Subrubro</mat-label>
   <input
     matInput
@@ -67,6 +67,20 @@
     <mat-label>Imagen (URL)</mat-label>
     <input matInput formControlName="imagen" />
   </mat-form-field>
+
+  <!-- SUBIR IMAGEN -->
+  <div class="fadeIn fourth">
+    <input
+      type="file"
+      accept="image/*"
+      (change)="onFileSelected($event)"
+    />
+  </div>
+
+  <div class="fadeIn fourth" *ngIf="subiendoImagen">
+    <small>Subiendo imagen...</small>
+  </div>
+
 
   <mat-checkbox class="fadeIn fourth" formControlName="destacado">Producto Destacado</mat-checkbox>
 

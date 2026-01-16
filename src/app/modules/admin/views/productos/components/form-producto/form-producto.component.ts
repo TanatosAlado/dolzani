@@ -3,6 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Producto } from 'src/app/shared/models/producto.model';
 import { ProductosService } from 'src/app/shared/services/productos.service';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
 
 @Component({
   selector: 'app-form-producto',
@@ -11,6 +13,8 @@ import { ProductosService } from 'src/app/shared/services/productos.service';
 })
 export class FormProductoComponent implements OnInit {
   productoForm!: FormGroup;
+  subiendoImagen = false;
+
 
   constructor(
   @Inject(MAT_DIALOG_DATA) public data: { rubros: string[], subrubros: string[], marcas: string[] },
@@ -151,6 +155,32 @@ permitirSoloNumeros(event: KeyboardEvent): void {
 
   if (!/^\d$/.test(charCode)) {
     event.preventDefault();
+  }
+}
+
+async onFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (!input.files || input.files.length === 0) return;
+
+  const file = input.files[0];
+  const storage = getStorage();
+
+  const filePath = `productos/${Date.now()}_${file.name}`;
+  const storageRef = ref(storage, filePath);
+
+  try {
+    this.subiendoImagen = true;
+
+    await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(storageRef);
+
+    // Seteamos la URL en el form
+    this.productoForm.get('imagen')?.setValue(downloadURL);
+
+  } catch (error) {
+    console.error('Error subiendo imagen', error);
+  } finally {
+    this.subiendoImagen = false;
   }
 }
 
