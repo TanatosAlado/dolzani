@@ -5,47 +5,47 @@
 <div class="container my-4">
 
   <!-- Subida de archivo -->
-<!-- ========== BLOQUE BANNER PRINCIPAL ========== -->
-<div class="card mb-4">
-  <div class="card-body">
-    <h5 class="card-title">Subir imagen para el banner principal</h5>
+  <!-- ========== BLOQUE BANNER PRINCIPAL ========== -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Subir imagen para el banner principal</h5>
 
-    <div class="mb-3">
-      <input type="file" class="form-control" (change)="onFileSelected($event, 'principal')">
-    </div>
+      <div class="mb-3">
+        <input type="file" class="form-control" (change)="onFileSelected($event, 'principal')">
+      </div>
 
-    <button class="btn btn-primary"
-            (click)="subirArchivo('principal')"
-            [disabled]="!archivoSeleccionadoPrincipal || subiendoPrincipal">
-      Subir archivo
-    </button>
+      <button class="btn btn-primary" (click)="subirArchivo('principal')"
+        [disabled]="!archivoSeleccionadoPrincipal || subiendoPrincipal">
+        Subir archivo
+      </button>
 
-    <div *ngIf="subiendoPrincipal" class="mt-2 text-info">
-      <div class="spinner-border spinner-border-sm me-2" role="status"></div>
-      Subiendo archivo...
-    </div>
+      <div *ngIf="subiendoPrincipal" class="mt-2 text-info">
+        <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+        Subiendo archivo...
+      </div>
 
-    <div *ngIf="urlArchivoPrincipal" class="mt-2 alert alert-success">
-      Archivo subido: <a [href]="urlArchivoPrincipal" target="_blank">{{ urlArchivoPrincipal }}</a>
+      <div *ngIf="urlArchivoPrincipal" class="mt-2 alert alert-success">
+        Archivo subido: <a [href]="urlArchivoPrincipal" target="_blank">{{ urlArchivoPrincipal }}</a>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="card mb-5">
-  <div class="card-body">
-    <h5 class="card-title">Archivos del banner principal</h5>
-    <ul class="list-group" *ngIf="archivosPrincipal.length > 0; else sinArchivosPrincipal">
-      <li *ngFor="let archivo of archivosPrincipal"
+  <div class="card mb-5">
+    <div class="card-body">
+      <h5 class="card-title">Archivos del banner principal</h5>
+      <ul class="list-group" *ngIf="archivosPrincipal.length > 0; else sinArchivosPrincipal">
+        <li *ngFor="let archivo of archivosPrincipal"
           class="list-group-item d-flex justify-content-between align-items-center">
-        <a [href]="archivo.url" target="_blank">{{ archivo.nombre }}</a>
-        <button class="btn btn-sm btn-outline-danger" (click)="eliminar('principal', archivo.nombre)">Eliminar</button>
-      </li>
-    </ul>
-    <ng-template #sinArchivosPrincipal>
-      <p class="text-muted mt-3">No hay archivos subidos aún.</p>
-    </ng-template>
+          <a [href]="archivo.url" target="_blank">{{ archivo.nombre }}</a>
+          <button class="btn btn-sm btn-outline-danger"
+            (click)="eliminar('principal', archivo.nombre)">Eliminar</button>
+        </li>
+      </ul>
+      <ng-template #sinArchivosPrincipal>
+        <p class="text-muted mt-3">No hay archivos subidos aún.</p>
+      </ng-template>
+    </div>
   </div>
-</div>
 
 
   <!-- ========== BLOQUE SUB BANNER ========== -->
@@ -57,9 +57,7 @@
         <input type="file" class="form-control" (change)="onFileSelected($event, 'sub')">
       </div>
 
-      <button class="btn btn-primary"
-              (click)="subirArchivo('sub')"
-              [disabled]="!archivoSeleccionadoSub || subiendoSub">
+      <button class="btn btn-primary" (click)="subirArchivo('sub')" [disabled]="!archivoSeleccionadoSub || subiendoSub">
         Subir archivo
       </button>
 
@@ -79,7 +77,7 @@
       <h5 class="card-title">Archivos del sub banner</h5>
       <ul class="list-group" *ngIf="archivosSub.length > 0; else sinArchivosSub">
         <li *ngFor="let archivo of archivosSub"
-            class="list-group-item d-flex justify-content-between align-items-center">
+          class="list-group-item d-flex justify-content-between align-items-center">
           <a [href]="archivo.url" target="_blank">{{ archivo.nombre }}</a>
           <button class="btn btn-sm btn-outline-danger" (click)="eliminar('sub', archivo.nombre)">Eliminar</button>
         </li>
@@ -90,4 +88,5 @@
     </div>
 
 
-</div>
+  </div>
+</div>  
