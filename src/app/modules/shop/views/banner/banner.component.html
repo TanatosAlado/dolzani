@@ -1,62 +1,112 @@
-<div *ngIf="mediaItems.length > 0; else sinImagenes" id="bannerCarousel"
-  class="carousel slide banner-container container" data-bs-ride="carousel" data-bs-interval="3000"
-  data-bs-pause="false">
-  <div class="carousel-inner banner">
-    <div class="carousel-item position-relative" *ngFor="let img of mediaItems; let i = index" [class.active]="i === 0">
+<div class="page-layout">
 
-      <ng-container *ngIf="img.tipo === 'imagen'; else videoTemplate">
-        <img [src]="img.url" class="d-block w-100" alt="Banner" />
-      </ng-container>
-
-      <ng-template #videoTemplate>
-        <video [src]="img.url" autoplay muted loop playsinline preload="auto"
-          style="width: 100%; max-height: 400px; object-fit: contain;"></video>
-
-      </ng-template>
-    </div>
+  <!-- PUBLICIDAD SUPERIOR (mobile) -->
+  <div class="ads ads-top">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQxx7e2PmF86GKbd8O7IZRo5B-gP8NFzX7Eg&s">
+    <button class="ads-btn">Consultar</button>
   </div>
 
-  <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-    <span class="visually-hidden">Anterior</span>
-  </button>
+  <div class="layout-row">
 
-  <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-    <span class="visually-hidden">Siguiente</span>
-  </button>
-</div>
-
-<!-- Sub Banner -->
-<div *ngIf="subBannerItems?.length > 0" id="subBannerCarousel"
-  class="carousel slide sub-banner-container container" data-bs-ride="carousel" data-bs-interval="4000"
-  data-bs-pause="false">
-
-  <div class="carousel-inner sub-banner">
-    <div class="carousel-item position-relative" *ngFor="let item of subBannerItems; let i = index" [class.active]="i === 0">
-
-      <ng-container *ngIf="item.tipo === 'imagen'; else subVideoTemplate">
-        <img [src]="item.url" class="d-block w-100" alt="Sub Banner" />
-      </ng-container>
-
-      <ng-template #subVideoTemplate>
-        <video [src]="item.url" autoplay muted loop playsinline preload="auto"
-          style="width: 100%; max-height: 250px; object-fit: contain;"></video>
-      </ng-template>
+    <!-- PUBLICIDAD IZQUIERDA (desktop) -->
+    <div class="ads ads-left">
+      <img src="https://http2.mlstatic.com/D_NQ_NP_2X_633707-MLU106813992004_022026-N.webp">
+      <button class="ads-btn">Consultar</button>
     </div>
+
+    <!-- CONTENIDO CENTRAL -->
+    <div class="contenido">
+
+      <!-- ================= BANNER ================= -->
+      <div *ngIf="mediaItems.length > 0; else sinImagenes"
+           id="bannerCarousel"
+           class="carousel slide banner-container"
+           data-bs-ride="carousel"
+           data-bs-interval="3000"
+           data-bs-pause="false">
+
+        <div class="carousel-inner banner">
+          <div class="carousel-item position-relative"
+               *ngFor="let img of mediaItems; let i = index"
+               [class.active]="i === 0">
+
+            <ng-container *ngIf="img.tipo === 'imagen'; else videoTemplate">
+              <img [src]="img.url" class="d-block w-100" />
+            </ng-container>
+
+            <ng-template #videoTemplate>
+              <video [src]="img.url"
+                     autoplay muted loop playsinline
+                     style="width: 100%; max-height: 400px; object-fit: contain;">
+              </video>
+            </ng-template>
+
+          </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+
+        <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+
+      <!-- ================= SUB BANNER ================= -->
+      <div *ngIf="subBannerItems?.length > 0"
+           id="subBannerCarousel"
+           class="carousel slide sub-banner-container"
+           data-bs-ride="carousel"
+           data-bs-interval="4000"
+           data-bs-pause="false">
+
+        <div class="carousel-inner sub-banner">
+          <div class="carousel-item position-relative"
+               *ngFor="let item of subBannerItems; let i = index"
+               [class.active]="i === 0">
+
+            <ng-container *ngIf="item.tipo === 'imagen'; else subVideoTemplate">
+              <img [src]="item.url" class="d-block w-100" />
+            </ng-container>
+
+            <ng-template #subVideoTemplate>
+              <video [src]="item.url"
+                     autoplay muted loop playsinline
+                     style="width: 100%; max-height: 250px; object-fit: contain;">
+              </video>
+            </ng-template>
+
+          </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#subBannerCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+
+        <button class="carousel-control-next" type="button" data-bs-target="#subBannerCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+
+      <ng-template #sinImagenes>
+        <p class="text-center mt-3">No hay imágenes disponibles para el banner.</p>
+      </ng-template>
+
+    </div>
+
+    <!-- PUBLICIDAD DERECHA (desktop) -->
+    <div class="ads ads-right">
+      <img src="https://q-xx.bstatic.com/xdata/images/hotel/max600/630900147.jpg?k=38b50d9df373bf9059ad124ed417ed632ebacbbfd9d0de8369a16cd391132e9b&o=&a=1311119">
+      <button class="ads-btn">Consultar</button>
+    </div>
+
   </div>
 
-  <button class="carousel-control-prev" type="button" data-bs-target="#subBannerCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-    <span class="visually-hidden">Anterior</span>
-  </button>
+  <!-- PUBLICIDAD INFERIOR (mobile) -->
+  <div class="ads ads-bottom">
+    <img src="https://http2.mlstatic.com/D_NQ_NP_2X_633707-MLU106813992004_022026-N.webp">
+    <button class="ads-btn">Consultar</button>
+  </div>
 
-  <button class="carousel-control-next" type="button" data-bs-target="#subBannerCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-    <span class="visually-hidden">Siguiente</span>
-  </button>
 </div>
-
-<ng-template #sinImagenes>
-  <p class="text-center mt-3">No hay imágenes disponibles para el banner.</p>
-</ng-template>
