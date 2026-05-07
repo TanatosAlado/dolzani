@@ -1,0 +1,182 @@
+<app-encabezado>
+  Gestión de Publicidad
+</app-encabezado>
+
+<div class="container my-4">
+
+  <!-- ================= PUBLICIDAD IZQUIERDA ================= -->
+  <div class="card mb-4">
+    <div class="card-body">
+
+      <h5 class="card-title">Subir publicidad izquierda</h5>
+
+      <div class="mb-3">
+        <input type="file" class="form-control" (change)="onFileSelected($event, 'izquierda')">
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" placeholder="https://..." [(ngModel)]="urlBotones['izquierda']">
+      </div>
+
+      <button class="btn btn-primary" (click)="subirArchivo('izquierda')" [disabled]="
+  !archivosSeleccionados['izquierda'] ||
+  subiendo['izquierda'] ||
+  !urlBotones['izquierda']
+">
+
+        Subir archivo
+      </button>
+
+      <!-- LOADING -->
+      <div *ngIf="subiendo['izquierda']" class="mt-2 text-info">
+        <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+        Subiendo archivo...
+      </div>
+
+      <!-- SUCCESS -->
+      <div *ngIf="urls['izquierda']" class="mt-2 alert alert-success">
+        Archivo subido:
+        <a [href]="urls['izquierda']" target="_blank">
+          {{ urls['izquierda'] }}
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LISTA IZQUIERDA -->
+  <div class="card mb-5">
+    <div class="card-body">
+
+      <h5 class="card-title">Archivos publicidad izquierda</h5>
+
+      <ul class="list-group" *ngIf="listas['izquierda'].length > 0; else sinIzquierda">
+
+        <li *ngFor="let archivo of listas['izquierda']"
+          class="list-group-item d-flex justify-content-between align-items-start">
+
+          <div>
+
+            <a [href]="archivo.urlImagen" target="_blank">
+              {{ archivo.nombreImagen }}
+            </a>
+
+            <div class="mt-1">
+              <a [href]="archivo.urlBoton" target="_blank" class="small d-block">
+
+                {{ archivo.urlBoton }}
+              </a>
+
+            </div>
+
+          </div>
+
+          <button class="btn btn-sm btn-outline-danger" (click)="eliminar(archivo)">
+
+            Eliminar
+          </button>
+
+        </li>
+
+      </ul>
+
+      <ng-template #sinIzquierda>
+        <p class="text-muted mt-3">
+          No hay archivos subidos aún.
+        </p>
+      </ng-template>
+
+    </div>
+  </div>
+
+
+
+  <!-- ================= PUBLICIDAD DERECHA ================= -->
+  <div class="card mb-4">
+    <div class="card-body">
+
+      <h5 class="card-title">Subir publicidad derecha</h5>
+
+      <div class="mb-3">
+        <input type="file" class="form-control" (change)="onFileSelected($event, 'derecha')">
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" placeholder="https://..." [(ngModel)]="urlBotones['derecha']">
+      </div>
+
+      <button class="btn btn-primary" (click)="subirArchivo('derecha')" [disabled]="
+  !archivosSeleccionados['derecha'] ||
+  subiendo['derecha'] ||
+  !urlBotones['derecha']
+">
+
+        Subir archivo
+      </button>
+
+      <!-- LOADING -->
+      <div *ngIf="subiendo['derecha']" class="mt-2 text-info">
+        <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+        Subiendo archivo...
+      </div>
+
+      <!-- SUCCESS -->
+      <div *ngIf="urls['derecha']" class="mt-2 alert alert-success">
+        Archivo subido:
+        <a [href]="urls['derecha']" target="_blank">
+          {{ urls['derecha'] }}
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LISTA DERECHA -->
+  <div class="card">
+    <div class="card-body">
+
+      <h5 class="card-title">Archivos publicidad derecha</h5>
+
+      <ul class="list-group" *ngIf="listas['derecha'].length > 0; else sinDerecha">
+
+        <li *ngFor="let archivo of listas['derecha']"
+    class="list-group-item d-flex justify-content-between align-items-start">
+
+  <div>
+
+    <a [href]="archivo.urlImagen" target="_blank">
+      {{ archivo.nombreImagen }}
+    </a>
+
+    <div class="mt-1">
+      <a
+        [href]="archivo.urlBoton"
+        target="_blank"
+        class="small d-block">
+
+        {{ archivo.urlBoton }}
+      </a>
+
+    </div>
+
+  </div>
+
+  <button
+    class="btn btn-sm btn-outline-danger"
+    (click)="eliminar(archivo)">
+
+    Eliminar
+  </button>
+
+</li>
+
+      </ul>
+
+      <ng-template #sinDerecha>
+        <p class="text-muted mt-3">
+          No hay archivos subidos aún.
+        </p>
+      </ng-template>
+
+    </div>
+  </div>
+
+</div>

@@ -19,6 +19,7 @@ import { ProductoEditarComponent } from './views/productos/components/producto-e
 import { CambioPassComponent } from '../auth/views/cambio-pass/cambio-pass.component';
 import { NosotrosGestionComponent } from './views/nosotros-gestion/nosotros-gestion.component';
 import { EmpresaComponent } from './views/empresa/empresa.component';
+import { PublicidadComponent } from './views/publicidad/publicidad.component';
 
 
 
@@ -40,7 +41,8 @@ import { EmpresaComponent } from './views/empresa/empresa.component';
     ProductoEditarComponent,
     CambioPassComponent,
     NosotrosGestionComponent,
-    EmpresaComponent
+    EmpresaComponent,
+    PublicidadComponent
   ],
   imports: [
     CommonModule,

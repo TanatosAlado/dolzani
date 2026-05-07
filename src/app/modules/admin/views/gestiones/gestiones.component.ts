@@ -33,6 +33,12 @@ export class GestionesComponent {
       icono: 'fas fa-image',
       ruta: '/gestiones/banner',
     },
+     {
+      titulo: 'Publicidad',
+      descripcion: 'Gestión de publicidad',
+      icono: 'fa solid fa-camera-retro',
+      ruta: '/gestiones/publicidad',
+    },
     {
       titulo: 'Nosotros',
       descripcion: 'Gestión de nosotros',
