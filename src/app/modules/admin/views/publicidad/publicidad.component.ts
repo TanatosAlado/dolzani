@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { reduce } from 'rxjs';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { PublicidadService } from 'src/app/shared/services/publicidad.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-publicidad',
@@ -35,7 +37,7 @@ export class PublicidadComponent {
     izquierda: []
   };
 
-  constructor(private publicidadService: PublicidadService,private dialog: MatDialog) { }
+  constructor(private publicidadService: PublicidadService,private dialog: MatDialog, private toastService:ToastService) { }
 
   ngOnInit(): void {
     this.cargarArchivos('derecha');
@@ -51,7 +53,7 @@ export class PublicidadComponent {
 async subirArchivo(tipo: 'derecha' | 'izquierda') {
 
   if (this.listas[tipo].length > 0) {
-    alert(`Ya existe una publicidad ${tipo}`);
+    this.toastService.toatsMessage(`Ya existe una publicidad ${tipo}`,"red",2000);
     return;
   }
 
@@ -69,11 +71,21 @@ async subirArchivo(tipo: 'derecha' | 'izquierda') {
 
     this.urls[tipo] = url;
 
+    // ✅ validar URL
+    let urlBoton = this.urlBotones[tipo];
+
+    if (
+      !urlBoton.startsWith('http://') &&
+      !urlBoton.startsWith('https://')
+    ) {
+      urlBoton = 'https://' + urlBoton;
+    }
+
     await this.publicidadService.guardarInfoImagen({
       tipo: tipo,
       nombreImagen: file.name,
       urlImagen: url,
-      urlBoton: this.urlBotones[tipo],
+      urlBoton: urlBoton,
       ruta: path
     });
 
